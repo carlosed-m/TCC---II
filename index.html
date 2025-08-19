@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>No Matters</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Verificador de Arquivos e URLs maliciosas</h1>
+
+    <form id="urlForm">
+      <h2>Verificar URL</h2>
+      <input type="url" id="urlInput" placeholder="https://exemplo.com" required />
+      <button type="submit">Verificar</button>
+    </form>
+
+    <form id="fileForm">
+      <h2>Verificar Arquivo</h2>
+      <input type="file" id="fileInput" required />
+      <button type="submit">Verificar</button>
+    </form>
+
+    <div id="loading" class="loader"></div>
+    <div id="results"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
