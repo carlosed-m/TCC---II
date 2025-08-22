@@ -5,27 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>No Matters</title>
   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-shield-alt"></i>
+      <span>No Matters</span>
+    </div>
+    <div class="theme-switch">
+      <span class="theme-label">Tema Escuro</span>
+      <label class="switch">
+        <input type="checkbox" id="themeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+  </header>
+
   <div class="container">
-    <h1>Verificador de Arquivos e URLs maliciosas</h1>
+    <h1>Verificador de Arquivos e URLs</h1>
+    
+    <div class="tabs">
+      <div class="tab active" data-tab="url">
+        <i class="fas fa-link"></i>
+        <span>URL</span>
+      </div>
+      <div class="tab" data-tab="file">
+        <i class="fas fa-file"></i>
+        <span>Arquivo</span>
+      </div>
+    </div>
 
-    <form id="urlForm">
-      <h2>Verificar URL</h2>
-      <input type="url" id="urlInput" placeholder="https://exemplo.com" required />
-      <button type="submit">Verificar</button>
-    </form>
+    <div class="tab-content">
+      <div id="urlForm" class="tab-pane active">
+        <h2>Verificar URL</h2>
+        <div class="form-group">
+          <input type="url" id="urlInput" placeholder="https://exemplo.com" required />
+        </div>
+        <button type="button" id="checkUrl">
+          <i class="fas fa-search"></i>
+          Verificar URL
+        </button>
+      </div>
 
-    <form id="fileForm">
-      <h2>Verificar Arquivo</h2>
-      <input type="file" id="fileInput" required />
-      <button type="submit">Verificar</button>
-    </form>
+      <div id="fileForm" class="tab-pane" style="display:none;">
+        <h2>Verificar Arquivo</h2>
+        <div class="form-group">
+          <input type="file" id="fileInput" required />
+        </div>
+        <button type="button" id="checkFile">
+          <i class="fas fa-upload"></i>
+          Verificar Arquivo
+        </button>
+      </div>
+    </div>
 
     <div id="loading" class="loader"></div>
     <div id="results"></div>
   </div>
 
-  <script src="script.js"></script>
+  <footer>
+    <div class="footer-links">
+      <a href="#"><i class="fas fa-box"></i> Nossos Produtos</a>
+      <a href="#"><i class="fas fa-envelope"></i> Contate-Nos</a>
+      <a href="#"><i class="fas fa-users"></i> Comunidade</a>
+      <a href="#"><i class="fas fa-tools"></i> Ferramentas</a>
+      <a href="#"><i class="fas fa-crown"></i> Serviços Premium</a>
+      <a href="#"><i class="fas fa-book"></i> Documentação</a>
+    </div>
+    <div class="disclaimer">
+      Ao enviar dados, você concorda com nossos Termos de Serviço e Política de Privacidade. 
+      Por favor, não envie informações pessoais. Não nos responsabilizamos pelo conteúdo de suas submissões.
+    </div>
+  </footer>
+
+  <script>
+    // Alternar entre abas
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remover classe active de todas as abas
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        // Adicionar classe active à aba clicada
+        tab.classList.add('active');
+        
+        // Esconder todos os conteúdos de abas
+        document.querySelectorAll('.tab-pane').forEach(pane => {
+          pane.style.display = 'none';
+        });
+        
+        // Mostrar o conteúdo da aba correspondente
+        const tabName = tab.getAttribute('data-tab');
+        if (tabName === 'url') {
+          document.getElementById('urlForm').style.display = 'block';
+        } else {
+          document.getElementById('fileForm').style.display = 'block';
+        }
+      });
+    });
+
+    // Alternar entre temas claro e escuro
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    
+    // Verificar se há preferência salva
+    if (localStorage.getItem('theme') === 'dark') {
+      body.classList.add('dark-theme');
+      themeToggle.checked = true;
+    }
+    
+    themeToggle.addEventListener('change', () => {
+      if (themeToggle.checked) {
+        body.classList.add('dark-theme');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-theme');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    // Simular verificação (para demonstração)
+    document.getElementById('checkUrl').addEventListener('click', () => {
+      const url = document.getElementById('urlInput').value;
+      if (!url) return alert('Por favor, insira uma URL');
+      
+      const loading = document.getElementById('loading');
+      const results = document.getElementById('results');
+      
+      loading.style.display = 'block';
+      results.innerHTML = '';
+      
+      setTimeout(() => {
+        loading.style.display = 'none';
+        // Resultado simulado
+        const isSafe = Math.random() > 0.3;
+        results.innerHTML = `
+          <div id="threatResult" class="${isSafe ? 'no-threat' : 'threat-detected'}">
+            ${isSafe ? 'URL Segura' : 'Ameaça Detectada!'}
+          </div>
+          <p>Resultado da verificação para: ${url}</p>
+          <p>${isSafe ? 'Nenhuma ameaça foi detectada nesta URL.' : 'Esta URL pode conter conteúdo malicioso. Recomendamos cautela.'}</p>
+        `;
+      }, 2000);
+    });
+
+    document.getElementById('checkFile').addEventListener('click', () => {
+      const fileInput = document.getElementById('fileInput');
+      if (!fileInput.files.length) return alert('Por favor, selecione um arquivo');
+      
+      const loading = document.getElementById('loading');
+      const results = document.getElementById('results');
+      
+      loading.style.display = 'block';
+      results.innerHTML = '';
+      
+      setTimeout(() => {
+        loading.style.display = 'none';
+        // Resultado simulado
+        const isSafe = Math.random() > 0.3;
+        results.innerHTML = `
+          <div id="threatResult" class="${isSafe ? 'no-threat' : 'threat-detected'}">
+            ${isSafe ? 'Arquivo Seguro' : 'Ameaça Detectada!'}
+          </div>
+          <p>Resultado da verificação para: ${fileInput.files[0].name}</p>
+          <p>${isSafe ? 'Nenhuma ameaça foi detectada neste arquivo.' : 'Este arquivo pode conter conteúdo malicioso. Recomendamos não abri-lo.'}</p>
+        `;
+      }, 2000);
+    });
+  </script>
 </body>
 </html>
