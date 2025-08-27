@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>No Matters</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body class="dark-theme">
+  <header class="main-header">
+    <div class="logo">
+      <a href="#">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>No Matters</span>
+      </a>
+    </div>
+    <nav class="main-nav">
+      <a href="docs.html" class="doc-button">
+        <i class="fa-solid fa-book"></i> Documentação
+      </a>
+      <button id="theme-toggle-button">
+        <i class="fa-solid fa-sun"></i>
+        <span>Mudar para Tema Claro</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="container">
+    <p class="subtitle">Analise arquivos, URLs para detectar malware e outras ameaças.</p>
+
+    <div class="scan-container">
+      <div class="tabs">
+        <button class="tab-link active" data-tab="file-tab">
+          <i class="fa-solid fa-file"></i> ARQUIVO
+        </button>
+        <button class="tab-link" data-tab="url-tab">
+          <i class="fa-solid fa-link"></i> URL
+        </button>
+      </div>
+
+      <div id="file-tab" class="tab-content active">
+        <form id="fileForm" class="upload-area">
+          <i class="fa-solid fa-fingerprint upload-icon"></i>
+          <label for="fileInput" class="custom-file-upload">Escolher Arquivo</label>
+          <input type="file" id="fileInput" />
+        </form>
+      </div>
+
+      <div id="url-tab" class="tab-content">
+        <form id="urlForm" class="url-form">
+          <input type="url" id="urlInput" placeholder="Pesquisar ou escanear uma URL" required />
+          <button type="submit" class="submit-scan-btn">
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div id="loading" class="loader"></div>
+    <div id="results"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
