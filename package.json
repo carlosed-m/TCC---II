@@ -1,11 +1,18 @@
 {
+  "name": "tcc-ii",
+  "version": "1.0.0",
+  "description": "Projeto TCC VirusTotal",
+  "main": "back-end/server.js",
+  "scripts": {
+    "start": "node ./back-end/server.js",
+    "dev": "npx nodemon ./back-end/server.js"
+  },
   "dependencies": {
-    "axios": "^1.11.0",
+    "axios": "^1.7.7",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.1",
-    "express": "^5.1.0",
-    "form-data": "^4.0.4",
-    "multer": "^2.0.2",
-    "openai": "^5.13.1"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "form-data": "^4.0.0",
+    "multer": "^2.0.2"
   }
 }
