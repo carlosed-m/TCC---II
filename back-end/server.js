@@ -1,3 +1,12 @@
+// Importação das dependências necessárias
+// dotenv: Para carregar variáveis de ambiente
+// express: Framework web para Node.js
+// axios: Cliente HTTP para fazer requisições
+// multer: Middleware para upload de arquivos
+// cors: Middleware para habilitar CORS
+// fs: Sistema de arquivos do Node.js
+// path: Manipulação de caminhos de arquivo
+// FormData: Para criar formulários multipart
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
@@ -7,9 +16,10 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 
+// Configuração inicial do servidor Express e middlewares
 const app = express();
-const upload = multer({ dest: path.join(__dirname, '../uploads') }); // robusto qdo rodar da raiz
-const API_KEY = "3bff712a13371ad413ae5dfc49b8bb4f8ae5b476084fc945d496f2ad6721e4d5";
+const upload = multer({ dest: path.join(__dirname, '../uploads') }); // Configura o diretório para upload de arquivos
+const API_KEY = "3bff712a13371ad413ae5dfc49b8bb4f8ae5b476084fc945d496f2ad6721e4d5"; // Chave da API do VirusTotal
 
 app.use(cors());
 app.use(express.json());
@@ -19,13 +29,17 @@ if (!API_KEY) {
   console.log("VT_API_KEY carregada?", API_KEY ? "Sim" : "Não");
 }
 
-// 2) Servir o front-end corretamente
+// Conexão com o front-end
 app.use(express.static(path.join(__dirname, '../front-end')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../front-end/index.html'));
 });
 
 // Função helper: polling do resultado da análise
+// Função auxiliar que realiza polling para verificar o status da análise no VirusTotal
+// - Faz requisições periódicas para verificar se a análise foi concluída
+// - Tenta até 10 vezes com intervalo de 1.5 segundos entre as tentativas
+// - Retorna os dados quando a análise é concluída ou lança erro se exceder o tempo
 async function pollAnalysis(analysisId, maxTries = 10, intervalMs = 1500) {
   for (let attempt = 1; attempt <= maxTries; attempt++) {
     const resp = await axios.get(
@@ -36,7 +50,7 @@ async function pollAnalysis(analysisId, maxTries = 10, intervalMs = 1500) {
     const status = resp.data?.data?.attributes?.status;
     if (status === 'completed') return resp.data;
 
-    // aguarda e tenta de novo
+    // Aguarda o intervalo definido antes da próxima tentativa
     await new Promise(r => setTimeout(r, intervalMs));
   }
   throw new Error('Tempo de espera excedido ao aguardar a análise do VirusTotal');

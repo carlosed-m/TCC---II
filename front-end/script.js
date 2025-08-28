@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleButton = document.getElementById('theme-toggle-button');
   const body = document.body;
 
+
+   // --- Seleção do Tema Escuro ou Claro ---
   if (themeToggleButton) {
     themeToggleButton.addEventListener('click', () => {
       body.classList.toggle('dark-theme');
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // --- Verificação de URL ---
+  // --- Verificação da URL ---
   const urlForm = document.getElementById('urlForm');
   if (urlForm) {
     urlForm.addEventListener('submit', async (e) => {
@@ -58,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Verificação de Arquivo ---
+  // --- Verificação do Arquivo ---
   const fileInput = document.getElementById('fileInput');
   if (fileInput) {
     fileInput.addEventListener('change', async (e) => {
