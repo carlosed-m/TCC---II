@@ -31,6 +31,7 @@ if (!API_KEY) {
 
 // Conexão com o front-end
 app.use(express.static(path.join(__dirname, '../front-end')));
+app.use('/tips', express.static(path.join(__dirname, '../tips'))); // Adicione esta linha
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../front-end/index.html'));
 });
