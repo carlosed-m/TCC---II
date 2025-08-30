@@ -168,7 +168,9 @@ h1 {
     font-weight: 500;
     font-size: 1rem;
     border-bottom: 3px solid transparent;
-    transition: all 0.2s;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    outline: none;
 }
 
 .dark-theme .tab-link {
@@ -200,10 +202,14 @@ h1 {
 .tab-content {
     display: none;
     padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    position: relative;
 }
 
 .tab-content.active {
     display: block;
+    opacity: 1;
 }
 /* Área de upload de arquivo */
 .upload-area {
@@ -461,4 +467,347 @@ input[type="file"] {
     border-radius: 8px;
     margin: 1rem 0;
     background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Card de Detalhes Técnicos */
+.details-card {
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .details-card {
+    background: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.stats-container {
+    margin-bottom: 24px;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.stat-box {
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 14px;
+}
+
+.stat-box.harmless {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+}
+
+.stat-box.malicious {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.stat-box.suspicious {
+    background-color: rgba(234, 179, 8, 0.1);
+    color: #eab308;
+}
+
+.stat-box.undetected {
+    background-color: rgba(100, 116, 139, 0.1);
+    color: #64748b;
+}
+
+.antivirus-results {
+    margin-top: 24px;
+}
+
+.av-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.av-item {
+    padding: 12px;
+    border-radius: 6px;
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+}
+
+.dark-theme .av-item {
+    background: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.av-item strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--primary-text-light);
+}
+
+.dark-theme .av-item strong {
+    color: var(--primary-text-dark);
+}
+
+.av-result {
+    font-size: 14px;
+    color: var(--secondary-text-light);
+}
+
+.dark-theme .av-result {
+    color: var(--secondary-text-dark);
+}
+
+.av-note {
+    font-size: 12px;
+    color: var(--secondary-text-light);
+    margin-top: 8px;
+}
+
+.dark-theme .av-note {
+    color: var(--secondary-text-dark);
+}
+
+/* Estilos para o resumo das detecções */
+.detection-summary {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.detection-description {
+    color: var(--primary-text-light);
+}
+
+.dark-theme .detection-description {
+    color: var(--primary-text-dark);
+}
+
+.detection-description p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.detection-description ul {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+}
+
+.detection-description li {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 6px;
+}
+
+.dark-theme .detection-description li {
+    background: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.detection-description strong {
+    color: #ef4444;
+    margin-right: 8px;
+}
+
+.detection-description small {
+    display: block;
+    margin-top: 4px;
+    color: var(--secondary-text-light);
+    font-size: 0.9em;
+}
+
+.dark-theme .detection-description small {
+    color: var(--secondary-text-dark);
+}
+
+.detection-note {
+    font-style: italic;
+    color: #ef4444;
+}
+
+/* Descrição nos cards de antivírus */
+.av-description {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color-light);
+}
+
+.dark-theme .av-description {
+    border-color: var(--border-color-dark);
+}
+
+.av-description small {
+    color: var(--secondary-text-light);
+    font-size: 0.85em;
+    line-height: 1.4;
+}
+
+.additional-info {
+    margin-top: 24px;
+}
+
+.additional-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0 0;
+}
+
+.additional-info li {
+    margin-bottom: 16px;
+    color: var(--secondary-text-light);
+    line-height: 1.5;
+}
+
+.dark-theme .additional-info li {
+    color: var(--secondary-text-dark);
+}
+
+.additional-info strong {
+    color: var(--primary-text-light);
+    margin-right: 8px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.dark-theme .additional-info strong {
+    color: var(--primary-text-dark);
+}
+
+.verification-summary {
+    margin: 8px 0 0 16px !important;
+    padding: 12px;
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 6px;
+}
+
+.dark-theme .verification-summary {
+    background: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.verification-summary li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.verification-summary li:not(.no-bullet):before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent-color-light);
+}
+
+.dark-theme .verification-summary li:not(.no-bullet):before {
+    color: var(--accent-color-dark);
+}
+
+.verification-summary li.no-bullet {
+    padding-left: 0;
+}
+
+.verification-summary .malicious {
+    color: #ef4444;
+}
+
+.categories-list {
+    margin: 8px 0 0 16px !important;
+}
+
+.categories-list li {
+    margin-bottom: 4px;
+    font-size: 0.9em;
+    color: var(--secondary-text-light);
+}
+
+.dark-theme .categories-list li {
+    color: var(--secondary-text-dark);
+}
+
+/* Estilos para detalhes de detecção */
+.detection-details {
+    margin-top: 16px !important;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color-light);
+}
+
+.dark-theme .detection-details {
+    border-top-color: var(--border-color-dark);
+}
+
+.detection-list {
+    margin-top: 8px !important;
+    padding-left: 16px !important;
+}
+
+.detection-list li {
+    margin-bottom: 12px !important;
+    padding: 8px;
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 4px;
+}
+
+.dark-theme .detection-list li {
+    background: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+.av-name {
+    font-weight: 500;
+    color: var(--primary-text-light);
+}
+
+.dark-theme .av-name {
+    color: var(--primary-text-dark);
+}
+
+.detection-type {
+    color: #ef4444;
+    margin-left: 4px;
+}
+
+.detection-list small {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.85em;
+    color: var(--secondary-text-light);
+}
+
+.dark-theme .detection-list small {
+    color: var(--secondary-text-dark);
+}
+
+.details-card h4 {
+    margin: 0;
+    color: var(--primary-text-light);
+    font-size: 18px;
+}
+
+.dark-theme .details-card h4 {
+    color: var(--primary-text-dark);
 }
