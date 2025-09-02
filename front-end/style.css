@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
     /* Tipografia */
-    --font-family: 'Roboto', sans-serif;
+    --font-family: 'Raleway', sans-serif;
 
     /* Cores do tema claro */
     --bg-color-light: #f5f7fa;
@@ -241,6 +241,27 @@ input[type="file"] {
     display: none;
 }
 
+.file-info {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.file-info p {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 6px;
+    color: var(--primary-text-light);
+    font-weight: 500;
+}
+
+.dark-theme .file-info p {
+    background-color: rgba(96, 165, 250, 0.15);
+    border-color: rgba(96, 165, 250, 0.4);
+    color: var(--primary-text-dark);
+}
+
 .custom-file-upload {
     background-color: var(--accent-color-light);
     color: #fff;
@@ -290,14 +311,21 @@ input[type="file"] {
     background: var(--accent-color-light);
     color: #fff;
     border: none;
-    padding: 0 1.5rem;
+    padding: 1rem 2rem;
     cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    min-height: 50px;
+    border-radius: 8px;
     transition: background-color 0.2s;
 }
 
 .submit-scan-btn:hover {
     background-color: var(--accent-hover-light);
+}
+
+.submit-scan-btn i {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
 }
 
 .dark-theme .submit-scan-btn {
@@ -335,7 +363,7 @@ input[type="file"] {
 
 /* === Estilos para os Resultados === */
 
-/* Botões de documentação e navegação */
+/* Botões de navegação e ações */
 .doc-button {
     display: inline-flex;
     align-items: center;
@@ -365,6 +393,33 @@ input[type="file"] {
     display: flex;
     align-items: center;
     gap: 1rem; /* Espaço entre Documentação e Tema */
+}
+
+/* Botão Nova Análise */
+.new-analysis-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: var(--accent-color-light);
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.new-analysis-btn:hover {
+    background-color: var(--accent-hover-light);
+}
+
+.dark-theme .new-analysis-btn {
+    background-color: var(--accent-color-dark);
+}
+
+.dark-theme .new-analysis-btn:hover {
+    background-color: var(--accent-hover-dark);
 }
 
 /* Área de resultados */
@@ -434,18 +489,72 @@ input[type="file"] {
     }
 }
 
-/* Cartão de dicas de segurança */
+/* Cartão de dicas de segurança - Base */
 .security-tips-card {
-    background-color: var(--card-bg);
     border-radius: 8px;
     padding: 1.5rem;
     margin: 1rem 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
 }
 
+/* Card para verificação segura (verde) */
+.security-tips-card.safe {
+    background-color: rgba(34, 197, 94, 0.1);
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.dark-theme .security-tips-card.safe {
+    background-color: rgba(34, 197, 94, 0.15);
+    border-color: rgba(34, 197, 94, 0.4);
+}
+
+.security-tips-card.safe h3 {
+    color: #16a34a;
+}
+
+.security-tips-card.safe p {
+    color: #15803d;
+}
+
+.dark-theme .security-tips-card.safe h3 {
+    color: #22c55e;
+}
+
+.dark-theme .security-tips-card.safe p {
+    color: #4ade80;
+}
+
+/* Card para verificação maliciosa (vermelho) */
+.security-tips-card.malicious {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.dark-theme .security-tips-card.malicious {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+
+.security-tips-card.malicious h3 {
+    color: #dc2626;
+}
+
+.security-tips-card.malicious p {
+    color: #b91c1c;
+}
+
+.dark-theme .security-tips-card.malicious h3 {
+    color: #ef4444;
+}
+
+.dark-theme .security-tips-card.malicious p {
+    color: #f87171;
+}
+
+/* Estilos gerais do card (fallback) */
 .security-tips-card h3 {
-    color: var(--text-primary);
     margin-bottom: 0.5rem;
     font-size: 1.1rem;
     display: flex;
@@ -454,7 +563,6 @@ input[type="file"] {
 }
 
 .security-tips-card p {
-    color: var(--text-secondary);
     line-height: 1.5;
     margin: 0;
 }
@@ -732,6 +840,10 @@ input[type="file"] {
 
 .verification-summary .malicious {
     color: #ef4444;
+}
+
+.dark-theme .verification-summary .malicious {
+    color: #f87171;
 }
 
 .categories-list {

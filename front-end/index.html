@@ -40,16 +40,22 @@
       </div>
 
       <div id="file-tab" class="tab-content active">
-        <form id="fileForm" class="upload-area">
+        <div class="upload-area">
           <i class="fa-solid fa-fingerprint upload-icon"></i>
           <label for="fileInput" class="custom-file-upload">Escolher Arquivo</label>
           <input type="file" id="fileInput"/>
-        </form>
+          <div id="file-info" class="file-info" style="display: none;">
+            <p id="file-name"></p>
+            <button type="button" id="confirmUpload" class="submit-scan-btn">
+              <i class="fa-solid fa-upload"></i> Confirmar envio
+            </button>
+          </div>
+        </div>
       </div>
 
       <div id="url-tab" class="tab-content">
         <form id="urlForm" class="url-form">
-          <input type="url" id="urlInput" placeholder="Pesquisar ou escanear uma URL" required />
+          <input type="url" id="urlInput" placeholder="Pesquisar ou escanear uma URL" required/>
           <button type="submit" class="submit-scan-btn">
             <i class="fa-solid fa-arrow-right"></i>
           </button>

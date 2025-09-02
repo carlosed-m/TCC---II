@@ -84,11 +84,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Input de arquivo
+  // Input de arquivo - apenas mostra o arquivo selecionado
   if (fileInput) {
-    fileInput.addEventListener('change', async (e) => {
+    fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
-      if (!file) return;
+      const fileInfo = document.getElementById('file-info');
+      const fileName = document.getElementById('file-name');
+      
+      if (file) {
+        fileName.textContent = `Arquivo selecionado: ${file.name} (${formatBytes(file.size)})`;
+        fileInfo.style.display = 'block';
+      } else {
+        fileInfo.style.display = 'none';
+      }
+    });
+  }
+
+  // Botão de confirmação de envio do arquivo
+  const confirmUploadBtn = document.getElementById('confirmUpload');
+  if (confirmUploadBtn) {
+    confirmUploadBtn.addEventListener('click', async () => {
+      const file = fileInput.files[0];
+      if (!file) {
+        exibirResultado({ erro: 'Nenhum arquivo selecionado' });
+        return;
+      }
 
       mostrarLoader(true);
       const formData = new FormData();
@@ -107,6 +127,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         exibirResultado(data);
+        
+        // Limpa o arquivo selecionado após o envio
+        fileInput.value = '';
+        document.getElementById('file-info').style.display = 'none';
+        
       } catch (error) {
         exibirResultado({ erro: 'Erro ao analisar o arquivo', detalhe: error.message });
       } finally {
@@ -179,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Card de dicas de segurança
     const tipsCard = document.createElement('div');
-    tipsCard.className = 'security-tips-card';
+    tipsCard.className = `security-tips-card ${isMalicious ? 'malicious' : 'safe'}`;
     
     // Seleciona a dica apropriada
     const tip = isMalicious 
@@ -192,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (tip) {
       tipsCard.innerHTML = `
-        <h3>${isMalicious ? '🚨 Dica de Segurança' : '💡 Lembre-se'}</h3>
+        <h3>${isMalicious ? '🚨 Dica de Segurança' : 'Lembre-se Sempre'}</h3>
         <p>${tip}</p>
       `;
     }
@@ -299,8 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <ul class="verification-summary">
               <li class="no-bullet"><strong>Seguros:</strong> ${stats.harmless || 0} antivírus não encontraram ameaças</li>
               <li class="no-bullet"><strong>Não detectados:</strong> ${stats.undetected || 0} antivírus não detectaram problemas</li>
-              ${stats.suspicious > 0 ? `<li>Suspeitos: ${stats.suspicious} antivírus marcaram como suspeito</li>` : ''}
-              ${stats.malicious > 0 ? `<li class="malicious">Maliciosos: ${stats.malicious} antivírus detectaram ameaças</li>` : ''}
+              ${stats.suspicious > 0 ? `<li class="no-bullet">Suspeitos: ${stats.suspicious} antivírus marcaram como suspeito</li>` : ''}
+              ${stats.malicious > 0 ? `<li class="malicious no-bullet">Maliciosos: ${stats.malicious} antivírus detectaram ameaças</li>` : ''}
             </ul>
           </li>
           ${attributes.categories ? `
@@ -360,10 +385,50 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleButton.textContent = isHidden ? 'Ocultar detalhes técnicos' : 'Mostrar detalhes técnicos';
     };
 
+    // Botão Nova Análise
+    const newAnalysisButton = document.createElement('button');
+    newAnalysisButton.textContent = 'Nova Análise';
+    newAnalysisButton.className = 'new-analysis-btn';
+    newAnalysisButton.onclick = () => {
+      // Limpa os resultados
+      resultsDiv.innerHTML = '';
+      
+      // Limpa o input de arquivo se houver
+      const fileInput = document.getElementById('fileInput');
+      const fileInfo = document.getElementById('file-info');
+      if (fileInput) {
+        fileInput.value = '';
+      }
+      if (fileInfo) {
+        fileInfo.style.display = 'none';
+      }
+      
+      // Limpa o input de URL se houver
+      const urlInput = document.getElementById('urlInput');
+      if (urlInput) {
+        urlInput.value = '';
+      }
+      
+      // Volta o foco para a aba ativa
+      const activeTab = document.querySelector('.tab-link.active');
+      if (activeTab) {
+        const tabId = activeTab.dataset.tab;
+        if (tabId === 'file-tab') {
+          // Se estiver na aba de arquivo, foca no botão de escolher arquivo
+          const chooseFileLabel = document.querySelector('.custom-file-upload');
+          if (chooseFileLabel) chooseFileLabel.focus();
+        } else if (tabId === 'url-tab') {
+          // Se estiver na aba de URL, foca no input de URL
+          if (urlInput) urlInput.focus();
+        }
+      }
+    };
+
     // Adiciona todos os elementos ao DOM
     resultsDiv.appendChild(resultButton);
     resultsDiv.appendChild(tipsCard);
     resultsDiv.appendChild(toggleButton);
     resultsDiv.appendChild(detailsCard);
+    resultsDiv.appendChild(newAnalysisButton);
   }
 });
