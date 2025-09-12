@@ -21,6 +21,7 @@ const app = express();
 const upload = multer({ dest: path.join(__dirname, '../uploads') }); // Configura o diretório para upload de arquivos
 const API_KEY = "3bff712a13371ad413ae5dfc49b8bb4f8ae5b476084fc945d496f2ad6721e4d5"; // Chave da API do VirusTotal
 
+// Configuração dos middlewares
 app.use(cors());
 app.use(express.json());
 
@@ -31,30 +32,51 @@ if (!API_KEY) {
 
 // Conexão com o front-end
 app.use(express.static(path.join(__dirname, '../front-end')));
-app.use('/tips', express.static(path.join(__dirname, '../tips'))); // Adicione esta linha
+app.use('/tips', express.static(path.join(__dirname, '../tips')));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../front-end/index.html'));
 });
 
 // Função helper: polling do resultado da análise
-// Função auxiliar que realiza polling para verificar o status da análise no VirusTotal
-// - Faz requisições periódicas para verificar se a análise foi concluída
-// - Tenta até 10 vezes com intervalo de 1.5 segundos entre as tentativas
-// - Retorna os dados quando a análise é concluída ou lança erro se exceder o tempo
-async function pollAnalysis(analysisId, maxTries = 10, intervalMs = 1500) {
-  for (let attempt = 1; attempt <= maxTries; attempt++) {
-    const resp = await axios.get(
-      `https://www.virustotal.com/api/v3/analyses/${analysisId}`,
-      { headers: { 'x-apikey': API_KEY }, timeout: 15000 }
-    );
+async function pollAnalysis(analysisId) {
+  const VIRUSTOTAL_BASE_URL = 'https://www.virustotal.com/api/v3';
+  const maxAttempts = 30; // Máximo 30 tentativas (5 minutos)
+  const pollInterval = 10000; // 10 segundos entre tentativas
 
-    const status = resp.data?.data?.attributes?.status;
-    if (status === 'completed') return resp.data;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      console.log(`Tentativa ${attempt}/${maxAttempts} - Verificando status da análise: ${analysisId}`);
+      
+      const response = await axios.get(`${VIRUSTOTAL_BASE_URL}/analyses/${analysisId}`, {
+        headers: { 'x-apikey': API_KEY },
+        timeout: 15000
+      });
 
-    // Aguarda o intervalo definido antes da próxima tentativa
-    await new Promise(r => setTimeout(r, intervalMs));
+      const status = response.data?.data?.attributes?.status;
+      console.log(`Status atual: ${status}`);
+
+      if (status === 'completed') {
+        console.log('Análise concluída! Retornando resultado.');
+        return response.data;
+      }
+
+      if (attempt < maxAttempts) {
+        console.log(`Aguardando ${pollInterval/1000} segundos antes da próxima verificação...`);
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
+      }
+
+    } catch (error) {
+      console.error(`Erro na tentativa ${attempt}:`, error.message);
+      
+      if (attempt === maxAttempts) {
+        throw error;
+      }
+      
+      await new Promise(resolve => setTimeout(resolve, pollInterval));
+    }
   }
-  throw new Error('Tempo de espera excedido ao aguardar a análise do VirusTotal');
+
+  throw new Error('Timeout: Análise não foi concluída no tempo esperado');
 }
 
 // Verificação de URL
@@ -89,23 +111,18 @@ app.post('/verificar-url', async (req, res) => {
       }
     );
 
-    const analysisId = uploadResponse.data?.data?.id;
-    if (!analysisId) throw new Error('Não foi possível obter o ID da análise');
+    const analysisId = uploadResponse.data.data.id;
 
-    // Faz polling até completar
-    const analysisData = await pollAnalysis(analysisId);
-    return res.json(analysisData);
+    // Aguarda resultado da análise usando polling
+    const resultado = await pollAnalysis(analysisId);
+
+    res.json(resultado);
+
   } catch (error) {
-    // Detalhar o erro para o front
-    const status = error.response?.status;
-    const vt = error.response?.data;
-    console.error('Erro na verificação de URL:', status, vt || error.message);
-
-    return res.status(500).json({
-      erro: 'Erro ao verificar URL',
-      detalhe: error.message,
-      status,
-      vt
+    console.error('Erro na verificação:', error.message);
+    res.status(500).json({
+      erro: 'Erro na verificação',
+      detalhe: error.message
     });
   }
 });
@@ -138,6 +155,7 @@ app.post('/verificar-arquivo', upload.single('file'), async (req, res) => {
     if (!analysisId) throw new Error('Não foi possível obter o ID da análise');
 
     const analysisData = await pollAnalysis(analysisId);
+    
     return res.json(analysisData);
   } catch (error) {
     const status = error.response?.status;

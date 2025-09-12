@@ -422,6 +422,37 @@ input[type="file"] {
     background-color: var(--accent-hover-dark);
 }
 
+/* Botão Gerar Relatório PDF */
+.generate-report-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #059669;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.generate-report-btn:hover {
+    background-color: #047857;
+}
+
+.dark-theme .generate-report-btn {
+    background-color: #10b981;
+}
+
+.dark-theme .generate-report-btn:hover {
+    background-color: #059669;
+}
+
 /* Área de resultados */
 #results {
     margin-top: 2rem;

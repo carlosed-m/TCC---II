@@ -385,6 +385,22 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleButton.textContent = isHidden ? 'Ocultar detalhes técnicos' : 'Mostrar detalhes técnicos';
     };
 
+    // Armazena os dados para o relatório
+    window.lastAnalysisData = {
+      data: data,
+      analysisType: document.querySelector('.tab-link.active').textContent.trim(),
+      timestamp: new Date(),
+      isMalicious: isMalicious,
+      stats: stats,
+      tip: tip
+    };
+
+    // Botão para gerar relatório PDF
+    const generateReportBtn = document.createElement('button');
+    generateReportBtn.className = 'generate-report-btn';
+    generateReportBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Gerar Relatório PDF';
+    generateReportBtn.onclick = () => generatePDFReport(window.lastAnalysisData);
+
     // Botão Nova Análise
     const newAnalysisButton = document.createElement('button');
     newAnalysisButton.textContent = 'Nova Análise';
@@ -429,6 +445,102 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsDiv.appendChild(tipsCard);
     resultsDiv.appendChild(toggleButton);
     resultsDiv.appendChild(detailsCard);
+    resultsDiv.appendChild(generateReportBtn);
     resultsDiv.appendChild(newAnalysisButton);
   }
 });
+
+// Função para gerar relatório PDF
+function generatePDFReport(analysisData) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Configurações
+  const pageWidth = doc.internal.pageSize.width;
+  const margin = 20;
+  let yPosition = 30;
+  
+  // Função auxiliar para adicionar texto com quebra de linha
+  function addText(text, x, y, options = {}) {
+    const maxWidth = options.maxWidth || (pageWidth - 2 * margin);
+    const fontSize = options.fontSize || 12;
+    const isBold = options.bold || false;
+    
+    doc.setFontSize(fontSize);
+    doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+    
+    const lines = doc.splitTextToSize(text, maxWidth);
+    doc.text(lines, x, y);
+    
+    return y + (lines.length * fontSize * 0.5) + 5;
+  }
+  
+  // Cabeçalho
+  doc.setFillColor(59, 130, 246);
+  doc.rect(0, 0, pageWidth, 25, 'F');
+  
+  doc.setTextColor(255, 255, 255);
+  yPosition = addText('RELATÓRIO DE VERIFICAÇÃO DE SEGURANÇA', margin, 15, { 
+    fontSize: 16, 
+    bold: true 
+  });
+  
+  // Reset cor do texto
+  doc.setTextColor(0, 0, 0);
+  yPosition += 10;
+  
+  // Informações gerais
+  yPosition = addText('INFORMAÇÕES GERAIS', margin, yPosition, { fontSize: 14, bold: true });
+  yPosition = addText(`Data/Hora: ${analysisData.timestamp.toLocaleString('pt-BR')}`, margin, yPosition);
+  yPosition = addText(`Tipo de Análise: ${analysisData.analysisType}`, margin, yPosition);
+  
+  // URL ou arquivo analisado
+  const attributes = analysisData.data.data.attributes;
+  if (attributes.url) {
+    yPosition = addText(`URL Analisada: ${attributes.url}`, margin, yPosition);
+  } else if (attributes.meaningful_name) {
+    yPosition = addText(`Arquivo Analisado: ${attributes.meaningful_name}`, margin, yPosition);
+  }
+  
+  yPosition += 10;
+  
+  // Resultado da análise
+  const resultColor = analysisData.isMalicious ? [239, 68, 68] : [34, 197, 94];
+  const resultText = analysisData.isMalicious ? '🚨 AMEAÇA DETECTADA' : '✅ NENHUMA AMEAÇA ENCONTRADA';
+  
+  doc.setFillColor(...resultColor);
+  doc.rect(margin, yPosition - 8, pageWidth - 2 * margin, 20, 'F');
+  
+  doc.setTextColor(255, 255, 255);
+  yPosition = addText(resultText, margin + 5, yPosition, { fontSize: 14, bold: true });
+  
+  doc.setTextColor(0, 0, 0);
+  yPosition += 15;
+  
+  // Estatísticas
+  yPosition = addText('ESTATÍSTICAS DA ANÁLISE', margin, yPosition, { fontSize: 14, bold: true });
+  
+  const stats = analysisData.stats;
+  yPosition = addText(`• Seguros: ${stats.harmless || 0} antivírus`, margin + 5, yPosition);
+  yPosition = addText(`• Maliciosos: ${stats.malicious || 0} antivírus`, margin + 5, yPosition);
+  yPosition = addText(`• Suspeitos: ${stats.suspicious || 0} antivírus`, margin + 5, yPosition);
+  yPosition = addText(`• Não detectados: ${stats.undetected || 0} antivírus`, margin + 5, yPosition);
+  
+  yPosition += 10;
+  
+  // Dica de segurança
+  yPosition = addText('DICA DE SEGURANÇA', margin, yPosition, { fontSize: 14, bold: true });
+  yPosition = addText(analysisData.tip || 'Mantenha sempre boas práticas de segurança.', margin + 5, yPosition);
+  
+  yPosition += 10;
+  
+  // Rodapé
+  doc.setFontSize(10);
+  doc.setTextColor(128, 128, 128);
+  doc.text('Relatório gerado automaticamente pelo sistema No Matters', margin, doc.internal.pageSize.height - 15);
+  doc.text(`Página 1 de 1 - ${new Date().toLocaleString('pt-BR')}`, pageWidth - margin - 50, doc.internal.pageSize.height - 15);
+  
+  // Download do PDF
+  const fileName = `relatorio_seguranca_${new Date().toISOString().slice(0, 10)}_${Date.now()}.pdf`;
+  doc.save(fileName);
+}
