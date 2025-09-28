@@ -392,7 +392,101 @@ input[type="file"] {
 .main-nav {
     display: flex;
     align-items: center;
-    gap: 1rem; /* Espaço entre Documentação e Tema */
+    gap: 1rem; /* Espaço entre elementos */
+}
+
+/* === ESTILOS DE AUTENTICAÇÃO === */
+.auth-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-btn, .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 8px 16px;
+    border: 1px solid var(--border-color-light);
+    background: var(--surface-color-light);
+    color: var(--primary-text-light);
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-btn:hover, .nav-btn:hover {
+    background: var(--accent-color-light);
+    color: white;
+    border-color: var(--accent-color-light);
+    transform: translateY(-1px);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-name {
+    color: var(--primary-text-light);
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    font-size: 0.9rem;
+}
+
+.nav-btn {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+/* Tema escuro para autenticação */
+.dark-theme .auth-btn,
+.dark-theme .nav-btn {
+    background: var(--surface-color-dark);
+    color: var(--primary-text-dark);
+    border-color: var(--border-color-dark);
+}
+
+.dark-theme .auth-btn:hover,
+.dark-theme .nav-btn:hover {
+    background: var(--accent-color-dark);
+    border-color: var(--accent-color-dark);
+}
+
+.dark-theme .user-name {
+    background: var(--surface-color-dark);
+    color: var(--primary-text-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .auth-section {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .user-menu {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    
+    .user-name {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
+    .auth-btn, .nav-btn {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
 }
 
 /* Botão Nova Análise */

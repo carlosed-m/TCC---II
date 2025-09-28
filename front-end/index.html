@@ -17,7 +17,22 @@
     </div>
     <nav class="main-nav">
       <div id="auth-section" class="auth-section">
-        <!-- Links de autenticação serão inseridos via JavaScript -->
+        <!-- Área de autenticação - será controlada via JavaScript -->
+        <button id="login-btn" class="auth-btn">
+          <i class="fa-solid fa-user"></i>
+          <span>Login</span>
+        </button>
+        <div id="user-menu" class="user-menu" style="display: none;">
+          <span id="user-name" class="user-name"></span>
+          <button id="history-btn" class="nav-btn">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Histórico</span>
+          </button>
+          <button id="logout-btn" class="nav-btn">
+            <i class="fa-solid fa-door-open"></i>
+            <span>Sair</span>
+          </button>
+        </div>
       </div>
       <a href="docs.html" class="doc-button">
         <i class="fa-solid fa-book"></i> Boas Práticas

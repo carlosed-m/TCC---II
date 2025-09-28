@@ -1,5 +1,94 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Elementos do DOM
+  // === SISTEMA DE AUTENTICAÇÃO ===
+  const API_URL = 'http://localhost:3001/api';
+  
+  // Elementos de autenticação
+  const loginBtn = document.getElementById('login-btn');
+  const userMenu = document.getElementById('user-menu');
+  const userName = document.getElementById('user-name');
+  const historyBtn = document.getElementById('history-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  // Verificar se o usuário está logado
+  function checkAuthStatus() {
+    const token = localStorage.getItem('authToken');
+    const userData = localStorage.getItem('userData');
+
+    if (token && userData) {
+      showUserMenu(JSON.parse(userData));
+    } else {
+      showLoginButton();
+    }
+  }
+
+  // Mostrar menu do usuário logado
+  function showUserMenu(user) {
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (userMenu) {
+      userMenu.style.display = 'flex';
+      if (userName) userName.textContent = `Olá, ${user.name.split(' ')[0]}`;
+    }
+  }
+
+  // Mostrar botão de login
+  function showLoginButton() {
+    if (loginBtn) loginBtn.style.display = 'flex';
+    if (userMenu) userMenu.style.display = 'none';
+  }
+
+  // Event listeners de autenticação
+  if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+      window.location.href = 'login.html';
+    });
+  }
+
+  if (historyBtn) {
+    historyBtn.addEventListener('click', () => {
+      window.location.href = 'historico.html';
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userData');
+      showLoginButton();
+      
+      // Opcional: mostrar mensagem de logout
+      alert('Você foi desconectado com sucesso!');
+    });
+  }
+
+  // Função para salvar verificação no histórico (se usuário estiver logado)
+  async function saveToHistory(type, target, result, status, threatCount = 0) {
+    const token = localStorage.getItem('authToken');
+    if (!token) return; // Se não estiver logado, não salva
+
+    try {
+      await fetch(`${API_URL}/history`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type,
+          target,
+          result,
+          status,
+          threat_count: threatCount
+        })
+      });
+    } catch (error) {
+      console.warn('Erro ao salvar no histórico:', error);
+    }
+  }
+
+  // Inicializar status de autenticação
+  checkAuthStatus();
+
+  // === ELEMENTOS PRINCIPAIS DO DOM ===
   const themeToggleButton = document.getElementById('theme-toggle-button');
   const body = document.body;
   const tabs = document.querySelectorAll('.tab-link');
@@ -62,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mostrarLoader(true);
 
       try {
-        const response = await fetch('/verificar-url', {
+        const response = await fetch('http://localhost:3000/verificar-url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url })
@@ -115,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('file', file);
 
       try {
-        const response = await fetch('/verificar-arquivo', {
+        const response = await fetch('http://localhost:3000/verificar-arquivo', {
           method: 'POST',
           body: formData
         });
@@ -440,6 +529,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
+    // Salvar no histórico se usuário estiver logado
+    saveVerificationToHistory(data, isMalicious, stats);
+
     // Adiciona todos os elementos ao DOM
     resultsDiv.appendChild(resultButton);
     resultsDiv.appendChild(tipsCard);
@@ -447,6 +539,35 @@ document.addEventListener('DOMContentLoaded', () => {
     resultsDiv.appendChild(detailsCard);
     resultsDiv.appendChild(generateReportBtn);
     resultsDiv.appendChild(newAnalysisButton);
+  }
+
+  // Função para salvar verificação no histórico
+  async function saveVerificationToHistory(data, isMalicious, stats) {
+    const token = localStorage.getItem('authToken');
+    if (!token) return; // Só salva se estiver logado
+
+    try {
+      const activeTab = document.querySelector('.tab-link.active');
+      const isUrl = activeTab?.dataset.tab === 'url-tab';
+      const target = isUrl ? 
+        document.getElementById('urlInput')?.value : 
+        document.getElementById('fileInput')?.files[0]?.name || 'Arquivo';
+
+      const threatCount = stats?.malicious || 0;
+      let status = 'clean';
+      if (threatCount > 0 && threatCount <= 3) status = 'suspicious';
+      else if (threatCount > 3) status = 'malicious';
+
+      await saveToHistory(
+        isUrl ? 'url' : 'file',
+        target,
+        data,
+        status,
+        threatCount
+      );
+    } catch (error) {
+      console.warn('Erro ao salvar no histórico:', error);
+    }
   }
 });
 

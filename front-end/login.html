@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - No Matters</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="light-theme">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="logo">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>No Matters</span>
+        </div>
+        <h1>Entrar na sua conta</h1>
+      </div>
+
+      <div id="error-message" class="error-message">
+        <i class="fa-solid fa-exclamation-triangle"></i>
+        <span id="error-text"></span>
+      </div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submit-btn">
+          Entrar
+        </button>
+
+        <div class="loading" id="loading">
+          <i class="fa-solid fa-spinner"></i>
+          Fazendo login...
+        </div>
+
+        <div class="forgot-password">
+          <a href="#" id="forgot-password-link">Esqueceu sua senha?</a>
+        </div>
+      </form>
+
+      <div class="signup-link">
+        Não tem um usuário(a)? <a href="cadastro.html">Cadastre-se</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

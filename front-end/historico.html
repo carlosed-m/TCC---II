@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico - No Matters</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/history.css">
+</head>
+<body class="light-theme">
+  <header class="main-header">
+    <div class="logo">
+      <a href="index.html">
+        <i class="fa-solid fa-shield-halved"></i>
+        <span>No Matters</span>
+      </a>
+    </div>
+    <nav class="main-nav">
+      <div id="auth-section" class="auth-section">
+        <div id="user-menu" class="user-menu">
+          <span id="user-name" class="user-name"></span>
+          <button id="logout-btn" class="nav-btn">
+            <i class="fa-solid fa-door-open"></i>
+            <span>Sair</span>
+          </button>
+        </div>
+      </div>
+      <button id="theme-toggle-button">
+        <i class="fa-solid fa-sun"></i>
+        <span>Mudar para Tema Claro</span>
+      </button>
+    </nav>
+  </header>
+
+  <main class="history-container">
+    <a href="index.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i>
+      Voltar ao Scanner
+    </a>
+
+    <div class="history-header">
+      <h1><i class="fa-solid fa-clock-rotate-left"></i> Histórico de Verificações</h1>
+      <p>Acompanhe todas as suas análises de segurança</p>
+    </div>
+
+    <!-- Estatísticas -->
+    <div class="stats-grid" id="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-search"></i>
+        <h3 id="total-scans">0</h3>
+        <p>Total de Verificações</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-link"></i>
+        <h3 id="total-urls">0</h3>
+        <p>URLs Analisadas</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-file"></i>
+        <h3 id="total-files">0</h3>
+        <p>Arquivos Analisados</p>
+      </div>
+      <div class="stat-card clean-card">
+        <i class="fa-solid fa-check-circle"></i>
+        <h3 id="clean-scans">0</h3>
+        <p>Resultados Limpos</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-exclamation-triangle"></i>
+        <h3 id="threat-scans">0</h3>
+        <p>Ameaças Detectadas</p>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="filters">
+      <div class="filter-group">
+        <label>Tipo:</label>
+        <select id="type-filter" class="filter-select">
+          <option value="">Todos</option>
+          <option value="url">URLs</option>
+          <option value="file">Arquivos</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Status:</label>
+        <select id="status-filter" class="filter-select">
+          <option value="">Todos</option>
+          <option value="clean">Limpo</option>
+          <option value="suspicious">Suspeito</option>
+          <option value="malicious">Malicioso</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Buscar:</label>
+        <input type="text" id="search-input" class="filter-input" placeholder="Digite para buscar...">
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading" class="loading">
+      <i class="fa-solid fa-spinner"></i>
+      <p>Carregando histórico...</p>
+    </div>
+
+    <!-- Lista do histórico -->
+    <div id="history-list" class="history-list" style="display: none;"></div>
+
+    <!-- Estado vazio -->
+    <div id="empty-state" class="empty-state" style="display: none;">
+      <i class="fa-solid fa-clock"></i>
+      <h3>Nenhuma verificação encontrada</h3>
+      <p>Suas análises de segurança aparecerão aqui</p>
+    </div>
+
+    <!-- Paginação -->
+    <div id="pagination" class="pagination" style="display: none;"></div>
+  </main>
+
+  <!-- Modal de Confirmação de Exclusão -->
+  <div id="delete-confirmation-modal" class="modal">
+    <div class="modal-content delete-modal-content">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-exclamation-triangle" style="color: #ef4444;"></i> Confirmar Exclusão</h2>
+        <button class="modal-close" onclick="closeDeleteModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="delete-confirmation-content">
+          <p>Tem certeza que deseja excluir esta verificação?</p>
+          <div class="verification-info" id="delete-verification-info">
+            <!-- Informações da verificação serão inseridas aqui -->
+          </div>
+          <p class="warning-text">
+            <i class="fa-solid fa-warning"></i>
+            Esta ação não pode ser desfeita.
+          </p>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeDeleteModal()">
+            <i class="fa-solid fa-times"></i> Cancelar
+          </button>
+          <button class="btn btn-danger" id="confirm-delete-btn">
+            <i class="fa-solid fa-trash"></i> Excluir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Detalhes Técnicos -->
+  <div id="details-modal" class="modal">
+    <div class="modal-content details-modal-content">
+      <div class="modal-header">
+        <h2><i class="fa-solid fa-microscope"></i> Detalhes Técnicos da Verificação</h2>
+        <button class="modal-close" onclick="closeDetailsModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <div class="loading-modal">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <p>Carregando detalhes...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/history.js"></script>
+</body>
+</html>
