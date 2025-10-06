@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // === SISTEMA DE AUTENTICAÇÃO ===
-  const API_URL = 'http://localhost:3001/api';
+  const API_URL = 'http://localhost:3003/api';
   
   // Elementos de autenticação
   const loginBtn = document.getElementById('login-btn');
@@ -55,8 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('userData');
       showLoginButton();
       
-      // Opcional: mostrar mensagem de logout
-      alert('Você foi desconectado com sucesso!');
+      // Mostrar modal de logout
+      showLogoutModal();
     });
   }
 
@@ -665,3 +665,58 @@ function generatePDFReport(analysisData) {
   const fileName = `relatorio_seguranca_${new Date().toISOString().slice(0, 10)}_${Date.now()}.pdf`;
   doc.save(fileName);
 }
+
+// === FUNÇÕES DO MODAL DE LOGOUT ===
+
+// Mostrar modal de logout
+function showLogoutModal() {
+  const modal = document.getElementById('logout-modal');
+  if (modal) {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevenir scroll da página
+    
+    // Focar no botão OK para acessibilidade
+    setTimeout(() => {
+      const okButton = document.getElementById('close-logout-modal');
+      if (okButton) {
+        okButton.focus();
+      }
+    }, 300);
+  }
+}
+
+// Fechar modal de logout
+function closeLogoutModal() {
+  const modal = document.getElementById('logout-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restaurar scroll da página
+  }
+}
+
+// Event listeners para o modal de logout
+document.addEventListener('DOMContentLoaded', () => {
+  const closeLogoutModalBtn = document.getElementById('close-logout-modal');
+  const logoutModal = document.getElementById('logout-modal');
+  
+  // Fechar modal ao clicar no botão OK
+  if (closeLogoutModalBtn) {
+    closeLogoutModalBtn.addEventListener('click', closeLogoutModal);
+  }
+  
+  // Fechar modal ao clicar fora dele
+  if (logoutModal) {
+    logoutModal.addEventListener('click', (e) => {
+      if (e.target === logoutModal) {
+        closeLogoutModal();
+      }
+    });
+  }
+  
+  // Fechar modal ao pressionar ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && logoutModal && logoutModal.style.display === 'block') {
+      closeLogoutModal();
+    }
+  });
+});

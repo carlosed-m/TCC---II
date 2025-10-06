@@ -1,5 +1,5 @@
 // Configuração da API
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'http://localhost:3003/api';
 
 // Funções de autenticação compartilhadas
 class AuthManager {

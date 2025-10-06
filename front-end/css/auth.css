@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #fafafa;
   padding: 20px;
 }
 
@@ -127,7 +127,7 @@
 .submit-btn {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--accent-color-light);
   color: white;
   border: none;
   border-radius: 10px;
@@ -135,6 +135,10 @@
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+  background-color: var(--accent-hover-light);
 }
 
 .submit-btn:hover:not(:disabled) {
