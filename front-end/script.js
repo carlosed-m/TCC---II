@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   // === SISTEMA DE AUTENTICAÇÃO ===
-  const API_URL = 'http://localhost:3003/api';
+  const API_URL = 'http://localhost:3001/api';
   
   // Elementos de autenticação
   const loginBtn = document.getElementById('login-btn');
