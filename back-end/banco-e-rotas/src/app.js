@@ -1,3 +1,11 @@
+// =======================================================
+// API COMPLETA TCC - Sistema com Banco de Dados
+// =======================================================
+// API principal com PostgreSQL, autenticação JWT,
+// histórico de verificações e geração de relatórios PDF.
+// Use este servidor para funcionalidade completa.
+// =======================================================
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');

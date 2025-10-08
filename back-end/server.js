@@ -1,3 +1,11 @@
+// =======================================================
+// SERVIDOR LEGACY - Integração Direta com VirusTotal
+// =======================================================
+// Este servidor fornece funcionalidade básica de verificação
+// sem banco de dados, ideal para testes rápidos.
+// Para funcionalidade completa, use: banco-e-rotas/src/app.js
+// =======================================================
+
 // Importação das dependências necessárias
 // dotenv: Para carregar variáveis de ambiente
 // express: Framework web para Node.js
@@ -27,7 +35,8 @@ app.use(express.json());
 
 // Verificação de chave logo no boot (ajuda a falhar com mensagem clara)
 if (!API_KEY) {
-  console.log("VT_API_KEY carregada?", API_KEY ? "Sim" : "Não");
+  console.error("ERRO: VT_API_KEY não encontrada!");
+  process.exit(1);
 }
 
 // Conexão com o front-end
@@ -45,23 +54,18 @@ async function pollAnalysis(analysisId) {
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      console.log(`Tentativa ${attempt}/${maxAttempts} - Verificando status da análise: ${analysisId}`);
-      
       const response = await axios.get(`${VIRUSTOTAL_BASE_URL}/analyses/${analysisId}`, {
         headers: { 'x-apikey': API_KEY },
         timeout: 15000
       });
 
       const status = response.data?.data?.attributes?.status;
-      console.log(`Status atual: ${status}`);
 
       if (status === 'completed') {
-        console.log('Análise concluída! Retornando resultado.');
         return response.data;
       }
 
       if (attempt < maxAttempts) {
-        console.log(`Aguardando ${pollInterval/1000} segundos antes da próxima verificação...`);
         await new Promise(resolve => setTimeout(resolve, pollInterval));
       }
 

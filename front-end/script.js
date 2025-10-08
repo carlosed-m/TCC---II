@@ -1,3 +1,14 @@
+// === APLICAÇÃO IMEDIATA DO TEMA ===
+// Aplicar tema antes do DOM carregar para evitar piscadas
+(function() {
+  const savedTheme = localStorage.getItem('theme') || 'light-theme';
+  document.documentElement.className = savedTheme;
+  // Também aplicar ao body se já existir
+  if (document.body) {
+    document.body.className = savedTheme;
+  }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   // === SISTEMA DE AUTENTICAÇÃO ===
   const API_URL = 'http://localhost:3001/api';
@@ -97,9 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const fileInput = document.getElementById('fileInput');
 
   // === SISTEMA DE TEMA ===
-  // Função para aplicar o tema salvo
+  // Função para aplicar o tema salvo de forma suave
   function applyTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light-theme';
+    
+    // Aplicar ao documentElement e body simultaneamente
+    document.documentElement.className = savedTheme;
     body.className = savedTheme;
     
     if (themeToggleButton) {
@@ -112,20 +126,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Aplicar tema ao carregar a página
+  // Aplicar tema imediatamente (sem delay)
   applyTheme();
 
   // Configuração inicial do tema
   if (themeToggleButton) {
-    // Listener do botão de tema
+    // Listener do botão de tema com transição suave
     themeToggleButton.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      body.classList.toggle('light-theme');
-      const isDarkMode = body.classList.contains('dark-theme');
+      // Determinar o novo tema
+      const currentTheme = body.className;
+      const newTheme = currentTheme === 'dark-theme' ? 'light-theme' : 'dark-theme';
+      
+      // Aplicar simultaneamente ao documentElement e body
+      document.documentElement.className = newTheme;
+      body.className = newTheme;
+      
+      const isDarkMode = newTheme === 'dark-theme';
       
       // Salvar tema no localStorage
-      localStorage.setItem('theme', isDarkMode ? 'dark-theme' : 'light-theme');
+      localStorage.setItem('theme', newTheme);
       
+      // Atualizar ícone e texto
       const icon = themeToggleButton.querySelector('i');
       if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
       const span = themeToggleButton.querySelector('span');

@@ -94,7 +94,7 @@ class LoginForm {
       }
     } catch (error) {
       AuthManager.showError(this.errorMessage, this.errorText, 'Erro de conexão. Verifique sua internet e tente novamente.');
-      console.error('Erro:', error);
+      // Erro de login - exibe mensagem de erro
     } finally {
       AuthManager.hideLoading(this.submitBtn, this.loading, 'Entrar');
     }
@@ -301,7 +301,7 @@ class RegisterForm {
       }
     } catch (error) {
       AuthManager.showError(this.errorMessage, this.errorText, 'Erro de conexão. Verifique sua internet e tente novamente.');
-      console.error('Erro:', error);
+      // Erro de cadastro - exibe mensagem de erro
     } finally {
       AuthManager.hideLoading(this.submitBtn, this.loading, 'Criar Conta');
     }

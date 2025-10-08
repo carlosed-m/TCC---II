@@ -125,7 +125,7 @@ class HistoryManager {
         this.threatScans.textContent = stats.threat_scans || 0;
       }
     } catch (error) {
-      console.error('Erro ao carregar estatísticas:', error);
+      // Erro ao carregar estatísticas - continua normalmente
     }
   }
 
@@ -158,7 +158,7 @@ class HistoryManager {
         throw new Error('Erro ao carregar histórico');
       }
     } catch (error) {
-      console.error('Erro ao carregar histórico:', error);
+      // Erro ao carregar histórico - exibe estado vazio
       this.emptyState.style.display = 'block';
     } finally {
       this.loading.style.display = 'none';
@@ -267,7 +267,7 @@ class HistoryManager {
 
   async downloadPDF(id) {
     try {
-      console.log('📄 Iniciando download de PDF para ID:', id);
+      // Iniciando download de PDF
       
       const token = localStorage.getItem('authToken');
       if (!token) {
@@ -310,7 +310,7 @@ class HistoryManager {
       this.showToast('PDF baixado com sucesso!', 'success');
       
     } catch (error) {
-      console.error('❌ Erro ao baixar PDF:', error);
+      // Erro ao baixar PDF - exibe toast de erro
       this.showToast(`Erro ao gerar PDF: ${error.message}`, 'error');
     }
   }
@@ -394,7 +394,7 @@ class HistoryManager {
         throw new Error('Erro ao excluir');
       }
     } catch (error) {
-      console.error('Erro ao excluir:', error);
+      // Erro ao excluir - exibe toast de erro
       this.showToast('Erro ao excluir a verificação', 'error');
     }
   }
