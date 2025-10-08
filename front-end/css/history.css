@@ -1,5 +1,9 @@
 /* Estilos para a página de histórico */
 
+* {
+  font: var(--font-family);
+}
+
 .history-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -748,6 +752,36 @@ body:not(.dark-theme) .delete-btn:hover {
 
 .dark-theme .verification-info strong {
   color: var(--primary-text-dark);
+}
+
+/* Botão de alteração de tema - padronizado com a tela inicial */
+#theme-toggle-button {
+  background: none;
+  border: 1px solid var(--border-color-light);
+  color: var(--secondary-text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+#theme-toggle-button:hover {
+  background-color: var(--bg-color-light);
+  border-color: var(--accent-color-light);
+}
+
+.dark-theme #theme-toggle-button {
+  border-color: var(--border-color-dark);
+  color: var(--secondary-text-dark);
+}
+
+.dark-theme #theme-toggle-button:hover {
+  background-color: var(--bg-color-dark);
+  border-color: var(--accent-color-dark);
 }
 
 /* Responsividade */

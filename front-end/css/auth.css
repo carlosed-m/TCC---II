@@ -1,5 +1,10 @@
 /* Estilos para páginas de autenticação (Login e Cadastro) */
 
+* {
+  font: var(--font-family);
+}
+
+
 .auth-container {
   min-height: 100vh;
   display: flex;
