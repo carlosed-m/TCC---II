@@ -232,6 +232,39 @@
   border-color: #a71e2a;
 }
 
+/* Tema claro específico para botões PDF e Delete */
+.light-theme .pdf-btn,
+body:not(.dark-theme) .pdf-btn {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border-color: #007bff;
+}
+
+.light-theme .pdf-btn:hover,
+body:not(.dark-theme) .pdf-btn:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+  color: white;
+  border-color: #004085;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.light-theme .delete-btn,
+body:not(.dark-theme) .delete-btn {
+  color: #dc3545;
+  border-color: #dc3545;
+  background: transparent;
+}
+
+.light-theme .delete-btn:hover,
+body:not(.dark-theme) .delete-btn:hover {
+  background: #dc3545;
+  color: white;
+  border-color: #dc3545;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
 /* Paginação */
 .pagination {
   display: flex;
@@ -687,6 +720,31 @@
 /* Tema escuro para modal de confirmação */
 .dark-theme .delete-confirmation-content p {
   color: var(--primary-text-dark);
+}
+
+/* Botões PDF e Delete no tema escuro */
+.dark-theme .pdf-btn {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+  color: white;
+  border-color: #e53e3e;
+}
+
+.dark-theme .pdf-btn:hover {
+  background: linear-gradient(135deg, #c53030, #9c2626);
+  color: white;
+  border-color: #9c2626;
+}
+
+.dark-theme .delete-btn {
+  color: #fc8181;
+  border-color: #fc8181;
+  background: transparent;
+}
+
+.dark-theme .delete-btn:hover {
+  background: #e53e3e;
+  color: white;
+  border-color: #e53e3e;
 }
 
 .dark-theme .verification-info {
