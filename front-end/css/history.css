@@ -237,21 +237,6 @@
 }
 
 /* Tema claro específico para botões PDF e Delete */
-.light-theme .pdf-btn,
-body:not(.dark-theme) .pdf-btn {
-  background: linear-gradient(135deg, #007bff, #0056b3);
-  color: white;
-  border-color: #007bff;
-}
-
-.light-theme .pdf-btn:hover,
-body:not(.dark-theme) .pdf-btn:hover {
-  background: linear-gradient(135deg, #0056b3, #004085);
-  color: white;
-  border-color: #004085;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
 
 .light-theme .delete-btn,
 body:not(.dark-theme) .delete-btn {
@@ -266,7 +251,6 @@ body:not(.dark-theme) .delete-btn:hover {
   color: white;
   border-color: #dc3545;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
 }
 
 /* Paginação */
@@ -693,8 +677,9 @@ body:not(.dark-theme) .delete-btn:hover {
 /* Tema escuro para modais */
 .dark-theme .details-modal-content,
 .dark-theme .delete-modal-content {
-  background: var(--surface-color-dark);
-  color: var(--primary-text-dark);
+  background: var(--surface-color-dark) !important;
+  color: var(--primary-text-dark) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
 }
 
 .dark-theme .summary-card,
@@ -715,9 +700,70 @@ body:not(.dark-theme) .delete-btn:hover {
   color: var(--primary-text-dark);
 }
 
-/* Tema escuro para modal de confirmação */
+/* Tema escuro para modal de confirmação de exclusão */
 .dark-theme .delete-confirmation-content p {
-  color: var(--primary-text-dark);
+  color: var(--primary-text-dark) !important;
+}
+
+.dark-theme .delete-modal-content .verification-info {
+  background: rgba(59, 130, 246, 0.15) !important;
+  border-left: 4px solid #ef4444 !important;
+}
+
+.dark-theme .delete-modal-content .verification-info strong,
+.dark-theme .delete-modal-content .verification-info p,
+.dark-theme .delete-modal-content .verification-info div {
+  color: var(--primary-text-dark) !important;
+}
+
+.dark-theme .warning-text {
+  color: #fca5a5 !important;
+}
+
+/* Cabeçalho do modal no tema escuro */
+.dark-theme .modal-header {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.dark-theme .modal-header h2 {
+  color: white !important;
+}
+
+.dark-theme .modal-close {
+  color: white;
+}
+
+.dark-theme .modal-close:hover {
+  color: #e5e7eb;
+}
+
+/* Corpo do modal no tema escuro */
+.dark-theme .modal-body {
+  background: var(--surface-color-dark) !important;
+  color: var(--primary-text-dark) !important;
+}
+
+/* Botões do modal no tema escuro */
+.dark-theme .btn-secondary {
+  background: #374151 !important;
+  color: white !important;
+  border-color: #4b5563 !important;
+}
+
+.dark-theme .btn-secondary:hover {
+  background: #4b5563 !important;
+  border-color: #6b7280 !important;
+}
+
+.dark-theme .btn-danger {
+  background: #dc2626 !important;
+  color: white !important;
+  border-color: #b91c1c !important;
+}
+
+.dark-theme .btn-danger:hover {
+  background: #b91c1c !important;
+  border-color: #991b1b !important;
 }
 
 /* Botões PDF e Delete no tema escuro */
@@ -766,7 +812,7 @@ body:not(.dark-theme) .delete-btn:hover {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
 }
 
 #theme-toggle-button:hover {
@@ -841,7 +887,6 @@ body:not(.dark-theme) .delete-btn:hover {
   color: white;
   padding: 2rem 1.5rem 1.5rem;
   border-radius: 16px 16px 0 0;
-  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -904,13 +949,11 @@ body:not(.dark-theme) .delete-btn:hover {
   font-family: 'Raleway', sans-serif;
   min-width: 120px;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
 .logout-modal-content .btn-modal:hover {
   background: linear-gradient(135deg, #c82333, #a71e2a);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
 }
 
 .logout-modal-content .btn-modal:active {
@@ -921,14 +964,33 @@ body:not(.dark-theme) .delete-btn:hover {
 .dark-theme .logout-modal-content,
 .dark-theme .logout-modal-content .modal-body,
 .dark-theme .logout-modal-content .modal-footer {
-  background: #ffffff !important;
+  background: var(--surface-color-dark) !important;
 }
 
 .dark-theme .logout-modal-content .modal-body p {
-  color: #333333 !important;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  color: var(--primary-text-dark) !important;
+  text-shadow: none !important;
 }
 
 .dark-theme .logout-modal-content .modal-subtitle {
-  color: #666666 !important;
+  color: var(--secondary-text-dark) !important;
+}
+
+.dark-theme .logout-modal-content .modal-header {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.dark-theme .logout-modal-content .modal-header h3 {
+  color: white !important;
+}
+
+.dark-theme .logout-modal-content .btn-modal {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: white !important;
+  border-color: #2563eb !important;
+}
+
+.dark-theme .logout-modal-content .btn-modal:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  border-color: #1d4ed8 !important;
 }

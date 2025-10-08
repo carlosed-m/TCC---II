@@ -519,3 +519,195 @@ exports.generateVerificationPDF = async (req, res) => {
         });
     }
 };
+
+// Gerar PDF temporário (sem salvar no histórico)
+exports.generateTemporaryPDF = async (req, res) => {
+    try {
+        const { type, target, result, status, threat_count, scan_date } = req.body;
+        
+        console.log('🎯 Gerando PDF temporário para:', { type, target, status });
+
+        // Validações básicas
+        if (!type || !target || !result) {
+            return res.status(400).json({
+                erro: 'Dados obrigatórios',
+                detalhe: 'Tipo, alvo e resultado são obrigatórios'
+            });
+        }
+
+        // Criar objeto simulando uma verificação do histórico
+        const verification = {
+            id: 'temp',
+            type,
+            target,
+            status: status || 'clean',
+            threat_count: threat_count || 0,
+            scan_date: scan_date ? new Date(scan_date) : new Date()
+        };
+
+        // Processar resultado (mesmo código da função original)
+        let parsedResult;
+        try {
+            parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
+        } catch (parseError) {
+            console.warn('⚠️  Erro ao fazer parse do resultado:', parseError);
+            parsedResult = result;
+        }
+
+        // Estatísticas padrão
+        let stats = {
+            harmless: 0,
+            malicious: 0,
+            suspicious: 0,
+            undetected: 0,
+            timeout: 0
+        };
+
+        if (parsedResult?.data?.attributes?.last_analysis_stats) {
+            stats = { ...stats, ...parsedResult.data.attributes.last_analysis_stats };
+        } else if (parsedResult?.data?.attributes?.stats) {
+            stats = { ...stats, ...parsedResult.data.attributes.stats };
+        }
+
+        const totalEngines = (stats.harmless || 0) + (stats.malicious || 0) + 
+                           (stats.suspicious || 0) + (stats.undetected || 0) + (stats.timeout || 0);
+
+        // Gerar PDF usando mesmo layout da função original
+        const PDFDocument = require('pdfkit');
+        const doc = new PDFDocument({ margin: 20 });
+        
+        // Headers para download
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', `attachment; filename="relatorio_seguranca_temp.pdf"`);
+        
+        // Pipe para resposta
+        doc.pipe(res);
+
+        // Configurações
+        const pageWidth = doc.page.width;
+        const margin = 20;
+        let yPosition = 30;
+
+        // Função auxiliar para adicionar texto com quebra de linha
+        function addText(text, x, y, options = {}) {
+            const maxWidth = options.maxWidth || (pageWidth - 2 * margin);
+            const fontSize = options.fontSize || 12;
+            const isBold = options.bold || false;
+            
+            doc.fontSize(fontSize);
+            doc.font(isBold ? 'Helvetica-Bold' : 'Helvetica');
+            
+            // Calcular altura necessária
+            const lines = doc.heightOfString(text, { width: maxWidth });
+            doc.text(text, x, y, { width: maxWidth });
+            
+            return y + lines + 5;
+        }
+
+        // Cabeçalho azul
+        doc.rect(0, 0, pageWidth, 25).fill('#3B82F6');
+        
+        doc.fillColor('#FFFFFF');
+        doc.fontSize(16).font('Helvetica-Bold');
+        doc.text('RELATÓRIO DE VERIFICAÇÃO DE SEGURANÇA', margin, 15);
+        
+        // Reset cor do texto
+        doc.fillColor('#000000');
+        yPosition += 10;
+        
+        // Traduzir status para português
+        function translateStatus(status) {
+            const statusMap = {
+                'clean': 'Limpo',
+                'malicious': 'Malicioso',
+                'suspicious': 'Suspeito',
+                'undetected': 'Não Detectado',
+                'timeout': 'Timeout',
+                'harmless': 'Inofensivo'
+            };
+            return statusMap[status] || status;
+        }
+
+        // Informações gerais
+        yPosition = addText('INFORMAÇÕES GERAIS', margin, yPosition, { fontSize: 14, bold: true });
+        yPosition = addText(`Data/Hora: ${new Date(verification.scan_date).toLocaleString('pt-BR')}`, margin, yPosition);
+        yPosition = addText(`Tipo de Análise: ${verification.type === 'url' ? 'URL' : 'Arquivo'}`, margin, yPosition);
+        yPosition = addText(`${verification.type === 'url' ? 'URL' : 'Arquivo'} Analisado: ${verification.target}`, margin, yPosition);
+        yPosition = addText(`Status da Verificação: ${translateStatus(verification.status)}`, margin, yPosition);
+        
+        yPosition += 10;
+        
+        // Resultado da análise (caixa colorida)
+        const isMalicious = verification.threat_count > 0;
+        const resultColor = isMalicious ? '#EF4444' : '#22C55E';
+        const resultText = isMalicious ? 'AMEAÇA DETECTADA' : 'NENHUMA AMEAÇA ENCONTRADA';
+        
+        doc.rect(margin, yPosition - 8, pageWidth - 2 * margin, 20).fill(resultColor);
+        
+        doc.fillColor('#FFFFFF');
+        doc.fontSize(14).font('Helvetica-Bold');
+        doc.text(resultText, margin + 5, yPosition);
+        
+        doc.fillColor('#000000');
+        yPosition += 25;
+        
+        // Estatísticas da análise
+        yPosition = addText('ESTATÍSTICAS DA ANÁLISE', margin, yPosition, { fontSize: 14, bold: true });
+        
+        yPosition = addText(`- Seguros: ${stats.harmless || 0} antivírus`, margin + 5, yPosition);
+        yPosition = addText(`- Maliciosos: ${stats.malicious || 0} antivírus`, margin + 5, yPosition);
+        yPosition = addText(`- Suspeitos: ${stats.suspicious || 0} antivírus`, margin + 5, yPosition);
+        yPosition = addText(`- Não detectados: ${stats.undetected || 0} antivírus`, margin + 5, yPosition);
+        
+        yPosition += 10;
+        
+        // Dica de segurança
+        yPosition = addText('DICA DE SEGURANÇA', margin, yPosition, { fontSize: 14, bold: true });
+        const securityTip = isMalicious 
+            ? 'Ameaça detectada! Evite interagir com este conteúdo e mantenha seu antivírus atualizado.'
+            : 'Conteúdo considerado seguro. Continue mantendo boas práticas de segurança digital.';
+        yPosition = addText(securityTip, margin + 5, yPosition);
+        
+        yPosition += 10;
+
+        // Engines maliciosos detalhados (se houver)
+        if (stats.malicious > 0 && parsedResult?.data?.attributes?.last_analysis_results) {
+            yPosition = addText('DETECÇÕES ESPECÍFICAS', margin, yPosition, { fontSize: 14, bold: true });
+            
+            const results = parsedResult.data.attributes.last_analysis_results;
+            Object.keys(results).slice(0, 5).forEach(engineName => {
+                const result = results[engineName];
+                if (result.category === 'malicious') {
+                    // Traduzir resultados comuns dos engines
+                    const translatedResult = result.result
+                        ?.replace(/malware/gi, 'malware')
+                        ?.replace(/trojan/gi, 'trojan')
+                        ?.replace(/virus/gi, 'vírus')
+                        ?.replace(/suspicious/gi, 'suspeito')
+                        ?.replace(/clean/gi, 'limpo')
+                        ?.replace(/detected/gi, 'detectado')
+                        ?.replace(/undetected/gi, 'não detectado') || 'Ameaça detectada';
+                    
+                    yPosition = addText(`- ${engineName}: ${translatedResult}`, margin + 5, yPosition, { fontSize: 10 });
+                }
+            });
+        }
+        
+        // Rodapé
+        doc.fontSize(10).fillColor('#808080');
+        doc.text('Relatório gerado automaticamente pelo sistema No Matters', margin, doc.page.height - 25);
+        doc.text(`Página 1 de 1 - ${new Date().toLocaleString('pt-BR')}`, pageWidth - margin - 100, doc.page.height - 25);
+
+        // Finalizar PDF
+        doc.end();
+        
+        console.log('✅ PDF temporário gerado e enviado com sucesso');
+
+    } catch (error) {
+        console.error('❌ Erro ao gerar PDF temporário:', error);
+        res.status(500).json({
+            erro: 'Erro interno do servidor',
+            detalhe: 'Não foi possível gerar o PDF temporário'
+        });
+    }
+};

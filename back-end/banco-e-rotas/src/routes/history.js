@@ -29,6 +29,11 @@ router.get('/:id', authenticateToken, historyController.getVerificationDetails);
 // Headers: { Authorization: "Bearer TOKEN" }
 router.get('/:id/pdf', authenticateToken, historyController.generateVerificationPDF);
 
+// Rota para gerar PDF temporário (sem salvar no histórico)
+// POST /api/history/generate-pdf
+// Body: { type, target, result, status, threat_count, scan_date }
+router.post('/generate-pdf', historyController.generateTemporaryPDF);
+
 // Rota para deletar uma verificação do histórico
 // DELETE /api/history/:id
 // Headers: { Authorization: "Bearer TOKEN" }
