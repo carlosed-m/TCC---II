@@ -94,7 +94,9 @@ class HistoryManager {
     this.logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
-      window.location.href = 'index.html';
+      
+      // Mostrar modal de logout
+      showLogoutModal();
     });
 
     // Filtros
@@ -461,6 +463,7 @@ document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     const detailsModal = document.getElementById('details-modal');
     const deleteModal = document.getElementById('delete-confirmation-modal');
+    const logoutModal = document.getElementById('logout-modal');
     
     if (detailsModal.style.display === 'block') {
       closeDetailsModal();
@@ -469,6 +472,61 @@ document.addEventListener('keydown', (event) => {
     if (deleteModal.style.display === 'block') {
       closeDeleteModal();
     }
+    
+    if (logoutModal && logoutModal.style.display === 'block') {
+      closeLogoutModal();
+    }
+  }
+});
+
+// === FUNÇÕES DO MODAL DE LOGOUT ===
+
+// Mostrar modal de logout
+function showLogoutModal() {
+  const modal = document.getElementById('logout-modal');
+  if (modal) {
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevenir scroll da página
+    
+    // Focar no botão OK para acessibilidade
+    setTimeout(() => {
+      const okButton = document.getElementById('close-logout-modal');
+      if (okButton) {
+        okButton.focus();
+      }
+    }, 300);
+  }
+}
+
+// Fechar modal de logout
+function closeLogoutModal() {
+  const modal = document.getElementById('logout-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restaurar scroll da página
+    
+    // Redirecionar para a página inicial
+    window.location.href = 'index.html';
+  }
+}
+
+// Event listeners para o modal de logout
+document.addEventListener('DOMContentLoaded', () => {
+  const closeLogoutModalBtn = document.getElementById('close-logout-modal');
+  const logoutModal = document.getElementById('logout-modal');
+  
+  // Fechar modal ao clicar no botão OK
+  if (closeLogoutModalBtn) {
+    closeLogoutModalBtn.addEventListener('click', closeLogoutModal);
+  }
+  
+  // Fechar modal ao clicar fora dele
+  if (logoutModal) {
+    logoutModal.addEventListener('click', (e) => {
+      if (e.target === logoutModal) {
+        closeLogoutModal();
+      }
+    });
   }
 });
 

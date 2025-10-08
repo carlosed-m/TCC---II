@@ -810,3 +810,106 @@ body:not(.dark-theme) .delete-btn:hover {
     font-size: 1.1rem;
   }
 }
+
+/* === ESTILOS DO MODAL DE LOGOUT === */
+.logout-modal-content {
+  text-align: center;
+  background: #ffffff;
+}
+
+.logout-modal-content .modal-header {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.logout-modal-content .modal-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logout-modal-content .modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Raleway', sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logout-modal-content .modal-body {
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+}
+
+.logout-modal-content .modal-body p {
+  margin: 0 0 0.5rem 0;
+  color: #333333;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  text-shadow: none !important;
+  font-weight: 500;
+}
+
+.logout-modal-content .modal-subtitle {
+  font-size: 0.9rem !important;
+  color: #666666 !important;
+  font-style: italic;
+  text-shadow: none !important;
+  font-weight: 400 !important;
+}
+
+.logout-modal-content .modal-footer {
+  padding: 0 1.5rem 2rem;
+  background: #ffffff;
+}
+
+.logout-modal-content .btn-modal {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Raleway', sans-serif;
+  min-width: 120px;
+  justify-content: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.logout-modal-content .btn-modal:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.logout-modal-content .btn-modal:active {
+  transform: translateY(0);
+}
+
+/* Tema escuro para o modal de logout */
+.dark-theme .logout-modal-content,
+.dark-theme .logout-modal-content .modal-body,
+.dark-theme .logout-modal-content .modal-footer {
+  background: #ffffff !important;
+}
+
+.dark-theme .logout-modal-content .modal-body p {
+  color: #333333 !important;
+  text-shadow: none !important;
+}
+
+.dark-theme .logout-modal-content .modal-subtitle {
+  color: #666666 !important;
+  text-shadow: none !important;
+}
