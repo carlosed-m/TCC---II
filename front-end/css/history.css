@@ -433,10 +433,18 @@ body:not(.dark-theme) .delete-btn:hover {
   margin-bottom: 20px;
 }
 
+/* Remover text-shadow de todos os elementos dentro do modal de confirmação */
+.delete-modal-content *,
+.delete-confirmation-content *,
+.verification-info * {
+  text-shadow: none !important;
+}
+
 .delete-confirmation-content p {
   font-size: 1.1rem;
   margin-bottom: 15px;
   color: #374151;
+  text-shadow: none !important;
 }
 
 .verification-info {
@@ -449,12 +457,14 @@ body:not(.dark-theme) .delete-btn:hover {
 
 .verification-info strong {
   color: #1f2937;
+  text-shadow: none !important;
 }
 
 .warning-text {
   color: #dc2626;
   font-weight: 500;
   font-size: 0.9rem !important;
+  text-shadow: none !important;
 }
 
 .warning-text i {
@@ -512,8 +522,7 @@ body:not(.dark-theme) .delete-btn:hover {
 }
 
 .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: var(--accent-hover-light);
   padding: 20px;
   display: flex;
   justify-content: space-between;
