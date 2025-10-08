@@ -387,21 +387,6 @@ body:not(.dark-theme) .delete-btn:hover {
   color: var(--primary-text-dark);
 }
 
-/* Card de resultados limpos - mantém apenas o ícone de check */
-.clean-card {
-  position: relative;
-}
-
-.clean-card::before {
-  content: '✓';
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 1.5rem;
-  color: #4caf50;
-  font-weight: bold;
-}
-
 /* Modal para detalhes técnicos e confirmação */
 .modal {
   display: none;
