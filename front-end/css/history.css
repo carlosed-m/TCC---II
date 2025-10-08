@@ -823,13 +823,17 @@ body:not(.dark-theme) .delete-btn:hover {
   padding: 2rem 1.5rem 1.5rem;
   border-radius: 16px 16px 0 0;
   box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .logout-modal-content .modal-icon {
   font-size: 3rem;
   margin-bottom: 1rem;
   opacity: 0.9;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: block;
 }
 
 .logout-modal-content .modal-header h3 {
@@ -837,7 +841,7 @@ body:not(.dark-theme) .delete-btn:hover {
   font-size: 1.5rem;
   font-weight: 600;
   font-family: 'Raleway', sans-serif;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 .logout-modal-content .modal-body {
@@ -850,7 +854,6 @@ body:not(.dark-theme) .delete-btn:hover {
   color: #333333;
   font-size: 1.1rem;
   line-height: 1.5;
-  text-shadow: none !important;
   font-weight: 500;
 }
 
@@ -858,7 +861,6 @@ body:not(.dark-theme) .delete-btn:hover {
   font-size: 0.9rem !important;
   color: #666666 !important;
   font-style: italic;
-  text-shadow: none !important;
   font-weight: 400 !important;
 }
 
@@ -883,7 +885,6 @@ body:not(.dark-theme) .delete-btn:hover {
   font-family: 'Raleway', sans-serif;
   min-width: 120px;
   justify-content: center;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
 }
 
@@ -906,10 +907,9 @@ body:not(.dark-theme) .delete-btn:hover {
 
 .dark-theme .logout-modal-content .modal-body p {
   color: #333333 !important;
-  text-shadow: none !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
 .dark-theme .logout-modal-content .modal-subtitle {
   color: #666666 !important;
-  text-shadow: none !important;
 }

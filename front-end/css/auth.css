@@ -277,6 +277,10 @@
 }
 
 /* Tema escuro */
+.dark-theme .auth-container {
+  background: #1a252f;
+}
+
 .dark-theme .auth-card,
 .dark-theme .modal-content {
   background: #2c3e50;
