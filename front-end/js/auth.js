@@ -10,10 +10,13 @@ class AuthManager {
     }
   }
 
-  // Aplicar tema
+  // Aplicar tema de forma suave
   static applyTheme() {
     const currentTheme = localStorage.getItem('theme') || 'light-theme';
+    // Aplicar simultaneamente ao documentElement e body
+    document.documentElement.className = currentTheme;
     document.body.className = currentTheme;
+    document.documentElement.style.colorScheme = currentTheme === 'dark-theme' ? 'dark' : 'light';
   }
 
   // Funções de UI

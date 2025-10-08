@@ -66,7 +66,10 @@ class HistoryManager {
 
   setupTheme() {
     const currentTheme = localStorage.getItem('theme') || 'light-theme';
+    // Aplicar simultaneamente ao documentElement e body
+    document.documentElement.className = currentTheme;
     document.body.className = currentTheme;
+    document.documentElement.style.colorScheme = currentTheme === 'dark-theme' ? 'dark' : 'light';
     
     // Aplicar o ícone e texto corretos ao carregar
     const isDarkMode = currentTheme === 'dark-theme';
@@ -77,15 +80,24 @@ class HistoryManager {
     if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
 
     this.themeToggleButton.addEventListener('click', () => {
-      document.body.classList.toggle('dark-theme');
-      document.body.classList.toggle('light-theme');
-      const isDarkMode = document.body.classList.contains('dark-theme');
+      // Determinar o novo tema
+      const currentTheme = document.body.className;
+      const newTheme = currentTheme === 'dark-theme' ? 'light-theme' : 'dark-theme';
+      
+      // Aplicar simultaneamente ao documentElement e body
+      document.documentElement.className = newTheme;
+      document.body.className = newTheme;
+      document.documentElement.style.colorScheme = newTheme === 'dark-theme' ? 'dark' : 'light';
+      
+      const isDarkMode = newTheme === 'dark-theme';
+      
+      // Salvar tema no localStorage
+      localStorage.setItem('theme', newTheme);
+      
       const icon = this.themeToggleButton.querySelector('i');
       if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
       const span = this.themeToggleButton.querySelector('span');
       if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
-      
-      localStorage.setItem('theme', document.body.className);
     });
   }
 
