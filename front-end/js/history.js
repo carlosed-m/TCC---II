@@ -67,6 +67,14 @@ class HistoryManager {
   setupTheme() {
     const currentTheme = localStorage.getItem('theme') || 'light-theme';
     document.body.className = currentTheme;
+    
+    // Aplicar o ícone e texto corretos ao carregar
+    const isDarkMode = currentTheme === 'dark-theme';
+    const icon = this.themeToggleButton.querySelector('i');
+    const span = this.themeToggleButton.querySelector('span');
+    
+    if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
 
     this.themeToggleButton.addEventListener('click', () => {
       document.body.classList.toggle('dark-theme');

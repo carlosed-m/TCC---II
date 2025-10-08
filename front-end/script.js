@@ -96,18 +96,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlForm = document.getElementById('urlForm');
   const fileInput = document.getElementById('fileInput');
 
+  // === SISTEMA DE TEMA ===
+  // Função para aplicar o tema salvo
+  function applyTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light-theme';
+    body.className = savedTheme;
+    
+    if (themeToggleButton) {
+      const icon = themeToggleButton.querySelector('i');
+      const span = themeToggleButton.querySelector('span');
+      const isDarkMode = savedTheme === 'dark-theme';
+      
+      if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
+    }
+  }
+
+  // Aplicar tema ao carregar a página
+  applyTheme();
+
   // Configuração inicial do tema
   if (themeToggleButton) {
-    const icon = themeToggleButton.querySelector('i');
-    const span = themeToggleButton.querySelector('span');
-    if (icon) icon.className = 'fa-solid fa-moon';
-    if (span) span.textContent = 'Mudar para Tema Escuro';
-
     // Listener do botão de tema
     themeToggleButton.addEventListener('click', () => {
       body.classList.toggle('dark-theme');
       body.classList.toggle('light-theme');
       const isDarkMode = body.classList.contains('dark-theme');
+      
+      // Salvar tema no localStorage
+      localStorage.setItem('theme', isDarkMode ? 'dark-theme' : 'light-theme');
+      
       const icon = themeToggleButton.querySelector('i');
       if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
       const span = themeToggleButton.querySelector('span');

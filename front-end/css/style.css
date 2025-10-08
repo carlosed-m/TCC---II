@@ -500,6 +500,7 @@ input[type="file"] {
     cursor: pointer;
     border-radius: 8px;
     font-size: 16px;
+    font-family: var(--font-family);
     font-weight: 500;
     transition: background-color 0.2s;
 }
@@ -521,11 +522,12 @@ input[type="file"] {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    background-color: #059669;
+    background-color: #ca4a2a;
     border: none;
     color: white;
     cursor: pointer;
     border-radius: 8px;
+    font-family: var(--font-family);
     font-size: 16px;
     font-weight: 500;
     transition: background-color 0.2s;
@@ -536,7 +538,7 @@ input[type="file"] {
 }
 
 .generate-report-btn:hover {
-    background-color: #047857;
+    background-color: #ac3d21;
 }
 
 .dark-theme .generate-report-btn {
@@ -558,6 +560,7 @@ input[type="file"] {
     padding: 15px;
     font-size: 18px;
     font-weight: bold;
+    font-family: var(--font-family);
     border: none;
     border-radius: 5px;
     margin-bottom: 10px;
@@ -580,6 +583,7 @@ input[type="file"] {
     margin-bottom: 15px;
     background-color: #3b82f6;
     border: none;
+    font-family: var(--font-family);
     color: white;
     cursor: pointer;
     border-radius: 5px;
