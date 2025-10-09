@@ -1,6 +1,6 @@
-# TCC - Sistema de Verificação de Segurança com VirusTotal
+# Site de Verificação de Segurança com VirusTotal
 
-Sistema de verificação de URLs e arquivos utilizando a API do VirusTotal, com backend em Node.js, frontend em HTML/CSS/JavaScript e banco de dados PostgreSQL.
+Site de verificação de URLs e arquivos utilizando a API do VirusTotal, com backend em Node.js, frontend em HTML/CSS/JavaScript e banco de dados PostgreSQL.
 
 ## 📁 Estrutura do Projeto
 
