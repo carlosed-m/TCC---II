@@ -2,12 +2,12 @@
   "name": "tcc-ii",
   "version": "1.0.0",
   "description": "Projeto TCC - Sistema de Verificação de URLs e Arquivos com VirusTotal",
-  "main": "back-end/banco-e-rotas/src/app.js",
+  "main": "back-end/server.js",
   "scripts": {
-    "start": "node ./back-end/banco-e-rotas/src/app.js",
-    "dev": "nodemon ./back-end/banco-e-rotas/src/app.js",
-    "start:legacy": "node ./back-end/server.js",
-    "dev:legacy": "nodemon ./back-end/server.js",
+    "start": "node ./back-end/server.js",
+    "dev": "nodemon ./back-end/server.js",
+    "start:api": "node ./back-end/banco-e-rotas/src/app.js",
+    "dev:api": "nodemon ./back-end/banco-e-rotas/src/app.js",
     "db:setup": "echo 'Execute o arquivo back-end/banco-e-rotas/database/create_tables.sql no pgAdmin'"
   },
   "dependencies": {

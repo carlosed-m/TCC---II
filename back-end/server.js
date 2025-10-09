@@ -177,7 +177,7 @@ app.post('/verificar-arquivo', upload.single('file'), async (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = 3000; // Frontend Server
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

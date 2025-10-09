@@ -16,13 +16,13 @@ const pool = require('./config/db');
 
 // --- CONFIGURAÇÃO INICIAL ---
 const app = express();
-const PORT = process.env.PORT || 3001; // Porta diferente do servidor principal
+const PORT = process.env.PORT || 3001; // API Backend
 
 // Middlewares globais
 app.use(cors({
     origin: [
-        'http://localhost:3000', 
-        'http://127.0.0.1:3000',
+        'http://localhost:3000',  // Frontend
+        'http://127.0.0.1:3000',  // Frontend alternativo
         'http://localhost:5500',  // Live Server
         'http://127.0.0.1:5500',  // Live Server alternativo
         'http://localhost:5501',  // Caso use outra porta

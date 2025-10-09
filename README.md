@@ -71,14 +71,14 @@ VT_API_KEY=sua_chave_api_virustotal
 
 ### Servidor Principal (Com Banco)
 ```bash
-npm start        # Inicia a API completa
-npm run dev      # Desenvolvimento com nodemon
+npm start        # Inicia a API completa na porta 3000
+npm run dev      # Desenvolvimento com nodemon na porta 3000
 ```
 
 ### Servidor Legacy (Só VirusTotal)
 ```bash
-npm run start:legacy    # Servidor simples
-npm run dev:legacy      # Desenvolvimento
+npm run start:legacy    # Servidor simples na porta 3001
+npm run dev:legacy      # Desenvolvimento na porta 3001
 ```
 
 ### Banco de Dados
