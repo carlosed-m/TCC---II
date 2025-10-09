@@ -513,21 +513,6 @@ body:not(.dark-theme) .delete-btn:hover {
   font-size: 1.3rem;
 }
 
-.modal-close {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-}
-
-.modal-close:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
 .modal-body {
   padding: 30px;
   max-height: 60vh;
@@ -735,14 +720,6 @@ body:not(.dark-theme) .delete-btn:hover {
   color: white !important;
 }
 
-.dark-theme .modal-close {
-  color: white;
-}
-
-.dark-theme .modal-close:hover {
-  color: #e5e7eb;
-}
-
 /* Corpo do modal no tema escuro */
 .dark-theme .modal-body {
   background: var(--surface-color-dark) !important;
@@ -774,15 +751,15 @@ body:not(.dark-theme) .delete-btn:hover {
 
 /* Botões PDF e Delete no tema escuro */
 .dark-theme .pdf-btn {
-  background: linear-gradient(135deg, #e53e3e, #c53030);
+  background: linear-gradient(135deg, #dc3545, #c82333);
   color: white;
-  border-color: #e53e3e;
+  border-color: #dc3545;
 }
 
 .dark-theme .pdf-btn:hover {
-  background: linear-gradient(135deg, #c53030, #9c2626);
+  background: linear-gradient(135deg, #c82333, #a71e2a);
   color: white;
-  border-color: #9c2626;
+  border-color: #a71e2a;
 }
 
 .dark-theme .delete-btn {

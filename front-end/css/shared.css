@@ -57,6 +57,37 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+}
+
+/* Botão de fechar (X) dos modais */
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.modal-close:active {
+  transform: scale(0.95);
 }
 
 .modal-icon {
@@ -213,6 +244,15 @@
 
 .dark-theme .modal-header h3 {
   color: white !important;
+}
+
+.dark-theme .modal-close {
+  color: white !important;
+}
+
+.dark-theme .modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #e5e7eb !important;
 }
 
 .dark-theme .btn-modal {

@@ -585,11 +585,11 @@ input[type="file"] {
 }
 
 .dark-theme .generate-report-btn {
-    background-color: #10b981;
+    background-color: #ca4a2a;
 }
 
 .dark-theme .generate-report-btn:hover {
-    background-color: #059669;
+    background-color: #ac3d21;
 }
 
 /* Área de resultados */
