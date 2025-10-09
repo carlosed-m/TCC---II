@@ -50,7 +50,12 @@
 
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required>
+          <div class="password-container">
+            <input type="password" id="password" name="password" required>
+            <button type="button" class="password-toggle" id="password-toggle">
+              <i class="fa-solid fa-eye" id="password-icon"></i>
+            </button>
+          </div>
           
           <div class="password-strength">
             <h4><i class="fa-solid fa-shield-halved"></i> Recomendações de senha segura:</h4>
@@ -79,7 +84,12 @@
 
         <div class="form-group">
           <label for="confirmPassword">Confirmar senha</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" required>
+          <div class="password-container">
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <button type="button" class="password-toggle" id="confirm-password-toggle">
+              <i class="fa-solid fa-eye" id="confirm-password-icon"></i>
+            </button>
+          </div>
           <div id="confirm-validation" class="validation-message"></div>
         </div>
 

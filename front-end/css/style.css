@@ -273,6 +273,13 @@ input[type="file"] {
     font-weight: 500;
 }
 
+/* Tema escuro para file-info */
+.dark-theme .file-info p {
+    background-color: rgba(96, 165, 250, 0.1);
+    border-color: rgba(96, 165, 250, 0.3);
+    color: var(--primary-text-dark);
+}
+
 .dark-theme .file-info p {
     background-color: rgba(96, 165, 250, 0.15);
     border-color: rgba(96, 165, 250, 0.4);
@@ -316,12 +323,31 @@ input[type="file"] {
     border: none;
     padding: 1rem;
     font-size: 1rem;
-    background-color: transparent;
-    color: inherit;
+    background-color: var(--surface-color-light);
+    color: var(--primary-text-light);
 }
 
 .url-form input:focus {
     outline: none;
+    background-color: var(--surface-color-light);
+}
+
+.dark-theme .url-form input:focus {
+    background-color: var(--surface-color-dark);
+}
+
+/* Tema escuro para o campo de URL */
+.dark-theme .url-form input {
+    background-color: var(--surface-color-dark);
+    color: var(--primary-text-dark);
+}
+
+.dark-theme .url-form input::placeholder {
+    color: var(--secondary-text-dark);
+}
+
+.url-form input::placeholder {
+    color: var(--secondary-text-light);
 }
 
 .submit-scan-btn {

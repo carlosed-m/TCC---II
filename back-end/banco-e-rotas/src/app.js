@@ -1,5 +1,5 @@
 // =======================================================
-// API COMPLETA TCC - Sistema com Banco de Dados
+// API COMPLETA TCC - Integração com Banco de Dados
 // =======================================================
 // API principal com PostgreSQL, autenticação JWT,
 // histórico de verificações e geração de relatórios PDF.

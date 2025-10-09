@@ -93,6 +93,56 @@ html, body {
   border-color: #e17055;
 }
 
+/* Contêiner para campo de senha com ícone */
+.password-container {
+  position: relative;
+  width: 100%;
+}
+
+.password-container input {
+  width: 100%;
+  padding: 15px 50px 15px 15px;
+  border: 2px solid #1e40af;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.password-container input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 1.1rem;
+  padding: 5px;
+  border-radius: 5px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle:hover {
+  color: #2563eb;
+  background-color: rgba(37, 99, 235, 0.1);
+}
+
+.password-toggle:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
 /* Estilos específicos do cadastro */
 .password-strength {
   background: #f8f9fa;
@@ -164,21 +214,6 @@ html, body {
 }
 
 /* Links de navegação */
-.forgot-password {
-  text-align: right;
-  margin-top: 15px;
-}
-
-.forgot-password a {
-  color: #667eea;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.forgot-password a:hover {
-  text-decoration: underline;
-}
-
 .login-link, .signup-link {
   text-align: center;
   margin-top: 30px;
@@ -327,6 +362,32 @@ html, body {
 
 .dark-theme .password-strength h4 {
   color: #ecf0f1;
+}
+
+/* Estilos do tema escuro para contêiner de senha */
+.dark-theme .password-container input {
+  background: #34495e;
+  border-color: #1e40af;
+  color: #ecf0f1;
+}
+
+.dark-theme .password-container input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dark-theme .password-toggle {
+  color: #bdc3c7;
+}
+
+.dark-theme .password-toggle:hover {
+  color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.dark-theme .password-toggle:focus {
+  outline: 2px solid #3b82f6;
 }
 
 .dark-theme .login-link,

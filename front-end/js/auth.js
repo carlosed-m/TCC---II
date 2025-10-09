@@ -63,7 +63,6 @@ class LoginForm {
     
     // Event listeners
     this.form.addEventListener('submit', this.handleSubmit.bind(this));
-    document.getElementById('forgot-password-link').addEventListener('click', this.handleForgotPassword);
   }
 
   async handleSubmit(e) {
@@ -101,11 +100,6 @@ class LoginForm {
     } finally {
       AuthManager.hideLoading(this.submitBtn, this.loading, 'Entrar');
     }
-  }
-
-  handleForgotPassword(e) {
-    e.preventDefault();
-    alert('Funcionalidade de recuperação de senha em desenvolvimento!');
   }
 }
 
@@ -322,4 +316,44 @@ document.addEventListener('DOMContentLoaded', () => {
   } else if (document.getElementById('signup-form')) {
     new RegisterForm();
   }
+  
+  // Inicializar controles de visualização de senha
+  initPasswordToggle();
 });
+
+// Função para controlar o ícone de mostrar/ocultar senha
+function initPasswordToggle() {
+  // Controle para o campo de senha principal
+  const passwordToggle = document.getElementById('password-toggle');
+  const passwordField = document.getElementById('password');
+  const passwordIcon = document.getElementById('password-icon');
+  
+  if (passwordToggle && passwordField && passwordIcon) {
+    passwordToggle.addEventListener('click', () => {
+      togglePasswordVisibility(passwordField, passwordIcon);
+    });
+  }
+  
+  // Controle para o campo de confirmar senha (apenas no cadastro)
+  const confirmPasswordToggle = document.getElementById('confirm-password-toggle');
+  const confirmPasswordField = document.getElementById('confirmPassword');
+  const confirmPasswordIcon = document.getElementById('confirm-password-icon');
+  
+  if (confirmPasswordToggle && confirmPasswordField && confirmPasswordIcon) {
+    confirmPasswordToggle.addEventListener('click', () => {
+      togglePasswordVisibility(confirmPasswordField, confirmPasswordIcon);
+    });
+  }
+}
+
+function togglePasswordVisibility(field, icon) {
+  if (field.type === 'password') {
+    field.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    field.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+}

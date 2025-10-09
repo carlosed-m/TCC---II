@@ -43,7 +43,12 @@
 
         <div class="form-group">
           <label for="password">Senha</label>
-          <input type="password" id="password" name="password" required>
+          <div class="password-container">
+            <input type="password" id="password" name="password" required>
+            <button type="button" class="password-toggle" id="password-toggle">
+              <i class="fa-solid fa-eye" id="password-icon"></i>
+            </button>
+          </div>
         </div>
 
         <button type="submit" class="submit-btn" id="submit-btn">
@@ -53,10 +58,6 @@
         <div class="loading" id="loading">
           <i class="fa-solid fa-spinner"></i>
           Fazendo login...
-        </div>
-
-        <div class="forgot-password">
-          <a href="#" id="forgot-password-link">Esqueceu sua senha?</a>
         </div>
       </form>
 
