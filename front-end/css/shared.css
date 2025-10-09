@@ -1,0 +1,282 @@
+/* ============================================
+   ESTILOS COMPARTILHADOS - MODAIS E COMPONENTES COMUNS
+   ============================================ */
+
+/* === OVERLAY BASE === */
+.modal,
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modal.show,
+.modal-overlay.show {
+  display: flex;
+}
+
+/* === ESTRUTURA BASE DO MODAL === */
+.modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalSlideIn 0.3s ease-out;
+  position: relative;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* === HEADER COMPARTILHADO === */
+.modal-header {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 2rem 1.5rem 1.5rem;
+  border-radius: 16px 16px 0 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-family: 'Raleway', sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* === BODY COMPARTILHADO === */
+.modal-body {
+  padding: 2rem 1.5rem;
+  background: #ffffff;
+  text-align: center;
+}
+
+.modal-body p {
+  margin: 0 0 1rem 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.modal-subtitle {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  opacity: 0.8;
+}
+
+/* === FOOTER COMPARTILHADO === */
+.modal-footer {
+  padding: 0 1.5rem 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* === BOTÕES COMPARTILHADOS === */
+.btn-modal {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+}
+
+.btn-modal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-modal:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0056b3, #004085);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #6c757d, #495057);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #495057, #343a40);
+}
+
+/* === ESTILOS ESPECÍFICOS DO MODAL DE LOGOUT === */
+.logout-modal-content {
+  text-align: center;
+  background: #ffffff;
+}
+
+/* === ESTILOS ESPECÍFICOS DO MODAL DE DELETE === */
+.delete-modal-content {
+  background: #ffffff;
+  text-align: center;
+}
+
+.verification-info {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  border-left: 4px solid #007bff;
+}
+
+.verification-info strong {
+  color: #495057;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.verification-info p {
+  margin: 0.25rem 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* === TEMA ESCURO === */
+.dark-theme .modal-content,
+.dark-theme .logout-modal-content,
+.dark-theme .delete-modal-content {
+  background: #2c3e50 !important;
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .modal-header {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+}
+
+.dark-theme .modal-body {
+  background: #2c3e50 !important;
+}
+
+.dark-theme .modal-body p {
+  color: #bdc3c7 !important;
+}
+
+.dark-theme .modal-subtitle {
+  color: #95a5a6 !important;
+}
+
+.dark-theme .modal-header h3 {
+  color: white !important;
+}
+
+.dark-theme .btn-modal {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: white !important;
+  border-color: #2563eb !important;
+}
+
+.dark-theme .btn-modal:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  border-color: #1d4ed8 !important;
+}
+
+.dark-theme .btn-secondary {
+  background: linear-gradient(135deg, #6c757d, #495057) !important;
+}
+
+.dark-theme .btn-secondary:hover {
+  background: linear-gradient(135deg, #495057, #343a40) !important;
+}
+
+.dark-theme .verification-info {
+  background: #34495e !important;
+  border-left-color: #3b82f6 !important;
+}
+
+.dark-theme .verification-info strong {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .verification-info p,
+.dark-theme .verification-info div {
+  color: #bdc3c7 !important;
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+    margin: 10px;
+  }
+  
+  .modal-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .modal-body {
+    padding: 1.5rem 1rem;
+  }
+  
+  .modal-footer {
+    padding: 0 1rem 1.5rem;
+    flex-direction: column;
+  }
+  
+  .btn-modal {
+    width: 100%;
+  }
+  
+  .modal-icon {
+    font-size: 2.5rem;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.3rem;
+  }
+}
