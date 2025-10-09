@@ -497,7 +497,8 @@ document.addEventListener('keydown', (event) => {
 function showLogoutModal() {
   const modal = document.getElementById('logout-modal');
   if (modal) {
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
+    modal.classList.add('show');
     document.body.style.overflow = 'hidden'; // Prevenir scroll da página
     
     // Focar no botão OK para acessibilidade
@@ -515,6 +516,7 @@ function closeLogoutModal() {
   const modal = document.getElementById('logout-modal');
   if (modal) {
     modal.style.display = 'none';
+    modal.classList.remove('show');
     document.body.style.overflow = ''; // Restaurar scroll da página
     
     // Redirecionar para a página inicial

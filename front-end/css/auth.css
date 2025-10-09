@@ -1,5 +1,28 @@
 /* Estilos para páginas de autenticação (Login e Cadastro) */
 
+/* === BOTÃO VOLTAR AO SCANNER === */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #1d4ed8;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  margin: 20px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  transition: background-color 0.2s ease;
+  z-index: 10;
+}
+
+.back-btn:hover {
+  background: #1e40af;
+}
+
 /* === TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA === */
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -326,6 +349,14 @@ html, body {
 /* Tema escuro */
 .dark-theme .auth-container {
   background: #1a252f;
+}
+
+.dark-theme .back-btn {
+  background: #2563eb;
+}
+
+.dark-theme .back-btn:hover {
+  background: #3b82f6;
 }
 
 .dark-theme .auth-card,
