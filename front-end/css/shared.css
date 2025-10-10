@@ -210,6 +210,16 @@
   border-color: #1d4ed8;
 }
 
+.logout-modal-content .modal-footer {
+  background: #ffffff;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.logout-modal-content .modal-body {
+  background: #ffffff;
+}
+
 /* === ESTILOS ESPECÍFICOS DO MODAL DE DELETE === */
 .delete-modal-content {
   background: #ffffff;
@@ -305,6 +315,16 @@
 
 .dark-theme .btn-secondary:hover {
   background: linear-gradient(135deg, #495057, #343a40) !important;
+}
+
+.dark-theme .logout-modal-content .modal-footer {
+  background: #2c3e50 !important;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.dark-theme .logout-modal-content .modal-body {
+  background: #2c3e50 !important;
 }
 
 .dark-theme .verification-info {
