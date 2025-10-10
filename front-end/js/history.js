@@ -278,53 +278,8 @@ class HistoryManager {
   }
 
   async downloadPDF(id) {
-    try {
-      // Iniciando download de PDF
-      
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        throw new Error('Token de autenticação não encontrado');
-      }
-
-      // Mostrar loading
-      const loadingToast = this.showToast('Gerando PDF...', 'info');
-
-      const response = await fetch(`${API_URL}/history/${id}/pdf`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Erro ${response.status}: ${errorText}`);
-      }
-
-      // Converter resposta para blob
-      const blob = await response.blob();
-      
-      // Criar link de download
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `verificacao-${id}.pdf`;
-      
-      // Trigger download
-      document.body.appendChild(link);
-      link.click();
-      
-      // Cleanup
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-
-      // Remover loading e mostrar sucesso
-      if (loadingToast) loadingToast.remove();
-      this.showToast('PDF baixado com sucesso!', 'success');
-      
-    } catch (error) {
-      // Erro ao baixar PDF - exibe toast de erro
-      this.showToast(`Erro ao gerar PDF: ${error.message}`, 'error');
-    }
+    const reportGenerator = new HistoryReportGenerator();
+    await reportGenerator.downloadPDF(id);
   }
 
   showToast(message, type = 'info') {

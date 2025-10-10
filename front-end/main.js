@@ -670,7 +670,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const generateReportBtn = document.createElement('button');
     generateReportBtn.className = 'generate-report-btn';
     generateReportBtn.innerHTML = '<i class="fa-solid fa-file-pdf"></i> Gerar Relatório PDF';
-    generateReportBtn.onclick = () => generatePDFReport(window.lastAnalysisData);
+    generateReportBtn.onclick = () => {
+      const reportGenerator = new ScannerReportGenerator();
+      reportGenerator.generatePDFReport(window.lastAnalysisData);
+    };
 
     // Botão Nova Análise
     const newAnalysisButton = document.createElement('button');
@@ -752,137 +755,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
-
-// Função para gerar relatório PDF
-function generatePDFReport(analysisData) {
-  if (!analysisData) {
-    alert('Dados de análise não encontrados. Realize uma verificação primeiro.');
-    return;
-  }
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Configurações
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const margin = 20;
-  let yPosition = 30;
-
-  // Função auxiliar para adicionar texto com quebra de linha
-  function addText(text, x, y, options = {}) {
-    const maxWidth = options.maxWidth || (pageWidth - 2 * margin);
-    const fontSize = options.fontSize || 12;
-    const isBold = options.bold || false;
-    
-    doc.setFontSize(fontSize);
-    doc.setFont('helvetica', isBold ? 'bold' : 'normal');
-    
-    // Dividir texto em linhas se necessário
-    const lines = doc.splitTextToSize(text, maxWidth);
-    const lineHeight = fontSize * 0.35;
-    
-    lines.forEach((line, index) => {
-      doc.text(line, x, y + (index * lineHeight));
-    });
-    
-    return y + (lines.length * lineHeight) + 5;
-  }
-
-  // Cabeçalho azul
-  doc.setFillColor(59, 130, 246); // #3B82F6
-  doc.rect(0, 0, pageWidth, 25, 'F');
-  
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(16);
-  doc.setFont('helvetica', 'bold');
-  doc.text('RELATÓRIO DE VERIFICAÇÃO DE SEGURANÇA', margin, 15);
-  
-  // Reset cor do texto
-  doc.setTextColor(0, 0, 0);
-  yPosition += 10;
-
-  // Função para traduzir status
-  function translateStatus(status) {
-    const statusMap = {
-      'clean': 'Limpo',
-      'malicious': 'Malicioso', 
-      'suspicious': 'Suspeito',
-      'undetected': 'Não Detectado',
-      'timeout': 'Timeout',
-      'harmless': 'Inofensivo'
-    };
-    return statusMap[status] || status;
-  }
-  
-  // Informações gerais
-  yPosition = addText('INFORMAÇÕES GERAIS', margin, yPosition, { fontSize: 14, bold: true });
-  yPosition = addText(`Data/Hora: ${analysisData.timestamp.toLocaleString('pt-BR')}`, margin, yPosition);
-  yPosition = addText(`Tipo de Análise: ${analysisData.analysisType}`, margin, yPosition);
-  
-  // URL ou arquivo analisado
-  const attributes = analysisData.data.data.attributes;
-  if (attributes.url) {
-    yPosition = addText(`URL Analisada: ${attributes.url}`, margin, yPosition);
-  } else if (attributes.meaningful_name) {
-    yPosition = addText(`Arquivo Analisado: ${attributes.meaningful_name}`, margin, yPosition);
-  }
-  
-  // Status da verificação
-  const status = analysisData.isMalicious ? 'malicious' : 'clean';
-  yPosition = addText(`Status da Verificação: ${translateStatus(status)}`, margin, yPosition);
-  
-  yPosition += 10;
-  
-  // Resultado da análise (caixa colorida)
-  const resultColor = analysisData.isMalicious ? [239, 68, 68] : [34, 197, 94];
-  const resultText = analysisData.isMalicious ? 'AMEAÇA DETECTADA' : 'NENHUMA AMEAÇA ENCONTRADA';
-  
-  doc.setFillColor(...resultColor);
-  doc.rect(margin, yPosition - 8, pageWidth - 2 * margin, 20, 'F');
-  
-  doc.setTextColor(255, 255, 255);
-  yPosition = addText(resultText, margin + 5, yPosition, { fontSize: 14, bold: true });
-  
-  doc.setTextColor(0, 0, 0);
-  yPosition += 25;
-  
-  // Estatísticas da análise
-  yPosition = addText('ESTATÍSTICAS DA ANÁLISE', margin, yPosition, { fontSize: 14, bold: true });
-  
-  const stats = analysisData.stats;
-  yPosition = addText(`- Seguros: ${stats.harmless || 0} antivírus`, margin + 5, yPosition);
-  yPosition = addText(`- Maliciosos: ${stats.malicious || 0} antivírus`, margin + 5, yPosition);
-  yPosition = addText(`- Suspeitos: ${stats.suspicious || 0} antivírus`, margin + 5, yPosition);
-  yPosition = addText(`- Não detectados: ${stats.undetected || 0} antivírus`, margin + 5, yPosition);
-  
-  yPosition += 10;
-  
-  // Dica de segurança
-  yPosition = addText('DICA DE SEGURANÇA', margin, yPosition, { fontSize: 14, bold: true });
-  const securityTip = analysisData.isMalicious 
-    ? 'Ameaça detectada! Evite interagir com este conteúdo e mantenha seu antivírus atualizado.'
-    : 'Conteúdo considerado seguro. Continue mantendo boas práticas de segurança digital.';
-  yPosition = addText(securityTip, margin + 5, yPosition);
-  
-  yPosition += 10;
-  
-  // Verificar se precisa de nova página
-  if (yPosition > doc.internal.pageSize.getHeight() - 50) {
-    doc.addPage();
-    yPosition = 30;
-  }
-  
-  // Rodapé (sempre na parte inferior da página)
-  const pageHeight = doc.internal.pageSize.getHeight();
-  doc.setFontSize(10);
-  doc.setTextColor(128, 128, 128);
-  doc.text('Relatório gerado automaticamente pelo sistema No Matters', margin, pageHeight - 25, { align: 'left' });
-  doc.text(`Página 1 de 1 - ${new Date().toLocaleString('pt-BR')}`, pageWidth - margin, pageHeight - 25, { align: 'right' });
-
-  // Salvar o PDF
-  const fileName = `relatorio_seguranca_${Date.now()}.pdf`;
-  doc.save(fileName);
-}
 
 // === FUNÇÕES DO MODAL DE LOGOUT ===
 
