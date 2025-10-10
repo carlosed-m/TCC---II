@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (historyBtn) {
     historyBtn.addEventListener('click', () => {
-      window.location.href = 'historico.html';
+      window.location.href = 'history.html';
     });
   }
 

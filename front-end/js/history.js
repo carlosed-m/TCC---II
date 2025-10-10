@@ -370,11 +370,11 @@ class HistoryManager {
     const statusText = this.getStatusText(verification.status, verification.threat_count);
     
     infoElement.innerHTML = `
-      <div style="text-align: left;">
-        <strong>Tipo:</strong> ${verification.type === 'url' ? 'URL' : 'Arquivo'}<br>
-        <strong>Alvo:</strong> ${verification.target}<br>
-        <strong>Status:</strong> ${statusText.replace(/<[^>]*>/g, '')}<br>
-        <strong>Data:</strong> ${date}
+      <div class="verification-summary">
+        <p><strong>Tipo:</strong> ${verification.type === 'url' ? 'URL' : 'Arquivo'}</p>
+        <p><strong>Alvo:</strong> ${verification.target}</p>
+        <p><strong>Status:</strong> ${statusText.replace(/<[^>]*>/g, '')}</p>
+        <p><strong>Data:</strong> ${date}</p>
       </div>
     `;
 
