@@ -310,50 +310,14 @@ input[type="file"] {
     font-weight: 600;
 }
 
-/* Modal de erro de tamanho - Forçar centralização absoluta */
-#file-size-error-modal .modal-content,
-.modal#file-size-error-modal .modal-content.logout-modal-content {
+/* Modal de erro de tamanho de arquivo */
+#file-size-error-modal .modal-content {
     max-width: 550px;
     max-height: 95vh;
-    overflow-y: auto;
 }
 
-/* Específico para modal de arquivo muito grande */
-#file-size-error-modal .modal-content {
-    min-height: auto;
-}
-
-#file-size-error-modal .modal-close {
-    background: none !important;
-    border: none !important;
-}
-
-#file-size-error-modal .modal-header,
-.modal#file-size-error-modal .modal-header {
-    text-align: center !important;
-}
-
-#file-size-error-modal .modal-header h3,
-.modal#file-size-error-modal .modal-header h3 {
-    text-align: center !important;
-}
-
-#file-size-error-modal .modal-body,
-.modal#file-size-error-modal .modal-body {
-    text-align: center !important;
+#file-size-error-modal .modal-body {
     padding: 2rem 2.5rem;
-}
-
-#file-size-error-modal .modal-body p,
-.modal#file-size-error-modal .modal-body p {
-    margin: 1rem 0;
-    text-align: center !important;
-}
-
-#file-size-error-modal .modal-footer,
-.modal#file-size-error-modal .modal-footer {
-    text-align: center !important;
-    padding: 1rem;
 }
 
 .file-size-details {

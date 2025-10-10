@@ -304,33 +304,6 @@ html, body {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.modal-content {
-  background-color: white;
-  margin: 10% auto;
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.modal-content i {
-  font-size: 3rem;
-  color: #00b894;
-  margin-bottom: 20px;
-}
-
-.modal-content h2 {
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.modal-content p {
-  color: #666;
-  margin-bottom: 25px;
-}
-
 .modal-btn {
   background: #00b894;
   color: white;
@@ -359,14 +332,12 @@ html, body {
   background: #3b82f6;
 }
 
-.dark-theme .auth-card,
-.dark-theme .modal-content {
+.dark-theme .auth-card {
   background: #2c3e50;
   color: #ecf0f1;
 }
 
-.dark-theme .auth-header h1,
-.dark-theme .modal-content h2 {
+.dark-theme .auth-header h1 {
   color: #ecf0f1;
 }
 
