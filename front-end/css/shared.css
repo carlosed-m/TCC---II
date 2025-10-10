@@ -224,6 +224,21 @@
   border-left: 4px solid #007bff;
 }
 
+.verification-summary {
+  text-align: left;
+}
+
+.verification-summary p {
+  margin: 0.5rem 0;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.verification-summary strong {
+  color: #495057;
+  font-weight: bold;
+}
+
 .verification-info strong {
   color: #495057;
   display: block;
@@ -295,6 +310,15 @@
 .dark-theme .verification-info {
   background: #34495e !important;
   border-left-color: #3b82f6 !important;
+}
+
+.dark-theme .verification-summary p {
+  color: #bdc3c7 !important;
+}
+
+.dark-theme .verification-summary strong {
+  color: #ecf0f1 !important;
+  font-weight: bold;
 }
 
 .dark-theme .verification-info strong {
