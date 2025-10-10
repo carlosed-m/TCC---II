@@ -293,21 +293,22 @@ input[type="file"] {
     gap: 0.5rem;
     margin-top: 0.8rem;
     padding: 0.6rem 1rem;
-    background: #fbbf24;
-    border: 1px solid #f59e0b;
+    background: #3b82f6;
+    border: none;
     border-radius: 6px;
-    color: #92400e;
+    color: white;
     font-size: 0.85rem;
-    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.1);
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
 }
 
 .file-size-warning i {
-    color: #d97706;
+    color: white;
     font-size: 1rem;
 }
 
 .file-size-warning strong {
     font-weight: 600;
+    color: white;
 }
 
 /* Modal de erro de tamanho de arquivo */
@@ -336,13 +337,18 @@ input[type="file"] {
 
 /* Tema escuro para aviso de tamanho */
 .dark-theme .file-size-warning {
-    background: linear-gradient(135deg, #451a03, #78350f);
-    border-color: #92400e;
-    color: #fbbf24;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    color: white;
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
 }
 
 .dark-theme .file-size-warning i {
-    color: #fbbf24;
+    color: white;
+}
+
+.dark-theme .file-size-warning strong {
+    color: white;
 }
 
 .dark-theme .file-size-details {
