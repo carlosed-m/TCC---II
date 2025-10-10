@@ -74,6 +74,13 @@
           <i class="fa-solid fa-fingerprint upload-icon"></i>
           <label for="fileInput" class="custom-file-upload">Escolher Arquivo</label>
           <input type="file" id="fileInput"/>
+          
+          <!-- Aviso sobre tamanho máximo -->
+          <div id="file-size-warning" class="file-size-warning">
+            <i class="fa-solid fa-info-circle"></i>
+            <span>Tamanho máximo permitido: <strong>50 MB</strong></span>
+          </div>
+          
           <div id="file-info" class="file-info" style="display: none;">
             <p id="file-name"></p>
             <button type="button" id="confirmUpload" class="submit-scan-btn">
@@ -90,6 +97,10 @@
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </form>
+        <div id="url-warning" class="url-warning" style="display: none;">
+          <i class="fa-solid fa-exclamation-triangle"></i>
+          <span>Por favor, inclua o protocolo na URL (http:// ou https://)</span>
+        </div>
       </div>
     </div>
 
@@ -115,6 +126,30 @@
         <button id="close-logout-modal" class="btn-modal">
           <i class="fa-solid fa-check"></i>
           OK
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Erro de Tamanho de Arquivo -->
+  <div id="file-size-error-modal" class="modal">
+    <div class="modal-content logout-modal-content">
+      <div class="modal-header">
+        <i class="fa-solid fa-exclamation-triangle modal-icon" style="color: #ef4444;"></i>
+        <h3>Arquivo Muito Grande</h3>
+        <button class="modal-close" onclick="closeFileSizeErrorModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>O arquivo selecionado excede o tamanho máximo permitido de <strong>50 MB</strong>.</p>
+        <p class="modal-subtitle">Por favor, selecione um arquivo menor para continuar com a verificação.</p>
+        <div id="file-size-details" class="file-size-details">
+          <!-- Detalhes do arquivo serão inseridos aqui -->
+        </div>
+        <button class="btn-modal" onclick="closeFileSizeErrorModal()">
+          <i class="fa-solid fa-check"></i>
+          Entendido
         </button>
       </div>
     </div>

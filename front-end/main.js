@@ -13,12 +13,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // === SISTEMA DE AUTENTICAÇÃO ===
   const API_URL = 'http://localhost:3001/api';
   
+  // === CONFIGURAÇÕES DE ARQUIVO ===
+  const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB em bytes
+  
+  // === FUNÇÕES UTILITÁRIAS ===
+  function showFileSizeErrorModal(fileName, fileSize) {
+    const modal = document.getElementById('file-size-error-modal');
+    const details = document.getElementById('file-size-details');
+    
+    details.innerHTML = `
+      <strong>Arquivo:</strong> ${fileName}<br>
+      <strong>Tamanho:</strong> ${formatBytes(fileSize)}<br>
+      <strong>Limite máximo:</strong> ${formatBytes(MAX_FILE_SIZE)}
+    `;
+    
+    modal.style.display = 'block';
+  }
+
+  function closeFileSizeErrorModal() {
+    const modal = document.getElementById('file-size-error-modal');
+    modal.style.display = 'none';
+    // Limpar o input do arquivo
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
+  // Função formatBytes já existe mais abaixo no código
+  
+  // Tornar função global para uso no HTML
+  window.closeFileSizeErrorModal = closeFileSizeErrorModal;
+  
   // Elementos de autenticação
   const loginBtn = document.getElementById('login-btn');
   const userMenu = document.getElementById('user-menu');
   const userName = document.getElementById('user-name');
   const historyBtn = document.getElementById('history-btn');
   const logoutBtn = document.getElementById('logout-btn');
+
+  // Controle de requisições em andamento
+  let currentVerificationController = null;
+  let isVerificationInProgress = false;
 
   // Verificar se o usuário está logado
   function checkAuthStatus() {
@@ -62,6 +98,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
+      // Cancelar qualquer verificação em andamento
+      cancelCurrentVerification();
+      
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       showLoginButton();
@@ -69,6 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
       // Mostrar modal de logout
       showLogoutModal();
     });
+  }
+
+  // Função para cancelar verificações em andamento
+  function cancelCurrentVerification() {
+    if (currentVerificationController && isVerificationInProgress) {
+      currentVerificationController.abort();
+      currentVerificationController = null;
+      isVerificationInProgress = false;
+      
+      // Ocultar loader
+      mostrarLoader(false);
+      
+      // Limpar resultados
+      document.getElementById('results').innerHTML = '';
+      
+      console.log('Verificação cancelada devido ao logout');
+    }
   }
 
   // Função para salvar verificação no histórico (se usuário estiver logado)
@@ -188,12 +244,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       mostrarLoader(true);
+      isVerificationInProgress = true;
+      currentVerificationController = new AbortController();
 
       try {
         const response = await fetch('http://localhost:3000/verificar-url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
+          body: JSON.stringify({ url }),
+          signal: currentVerificationController.signal
         });
 
         const data = await response.json();
@@ -204,26 +263,80 @@ document.addEventListener('DOMContentLoaded', () => {
         
         exibirResultado(data);
       } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Verificação de URL cancelada');
+          return;
+        }
         console.error('Erro na requisição:', error);
         exibirResultado({ erro: 'Erro ao analisar a URL', detalhe: error.message });
       } finally {
         mostrarLoader(false);
+        isVerificationInProgress = false;
+        currentVerificationController = null;
       }
     });
   }
 
-  // Input de arquivo - apenas mostra o arquivo selecionado
+  // Validação em tempo real da URL
+  const urlInput = document.getElementById('urlInput');
+  if (urlInput) {
+    urlInput.addEventListener('input', (e) => {
+      const url = e.target.value.trim();
+      
+      if (url.length > 0 && !validateURL(url)) {
+        showURLWarning();
+      } else {
+        hideURLWarning();
+      }
+    });
+
+    // Esconder aviso quando campo estiver vazio
+    urlInput.addEventListener('blur', () => {
+      const url = urlInput.value.trim();
+      if (url.length === 0) {
+        hideURLWarning();
+      }
+    });
+  }
+
+  // Input de arquivo - valida tamanho e mostra o arquivo selecionado
   if (fileInput) {
     fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       const fileInfo = document.getElementById('file-info');
       const fileName = document.getElementById('file-name');
+      const fileSizeWarning = document.getElementById('file-size-warning');
       
       if (file) {
+        // Verificar se o arquivo excede o tamanho máximo
+        if (file.size > MAX_FILE_SIZE) {
+          // Mostrar modal de erro
+          showFileSizeErrorModal(file.name, file.size);
+          // Limpar o input
+          e.target.value = '';
+          // Esconder informações do arquivo
+          fileInfo.style.display = 'none';
+          // Mostrar aviso novamente
+          if (fileSizeWarning) {
+            fileSizeWarning.style.display = 'flex';
+          }
+          return;
+        }
+        
+        // Arquivo válido - mostrar informações
         fileName.textContent = `Arquivo selecionado: ${file.name} (${formatBytes(file.size)})`;
         fileInfo.style.display = 'block';
+        
+        // Esconder aviso de tamanho máximo
+        if (fileSizeWarning) {
+          fileSizeWarning.style.display = 'none';
+        }
       } else {
         fileInfo.style.display = 'none';
+        // Mostrar aviso novamente
+        if (fileSizeWarning) {
+          fileSizeWarning.style.display = 'flex';
+        }
       }
     });
   }
@@ -239,13 +352,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       mostrarLoader(true);
+      isVerificationInProgress = true;
+      currentVerificationController = new AbortController();
+      
       const formData = new FormData();
       formData.append('file', file);
 
       try {
         const response = await fetch('http://localhost:3000/verificar-arquivo', {
           method: 'POST',
-          body: formData
+          body: formData,
+          signal: currentVerificationController.signal
         });
         
         const data = await response.json();
@@ -261,9 +378,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('file-info').style.display = 'none';
         
       } catch (error) {
+        if (error.name === 'AbortError') {
+          console.log('Verificação de arquivo cancelada');
+          return;
+        }
         exibirResultado({ erro: 'Erro ao analisar o arquivo', detalhe: error.message });
       } finally {
         mostrarLoader(false);
+        isVerificationInProgress = false;
+        currentVerificationController = null;
       }
     });
   }
@@ -297,6 +420,26 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  // === VALIDAÇÃO DE URL ===
+  function validateURL(url) {
+    const urlPattern = /^https?:\/\//i;
+    return urlPattern.test(url);
+  }
+
+  function showURLWarning() {
+    const warning = document.getElementById('url-warning');
+    if (warning) {
+      warning.style.display = 'flex';
+    }
+  }
+
+  function hideURLWarning() {
+    const warning = document.getElementById('url-warning');
+    if (warning) {
+      warning.style.display = 'none';
+    }
   }
 
   function exibirResultado(data) {

@@ -519,6 +519,17 @@ body:not(.dark-theme) .delete-btn:hover {
   overflow-y: auto;
 }
 
+/* Centralização específica para modal de erro de tamanho de arquivo */
+.error-modal-content .modal-header,
+.error-modal-content .modal-body,
+.error-modal-content .modal-footer {
+  text-align: center !important;
+}
+
+.error-modal-content .modal-body p {
+  text-align: center !important;
+}
+
 .loading-modal {
   text-align: center;
   padding: 40px;
