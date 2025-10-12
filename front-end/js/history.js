@@ -369,23 +369,9 @@ class HistoryManager {
         }
         typeElement.style.setProperty('color', typeElement.style.color, 'important');
         typeElement.style.setProperty('background', typeElement.style.background, 'important');
-        
-        console.log('Forçou cor TEMA CLARO via JS:', {
-          color: typeElement.style.color,
-          background: typeElement.style.background,
-          isDarkTheme,
-          element: typeElement
-        });
       }
     }, 100);
     
-    // Debug: Verificar se as classes estão sendo aplicadas
-    console.log('Debug modal exclusão:', {
-      typeClass,
-      statusClass,
-      verification
-    });
-
     // Mostrar modal
     const modal = document.getElementById('delete-confirmation-modal');
     modal.style.display = 'block';
