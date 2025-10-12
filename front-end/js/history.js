@@ -192,6 +192,7 @@ class HistoryManager {
     const statusClass = this.getStatusClass(item.status, item.threat_count);
     const statusText = this.getStatusText(item.status, item.threat_count);
     const typeIcon = item.type === 'url' ? 'fa-link' : 'fa-file';
+    const typeText = item.type === 'url' ? 'URL' : 'Arquivo';
 
     return `
       <div class="history-item">
@@ -199,7 +200,7 @@ class HistoryManager {
           <div class="item-info">
             <div class="item-type type-${item.type}">
               <i class="fa-solid ${typeIcon}"></i>
-              ${item.type.toUpperCase()}
+              ${typeText}
             </div>
             <div class="item-target">${item.target}</div>
             <div class="item-date">
@@ -323,15 +324,67 @@ class HistoryManager {
     const infoElement = document.getElementById('delete-verification-info');
     const date = new Date(verification.created_at).toLocaleString('pt-BR');
     const statusText = this.getStatusText(verification.status, verification.threat_count);
+    const statusClass = this.getStatusClass(verification.status, verification.threat_count);
+    
+    // Definir ícone e tipo
+    const typeIcon = verification.type === 'url' ? 'fa-link' : 'fa-file';
+    const typeClass = verification.type === 'url' ? 'type-url' : 'type-file';
+    const typeText = verification.type === 'url' ? 'URL' : 'Arquivo';
+    
+    // Estilizar o alvo (link ou arquivo)
+    const targetElement = verification.type === 'url' 
+      ? `<div class="verification-link">${verification.target}</div>`
+      : `<div>${verification.target}</div>`;
     
     infoElement.innerHTML = `
       <div class="verification-summary">
-        <p><strong>Tipo:</strong> ${verification.type === 'url' ? 'URL' : 'Arquivo'}</p>
-        <p><strong>Alvo:</strong> ${verification.target}</p>
-        <p><strong>Status:</strong> ${statusText.replace(/<[^>]*>/g, '')}</p>
+        <div class="verification-type ${typeClass}">
+          <i class="fa-solid ${typeIcon}"></i> ${typeText}
+        </div>
+        <p><strong>Alvo:</strong></p>
+        ${targetElement}
+        <p><strong>Status:</strong></p>
+        <div class="verification-status ${statusClass}">${statusText}</div>
         <p><strong>Data:</strong> ${date}</p>
       </div>
     `;
+    
+    // FORÇA a cor via JavaScript - usar as mesmas cores do tema claro
+    setTimeout(() => {
+      const typeElement = infoElement.querySelector('.verification-type');
+      const isDarkTheme = document.documentElement.classList.contains('dark-theme') || 
+                         document.documentElement.className === 'dark-theme' ||
+                         document.body.classList.contains('dark-theme') ||
+                         document.body.className === 'dark-theme';
+      
+      if (typeElement && isDarkTheme) {
+        if (verification.type === 'url') {
+          // Usar as mesmas cores do tema claro
+          typeElement.style.background = '#e3f2fd';
+          typeElement.style.color = '#1976d2';
+        } else if (verification.type === 'file') {
+          // Usar as mesmas cores do tema claro
+          typeElement.style.background = '#f3e5f5';
+          typeElement.style.color = '#7b1fa2';
+        }
+        typeElement.style.setProperty('color', typeElement.style.color, 'important');
+        typeElement.style.setProperty('background', typeElement.style.background, 'important');
+        
+        console.log('Forçou cor TEMA CLARO via JS:', {
+          color: typeElement.style.color,
+          background: typeElement.style.background,
+          isDarkTheme,
+          element: typeElement
+        });
+      }
+    }, 100);
+    
+    // Debug: Verificar se as classes estão sendo aplicadas
+    console.log('Debug modal exclusão:', {
+      typeClass,
+      statusClass,
+      verification
+    });
 
     // Mostrar modal
     const modal = document.getElementById('delete-confirmation-modal');

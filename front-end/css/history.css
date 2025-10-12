@@ -181,14 +181,29 @@ html, body {
   color: #2e7d32;
 }
 
+.status-clean::before {
+  content: "✓ ";
+  font-weight: bold;
+}
+
 .status-suspicious {
   background: #fff3e0;
   color: #f57c00;
 }
 
+.status-suspicious::before {
+  content: "⚠ ";
+  font-weight: bold;
+}
+
 .status-malicious {
   background: #ffebee;
   color: #d32f2f;
+}
+
+.status-malicious::before {
+  content: "☠ ";
+  font-weight: bold;
 }
 
 .threat-count {
@@ -397,14 +412,24 @@ body:not(.dark-theme) .delete-btn:hover {
 /* Modal de confirmação de exclusão */
 .delete-modal-content {
   background-color: white;
-  margin: 10% auto;
+  margin: 5% auto;
   padding: 0;
   border-radius: 15px;
   width: 90%;
-  max-width: 500px;
+  max-width: 650px;
+  max-height: 85vh;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: slideIn 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-modal-content .modal-body {
+  padding: 30px;
+  max-height: none;
+  overflow-y: auto;
+  flex: 1;
 }
 
 .delete-confirmation-content {
@@ -432,11 +457,102 @@ body:not(.dark-theme) .delete-btn:hover {
   border-radius: 10px;
   margin: 15px 0;
   border-left: 4px solid #ef4444;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .verification-info strong {
   color: #1f2937;
   text-shadow: none !important;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.verification-info p,
+.verification-info div {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+  line-height: 1.4;
+  margin: 4px 0;
+}
+
+/* Estilo para tipo de verificação no modal */
+.verification-info .verification-type {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  word-break: normal;
+}
+
+.verification-info .verification-type.type-url {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.verification-info .verification-type.type-file {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+/* Estilo para links no modal */
+.verification-info .verification-link {
+  color: #1976d2 !important;
+  text-decoration: underline;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+
+.verification-info .verification-link:hover {
+  color: #1565c0 !important;
+  text-decoration: underline;
+}
+
+/* Estilo para status no modal */
+.verification-info .verification-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.verification-info .verification-status.status-clean {
+  background: #e8f5e8;
+  color: #2e7d32;
+}
+
+.verification-info .verification-status.status-clean::before {
+  content: "✓ ";
+  font-weight: bold;
+}
+
+.verification-info .verification-status.status-suspicious {
+  background: #fff3e0;
+  color: #f57c00;
+}
+
+.verification-info .verification-status.status-suspicious::before {
+  content: "⚠ ";
+  font-weight: bold;
+}
+
+.verification-info .verification-status.status-malicious {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.verification-info .verification-status.status-malicious::before {
+  content: "☠ ";
+  font-weight: bold;
 }
 
 .warning-text {
@@ -703,8 +819,76 @@ body:not(.dark-theme) .delete-btn:hover {
 
 .dark-theme .delete-modal-content .verification-info strong,
 .dark-theme .delete-modal-content .verification-info p,
-.dark-theme .delete-modal-content .verification-info div {
+.dark-theme .delete-modal-content .verification-info div:not(.verification-type):not(.verification-status) {
   color: var(--primary-text-dark) !important;
+}
+
+/* Estilos para tipo de verificação no tema escuro */
+.dark-theme .verification-info .verification-type.type-url,
+.dark-theme .delete-modal-content .verification-info .verification-type.type-url {
+  background: rgba(25, 118, 210, 0.2) !important;
+  color: #64b5f6 !important;
+}
+
+.dark-theme .verification-info .verification-type.type-file,
+.dark-theme .delete-modal-content .verification-info .verification-type.type-file {
+  background: rgba(123, 31, 162, 0.2) !important;
+  color: #ba68c8 !important;
+}
+
+/* Forçar especificamente para o modal de exclusão no tema escuro */
+.dark-theme #delete-confirmation-modal .verification-type.type-url {
+  background: rgba(25, 118, 210, 0.2) !important;
+  color: #64b5f6 !important;
+  border: none !important;
+}
+
+.dark-theme #delete-confirmation-modal .verification-type.type-file {
+  background: rgba(123, 31, 162, 0.2) !important;
+  color: #ba68c8 !important;
+  border: none !important;
+}
+
+/* Estilo para links no tema escuro */
+.dark-theme .verification-info .verification-link {
+  color: #64b5f6 !important;
+  text-decoration: underline;
+}
+
+.dark-theme .verification-info .verification-link:hover {
+  color: #90caf9 !important;
+  text-decoration: underline;
+}
+
+/* Estilo para status no tema escuro */
+.dark-theme .verification-info .verification-status.status-clean {
+  background: rgba(46, 125, 50, 0.2);
+  color: #81c784;
+}
+
+.dark-theme .verification-info .verification-status.status-clean::before {
+  content: "✓ ";
+  font-weight: bold;
+}
+
+.dark-theme .verification-info .verification-status.status-suspicious {
+  background: rgba(245, 124, 0, 0.2);
+  color: #ffb74d;
+}
+
+.dark-theme .verification-info .verification-status.status-suspicious::before {
+  content: "⚠ ";
+  font-weight: bold;
+}
+
+.dark-theme .verification-info .verification-status.status-malicious {
+  background: rgba(211, 47, 47, 0.2);
+  color: #e57373;
+}
+
+.dark-theme .verification-info .verification-status.status-malicious::before {
+  content: "☠ ";
+  font-weight: bold;
 }
 
 .dark-theme .warning-text {
@@ -848,6 +1032,17 @@ body:not(.dark-theme) .delete-btn:hover {
   .details-modal-content {
     width: 95%;
     margin: 5% auto;
+  }
+
+  .delete-modal-content {
+    width: 95%;
+    max-width: 95%;
+    margin: 2% auto;
+    max-height: 90vh;
+  }
+
+  .delete-modal-content .modal-body {
+    padding: 20px;
   }
 
   .scan-summary {
