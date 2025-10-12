@@ -20,10 +20,10 @@ TCC---II/
 │       ├── auth.js        # Lógica de autenticação
 │       └── history.js     # Lógica do histórico
 ├── 📁 back-end/           # Servidores backend
-│   ├── server.js          # Servidor simples (VirusTotal only)
 │   └── 📁 banco-e-rotas/  # API completa com banco
 │       ├── 📁 src/        # Código fonte da API
 │       │   ├── app.js     # Servidor principal
+│       │   ├── server.js  # Servidor simples (VirusTotal only)
 │       │   ├── 📁 config/ # Configurações
 │       │   ├── 📁 controllers/ # Controladores
 │       │   ├── 📁 middleware/  # Middlewares
@@ -124,7 +124,7 @@ npm run db:setup  # Instruções para setup do DB
 ## 🏗️ Arquitetura
 
 ### Dois Servidores Backend
-1. **Servidor Legacy** (`server.js`):
+1. **Servidor Legacy** (`banco-e-rotas/src/server.js`):
    - Integração direta com VirusTotal
    - Sem persistência de dados
    - Ideal para testes rápidos
