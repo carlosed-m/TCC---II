@@ -1,7 +1,5 @@
 /**
- * GERADOR DE PDF - RELATÓRIO DE VERIFICAÇÃO DA TELA INICIAL
- * Este arquivo contém a lógica para gerar PDFs dos resultados da verificação na tela inicial
- */
+ * GERADOR DE PDF - RELATÓRIO DE VERIFICAÇÃO DA TELA INICIAL */
 
 class ScannerReportGenerator {
   constructor() {

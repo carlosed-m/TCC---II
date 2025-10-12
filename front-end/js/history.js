@@ -77,7 +77,7 @@ class HistoryManager {
     const span = this.themeToggleButton.querySelector('span');
     
     if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-    if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
+    if (span) span.textContent = isDarkMode ? 'Tema Claro' : 'Tema Escuro';
 
     this.themeToggleButton.addEventListener('click', () => {
       // Determinar o novo tema

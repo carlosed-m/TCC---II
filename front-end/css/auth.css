@@ -241,8 +241,8 @@ html, body {
   text-align: center;
   margin-top: 30px;
   padding-top: 20px;
-  border-top: 1px solid #e1e5e9;
-  color: #666;
+  border-top: 1px solid #1d4ed8;
+  color: #333;
 }
 
 .login-link a, .signup-link a {
@@ -394,7 +394,7 @@ html, body {
 
 .dark-theme .login-link,
 .dark-theme .signup-link {
-  border-top-color: #4a6741;
+  border-top-color: #1d4ed8;
   color: #bdc3c7;
 }
 

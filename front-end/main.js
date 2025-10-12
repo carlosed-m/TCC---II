@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDarkMode = savedTheme === 'dark-theme';
       
       if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-      if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
+      if (span) span.textContent = isDarkMode ? 'Tema Claro' : 'Tema Escuro';
     }
   }
 
@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const icon = themeToggleButton.querySelector('i');
       if (icon) icon.className = isDarkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
       const span = themeToggleButton.querySelector('span');
-      if (span) span.textContent = isDarkMode ? 'Mudar para Tema Claro' : 'Mudar para Tema Escuro';
+      if (span) span.textContent = isDarkMode ? 'Tema Claro' : 'Tema Escuro';
     });
   }
 
