@@ -1,6 +1,5 @@
 /**
  * GERADOR DE PDF - RELATÓRIO DETALHADO DO HISTÓRICO
- * Este arquivo contém a lógica para gerenciar PDFs do histórico de verificações
  */
 
 class HistoryReportGenerator {
