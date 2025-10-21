@@ -84,13 +84,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listeners de autenticação
   if (loginBtn) {
     loginBtn.addEventListener('click', () => {
-      window.location.href = 'login.html';
+      window.location.href = 'html/login.html';
     });
   }
 
   if (historyBtn) {
     historyBtn.addEventListener('click', () => {
-      window.location.href = 'history.html';
+      window.location.href = 'html/history.html';
     });
   }
 
@@ -254,7 +254,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         
         if (!response.ok) {
-          throw new Error(JSON.stringify(data || { status: response.status }));
+          // Se houver erro, exibir a mensagem do servidor
+          exibirResultado(data);
+          return;
         }
         
         exibirResultado(data);
@@ -319,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Arquivo válido - mostrar informações
-        fileName.textContent = `Arquivo selecionado: ${file.name} (${formatBytes(file.size)})`;
+        fileName.innerHTML = `<strong class="file-label">Arquivo selecionado:</strong> ${file.name} (${formatBytes(file.size)})`;
         fileInfo.style.display = 'block';
         
         // Esconder aviso de tamanho máximo
@@ -363,7 +365,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.json();
         
         if (!response.ok) {
-          throw new Error(JSON.stringify(data || { status: response.status }));
+          // Se houver erro, exibir a mensagem do servidor
+          exibirResultado(data);
+          return;
         }
         
         exibirResultado(data);

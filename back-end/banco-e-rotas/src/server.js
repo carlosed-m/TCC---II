@@ -70,6 +70,18 @@ async function pollAnalysis(analysisId) {
       }
 
     } catch (error) {
+      // Tratar erro 409 (ConflictError) especificamente
+      if (error.response?.status === 409) {
+        console.log(`Tentativa ${attempt}: VirusTotal ainda processando...`);
+        
+        if (attempt < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, pollInterval));
+          continue;
+        }
+        
+        throw new Error('O VirusTotal está demorando para processar este arquivo. Tente novamente em alguns minutos.');
+      }
+      
       console.error(`Erro na tentativa ${attempt}:`, error.message);
       
       if (attempt === maxAttempts) {
@@ -166,9 +178,24 @@ app.post('/verificar-arquivo', upload.single('file'), async (req, res) => {
     const vt = error.response?.data;
     console.error('Erro na verificação de arquivo:', status, vt || error.message);
 
-    return res.status(500).json({
-      erro: 'Erro ao verificar arquivo',
-      detalhe: error.message,
+    // Mensagens específicas para diferentes tipos de erro
+    let mensagemErro = 'Erro ao verificar arquivo';
+    let detalheErro = error.message;
+
+    if (status === 409) {
+      mensagemErro = 'O VirusTotal está processando muitas requisições';
+      detalheErro = 'Por favor, aguarde alguns minutos e tente novamente. O arquivo pode estar sendo processado por outro usuário.';
+    } else if (status === 429) {
+      mensagemErro = 'Limite de requisições excedido';
+      detalheErro = 'Muitas verificações foram feitas recentemente. Aguarde 1 minuto e tente novamente.';
+    } else if (error.message.includes('Timeout')) {
+      mensagemErro = 'Tempo de análise excedido';
+      detalheErro = 'O arquivo está demorando muito para ser analisado. Tente novamente em alguns minutos.';
+    }
+
+    return res.status(status || 500).json({
+      erro: mensagemErro,
+      detalhe: detalheErro,
       status,
       vt
     });

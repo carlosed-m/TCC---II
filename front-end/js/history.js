@@ -55,7 +55,7 @@ class HistoryManager {
     const userData = localStorage.getItem('userData');
 
     if (!token || !userData) {
-      window.location.href = 'login.html';
+      window.location.href = 'html/login.html';
       return false;
     }
 
@@ -514,7 +514,7 @@ function closeLogoutModal() {
     document.body.style.overflow = ''; // Restaurar scroll da página
     
     // Redirecionar para a página inicial
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
   }
 }
 

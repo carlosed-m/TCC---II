@@ -22,7 +22,7 @@ const securityTips = {
         
         // Educação e Conscientização
         "Eduque-se sobre as últimas táticas de engenharia social e phishing.",
-        "Verifique se os sites usam HTTPS (cadeado verde) antes de inserir dados pessoais.",
+        "Verifique se os sites usam HTTPS (cadeado fechado) antes de inserir dados pessoais.",
         "Desconfie de ofertas muito boas para ser verdade ou urgências extremas.",
         "Mantenha-se informado sobre as últimas ameaças de segurança cibernética.",
         "Considere usar sistemas operacionais focados em privacidade para atividades sensíveis.",

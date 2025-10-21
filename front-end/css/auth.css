@@ -236,6 +236,116 @@ html, body {
   transform: none;
 }
 
+/* === ESTILOS EXPLÍCITOS PARA TEMA CLARO === */
+.light-theme .form-group label,
+body.light-theme .form-group label {
+  color: #555 !important;
+}
+
+.light-theme .form-group input,
+body.light-theme .form-group input,
+.light-theme .password-container input,
+body.light-theme .password-container input {
+  background-color: #ffffff !important;
+  border-color: #1e40af !important;
+  color: #333 !important;
+}
+
+.light-theme .form-group input::placeholder,
+body.light-theme .form-group input::placeholder,
+.light-theme .password-container input::placeholder,
+body.light-theme .password-container input::placeholder {
+  color: #999 !important;
+  opacity: 1 !important;
+}
+
+.light-theme .password-strength,
+body.light-theme .password-strength {
+  background-color: #f8f9fa !important;
+  color: #333 !important;
+  border-left-color: #667eea !important;
+}
+
+.light-theme .password-strength h4,
+body.light-theme .password-strength h4 {
+  color: #333 !important;
+}
+
+.light-theme .strength-item,
+body.light-theme .strength-item {
+  color: #666 !important;
+}
+
+.light-theme .strength-item.valid,
+body.light-theme .strength-item.valid {
+  color: #00b894 !important;
+}
+
+.light-theme .strength-item.invalid,
+body.light-theme .strength-item.invalid {
+  color: #e17055 !important;
+}
+
+.light-theme .password-toggle,
+body.light-theme .password-toggle {
+  color: #666 !important;
+}
+
+.light-theme .password-toggle:hover,
+body.light-theme .password-toggle:hover {
+  color: #2563eb !important;
+}
+
+/* ESPECIFICIDADE MÁXIMA PARA TEMA CLARO - usando html.light-theme */
+html.light-theme .form-group label {
+  color: #555 !important;
+  font-weight: 600 !important;
+}
+
+html.light-theme .form-group input[type="password"],
+html.light-theme .form-group input[type="email"],
+html.light-theme .form-group input[type="text"],
+html.light-theme .password-container input {
+  background-color: #ffffff !important;
+  border: 2px solid #1e40af !important;
+  color: #333 !important;
+}
+
+html.light-theme .form-group input::placeholder,
+html.light-theme .password-container input::placeholder {
+  color: #999 !important;
+  opacity: 1 !important;
+}
+
+html.light-theme .password-strength {
+  background-color: #f8f9fa !important;
+  color: #333 !important;
+}
+
+html.light-theme .password-strength h4 {
+  color: #333 !important;
+}
+
+html.light-theme .strength-item {
+  color: #666 !important;
+}
+
+html.light-theme .strength-item.valid {
+  color: #00b894 !important;
+}
+
+html.light-theme .strength-item.invalid {
+  color: #e17055 !important;
+}
+
+html.light-theme .password-toggle {
+  color: #666 !important;
+}
+
+html.light-theme .password-toggle:hover {
+  color: #2563eb !important;
+}
+
 /* Links de navegação */
 .login-link, .signup-link {
   text-align: center;
@@ -252,6 +362,24 @@ html, body {
 }
 
 .login-link a:hover, .signup-link a:hover {
+  text-decoration: underline;
+}
+
+/* Link para esqueceu senha */
+.forgot-password-link {
+  text-align: center;
+  margin-top: 15px;
+  color: #333;
+}
+
+.forgot-password-link a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.forgot-password-link a:hover {
   text-decoration: underline;
 }
 
@@ -416,4 +544,241 @@ html, body {
   .auth-header h1 {
     font-size: 1.3rem;
   }
+}
+
+/* === TEMA ESCURO PARA REDEFINIÇÃO DE SENHA === */
+.dark-theme .password-strength {
+  background-color: #34495e !important;
+  border-left-color: #3b82f6 !important;
+}
+
+.dark-theme .password-strength h4 {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .strength-item {
+  color: #bdc3c7 !important;
+}
+
+.dark-theme .strength-item.valid {
+  color: #2ecc71 !important;
+}
+
+.dark-theme .strength-item.invalid {
+  color: #e74c3c !important;
+}
+
+/* Estilização dos campos de entrada no tema escuro */
+.dark-theme .form-group input {
+  background-color: #34495e !important;
+  border-color: #1e40af !important;
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .form-group input::placeholder {
+  color: #95a5a6 !important;
+}
+
+.dark-theme .form-group input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+}
+
+.dark-theme .form-group label {
+  color: #ecf0f1 !important;
+}
+
+/* Validação de erro no tema escuro */
+.dark-theme .validation-message {
+  color: #e74c3c !important;
+}
+
+.dark-theme .input-error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.25) !important;
+}
+
+/* Botões do toggle de senha no tema escuro */
+.dark-theme .password-toggle {
+  background-color: transparent !important;
+  color: #bdc3c7 !important;
+}
+
+.dark-theme .password-toggle:hover {
+  color: #ecf0f1 !important;
+}
+
+/* Container de senha no tema escuro */
+.dark-theme .password-container {
+  position: relative;
+}
+
+.dark-theme .password-container input {
+  padding-right: 45px !important;
+}
+
+/* === ESTILOS GERAIS DO TEMA ESCURO === */
+.dark-theme body {
+  background-color: #1a202c !important;
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-container {
+  background-color: #1a202c !important;
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-card {
+  background-color: #2c3e50 !important;
+  color: #ecf0f1 !important;
+  border: 1px solid #34495e !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-theme .auth-header {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-header .logo {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-header .logo span {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-header h1 {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .auth-header h1 small {
+  color: #bdc3c7 !important;
+}
+
+/* Campos de formulário no tema escuro */
+.dark-theme .form-group {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .form-group label {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .form-group input {
+  background-color: #34495e !important;
+  border: 2px solid #1e40af !important;
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .form-group input::placeholder {
+  color: #95a5a6 !important;
+}
+
+.dark-theme .form-group input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+  background-color: #34495e !important;
+  color: #ecf0f1 !important;
+}
+
+/* Container de senha no tema escuro */
+.dark-theme .password-container {
+  position: relative;
+}
+
+.dark-theme .password-container input {
+  padding-right: 45px !important;
+  background-color: #34495e !important;
+  color: #ecf0f1 !important;
+}
+
+/* Botões do toggle de senha no tema escuro */
+.dark-theme .password-toggle {
+  background-color: transparent !important;
+  border: none !important;
+  color: #bdc3c7 !important;
+  position: absolute !important;
+  right: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  cursor: pointer !important;
+}
+
+.dark-theme .password-toggle:hover {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .password-toggle i {
+  color: #bdc3c7 !important;
+}
+
+.dark-theme .password-toggle:hover i {
+  color: #ecf0f1 !important;
+}
+
+/* Botões no tema escuro */
+.dark-theme .submit-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb) !important;
+  color: white !important;
+}
+
+.dark-theme .submit-btn:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+}
+
+/* Mensagens de feedback no tema escuro */
+.dark-theme .error-message {
+  background-color: #34495e !important;
+  color: #e74c3c !important;
+  border-left-color: #e74c3c !important;
+}
+
+.dark-theme .success-message {
+  background-color: #34495e !important;
+  color: #2ecc71 !important;
+  border-left-color: #2ecc71 !important;
+}
+
+.dark-theme .loading {
+  color: #ecf0f1 !important;
+}
+
+.dark-theme .loading i {
+  color: #3b82f6 !important;
+}
+
+/* Validação de erro no tema escuro */
+.dark-theme .validation-message {
+  color: #e74c3c !important;
+  background-color: rgba(231, 76, 60, 0.1) !important;
+  padding: 8px !important;
+  border-radius: 4px !important;
+  margin-top: 5px !important;
+}
+
+.dark-theme .input-error {
+  border-color: #e74c3c !important;
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.25) !important;
+  background-color: #34495e !important;
+  color: #ecf0f1 !important;
+}
+
+/* Links no tema escuro */
+.dark-theme .login-link,
+.dark-theme .signup-link,
+.dark-theme .forgot-password-link {
+  color: #bdc3c7 !important;
+  border-top-color: #34495e !important;
+}
+
+.dark-theme .login-link a,
+.dark-theme .signup-link a,
+.dark-theme .forgot-password-link a {
+  color: #3b82f6 !important;
+}
+
+.dark-theme .login-link a:hover,
+.dark-theme .signup-link a:hover,
+.dark-theme .forgot-password-link a:hover {
+  color: #60a5fa !important;
 }

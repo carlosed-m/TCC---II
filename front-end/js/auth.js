@@ -6,7 +6,7 @@ class AuthManager {
   // Verificar se já está logado e redirecionar se necessário
   static checkIfLoggedIn() {
     if (localStorage.getItem('authToken')) {
-      window.location.href = 'index.html';
+      window.location.href = '../index.html';
     }
   }
 
@@ -90,7 +90,7 @@ class LoginForm {
         localStorage.setItem('userData', JSON.stringify(data.user));
 
         // Redirecionar para a página principal
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
       } else {
         AuthManager.showError(this.errorMessage, this.errorText, data.detalhe || data.erro || 'Erro ao fazer login');
       }

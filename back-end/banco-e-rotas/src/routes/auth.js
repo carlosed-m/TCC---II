@@ -1,5 +1,5 @@
 const express = require('express');
-const { register, login, verifyToken } = require('../controllers/authController');
+const { register, login, verifyToken, forgotPassword, resetPassword } = require('../controllers/authController');
 const { authenticateToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -18,6 +18,16 @@ router.post('/login', login);
 // GET /api/auth/verify
 // Headers: { Authorization: "Bearer TOKEN" }
 router.get('/verify', verifyToken);
+
+// Rota para solicitar recuperação de senha
+// POST /api/auth/forgot-password
+// Body: { email }
+router.post('/forgot-password', forgotPassword);
+
+// Rota para redefinir senha
+// POST /api/auth/reset-password
+// Body: { token, newPassword }
+router.post('/reset-password', resetPassword);
 
 // Rota para logout (opcional - pode ser implementada no frontend)
 // POST /api/auth/logout

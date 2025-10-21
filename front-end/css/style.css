@@ -273,13 +273,13 @@ input[type="file"] {
     font-weight: 500;
 }
 
-/* Tema escuro para file-info */
-.dark-theme .file-info p {
-    background-color: rgba(96, 165, 250, 0.1);
-    border-color: rgba(96, 165, 250, 0.3);
-    color: var(--primary-text-dark);
+.file-info .submit-scan-btn {
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
 }
 
+/* Tema escuro para file-info */
 .dark-theme .file-info p {
     background-color: rgba(96, 165, 250, 0.15);
     border-color: rgba(96, 165, 250, 0.4);
@@ -380,16 +380,40 @@ input[type="file"] {
 .dark-theme .custom-file-upload:hover {
     background-color: var(--accent-hover-dark);
 }
+
+/* Informação do arquivo selecionado */
+#file-name {
+    margin-top: 10px;
+}
+
+#file-name .file-label {
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.dark-theme #file-name .file-label {
+    color: #3b82f6;
+}
+
 /* Formulário de URL */
 .url-form {
     display: flex;
-    border: 1px solid var(--border-color-light);
+    border: 2px solid #1e40af;
     border-radius: 8px;
     overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+.url-form:focus-within {
+    border-color: #3b82f6;
 }
 
 .dark-theme .url-form {
-    border-color: var(--border-color-dark);
+    border-color: #1e40af;
+}
+
+.dark-theme .url-form:focus-within {
+    border-color: #3b82f6;
 }
 
 .url-form input {
@@ -408,6 +432,24 @@ input[type="file"] {
 
 .dark-theme .url-form input:focus {
     background-color: var(--surface-color-dark);
+}
+
+/* Desabilitar estilos de autocomplete do navegador */
+.url-form input:-webkit-autofill,
+.url-form input:-webkit-autofill:hover,
+.url-form input:-webkit-autofill:focus,
+.url-form input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-color-light) inset !important;
+    -webkit-text-fill-color: var(--primary-text-light) !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.dark-theme .url-form input:-webkit-autofill,
+.dark-theme .url-form input:-webkit-autofill:hover,
+.dark-theme .url-form input:-webkit-autofill:focus,
+.dark-theme .url-form input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--surface-color-dark) inset !important;
+    -webkit-text-fill-color: var(--primary-text-dark) !important;
 }
 
 /* Tema escuro para o campo de URL */
@@ -476,7 +518,7 @@ input[type="file"] {
     cursor: pointer;
     font-size: 1.1rem;
     min-height: 50px;
-    border-radius: 8px;
+    border-radius: 0 6px 6px 0;
     transition: background-color 0.2s;
 }
 
@@ -486,7 +528,6 @@ input[type="file"] {
 
 .submit-scan-btn i {
     font-size: 1.2rem;
-    margin-right: 0.5rem;
 }
 
 .dark-theme .submit-scan-btn {

@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const pool = require('../config/db');
 
 // Chave secreta JWT - em produção, use variável de ambiente
@@ -176,6 +177,130 @@ exports.verifyToken = async (req, res) => {
         res.status(401).json({ 
             erro: 'Token inválido', 
             detalhe: 'Token expirado ou malformado' 
+        });
+    }
+};
+
+// Verificar se e-mail existe para recuperação
+exports.forgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'E-mail é obrigatório' 
+            });
+        }
+
+        // Verificar se usuário existe
+        const userResult = await pool.query('SELECT id, name, email FROM users WHERE email = $1', [email]);
+        
+        if (userResult.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: 'E-mail não encontrado em nossos registros.'
+            });
+        }
+
+        const user = userResult.rows[0];
+        
+        // Gerar um código simples de recuperação baseado no ID e timestamp
+        const resetCode = Buffer.from(`${user.id}:${Date.now()}`).toString('base64');
+        const resetCodeExpiry = new Date(Date.now() + 1800000); // 30 minutos
+
+        // Salvar código no banco
+        await pool.query(
+            'UPDATE users SET reset_token = $1, reset_token_expiry = $2 WHERE id = $3',
+            [resetCode, resetCodeExpiry, user.id]
+        );
+
+        console.log(`✅ Código de recuperação gerado para: ${email}`);
+        console.log(`📧 Usuário: ${user.name}`);
+        console.log(`🔑 Código expira em: ${resetCodeExpiry.toLocaleString()}`);
+
+        res.json({
+            success: true,
+            message: 'E-mail verificado! Redirecionando para redefinição de senha...',
+            resetCode: resetCode,
+            userName: user.name
+        });
+
+    } catch (error) {
+        console.error('Erro ao verificar e-mail:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Erro interno do servidor' 
+        });
+    }
+};
+
+// Redefinir senha
+exports.resetPassword = async (req, res) => {
+    try {
+        const { code, newPassword } = req.body;
+
+        if (!code || !newPassword) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'Código e nova senha são obrigatórios' 
+            });
+        }
+
+        if (newPassword.length < 8) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'A senha deve ter pelo menos 8 caracteres' 
+            });
+        }
+
+        // Validar formato da senha
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])/;
+        if (!passwordRegex.test(newPassword)) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial' 
+            });
+        }
+
+        // Buscar usuário pelo código
+        const userResult = await pool.query(
+            'SELECT id, email, name FROM users WHERE reset_token = $1 AND reset_token_expiry > NOW()',
+            [code]
+        );
+
+        if (userResult.rows.length === 0) {
+            return res.status(400).json({ 
+                success: false,
+                message: 'Código inválido ou expirado. Solicite uma nova recuperação.' 
+            });
+        }
+
+        const user = userResult.rows[0];
+
+        // Criptografar nova senha
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+        // Atualizar senha e limpar código
+        await pool.query(
+            'UPDATE users SET password = $1, reset_token = NULL, reset_token_expiry = NULL WHERE id = $2',
+            [hashedPassword, user.id]
+        );
+
+        console.log(`✅ Senha redefinida com sucesso para: ${user.email} (${user.name})`);
+
+        res.json({
+            success: true,
+            message: 'Senha redefinida com sucesso! Você pode fazer login agora.',
+            userName: user.name
+        });
+
+    } catch (error) {
+        console.error('Erro ao redefinir senha:', error);
+        res.status(500).json({ 
+            success: false,
+            message: 'Erro interno do servidor' 
         });
     }
 };
