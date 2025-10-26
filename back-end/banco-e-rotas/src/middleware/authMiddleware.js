@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'tcc_jwt_secret_key_2024';
 // Middleware para verificar autenticação JWT
 const authenticateToken = async (req, res, next) => {
     try {
-        // Buscar token no header Authorization
+        // Buscar token no header do Authorization
         const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
@@ -34,7 +34,7 @@ const authenticateToken = async (req, res, next) => {
             });
         }
 
-        // Adicionar informações do usuário ao request
+        // Adicionar as informações do usuário ao request
         req.user = {
             userId: decoded.userId,
             email: decoded.email,
@@ -67,7 +67,7 @@ const authenticateToken = async (req, res, next) => {
     }
 };
 
-// Middleware opcional - permite acesso com ou sem token
+// Middleware opcional - permite o acesso com ou sem token
 const optionalAuth = async (req, res, next) => {
     try {
         const authHeader = req.headers['authorization'];

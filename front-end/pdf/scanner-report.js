@@ -1,5 +1,5 @@
 /**
- * GERADOR DE PDF - RELATÓRIO DE VERIFICAÇÃO DA TELA INICIAL */
+ * Geração do PDF - Relatório da Tela Inicial */
 
 class ScannerReportGenerator {
   constructor() {
@@ -38,11 +38,11 @@ class ScannerReportGenerator {
   }
 
   /**
-   * Adiciona o cabeçalho azul do relatório
+   * Adiciona o cabeçalho do relatório
    * @private
    */
   _addHeader(doc) {
-    // Cabeçalho azul
+    // Cabeçalho
     doc.setFillColor(59, 130, 246); // #3B82F6
     doc.rect(0, 0, this.pageWidth, 25, 'F');
     
@@ -81,7 +81,7 @@ class ScannerReportGenerator {
   }
 
   /**
-   * Adiciona o resultado da análise com caixa colorida
+   * Adiciona o resultado da análise
    * @private
    */
   _addAnalysisResult(doc, analysisData) {
@@ -133,13 +133,13 @@ class ScannerReportGenerator {
    * @private
    */
   _addFooter(doc) {
-    // Verificar se precisa de nova página
+    // Verifica se precisa de nova página
     if (this.yPosition > doc.internal.pageSize.getHeight() - 50) {
       doc.addPage();
       this.yPosition = 30;
     }
     
-    // Rodapé (sempre na parte inferior da página)
+    // Rodapé
     const pageHeight = doc.internal.pageSize.getHeight();
     doc.setFontSize(10);
     doc.setTextColor(128, 128, 128);
@@ -159,7 +159,7 @@ class ScannerReportGenerator {
     doc.setFontSize(fontSize);
     doc.setFont('helvetica', isBold ? 'bold' : 'normal');
     
-    // Dividir texto em linhas se necessário
+    // Dividir texto em linhas, se necessário
     const lines = doc.splitTextToSize(text, maxWidth);
     const lineHeight = fontSize * 0.35;
     

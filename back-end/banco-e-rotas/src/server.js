@@ -1,10 +1,3 @@
-// =======================================================
-// SERVIDOR LEGACY - Integração Direta com VirusTotal
-// =======================================================
-// Este servidor fornece funcionalidade básica de verificação
-// sem banco de dados, ideal para testes rápidos.
-// Para funcionalidade completa, use: banco-e-rotas/src/app.js
-// =======================================================
 
 // Importação das dependências necessárias
 // dotenv: Para carregar variáveis de ambiente
@@ -33,7 +26,7 @@ const API_KEY = "3bff712a13371ad413ae5dfc49b8bb4f8ae5b476084fc945d496f2ad6721e4d
 app.use(cors());
 app.use(express.json());
 
-// Verificação de chave logo no boot (ajuda a falhar com mensagem clara)
+// Verificação da chave logo no boot
 if (!API_KEY) {
   console.error("ERRO: VT_API_KEY não encontrada!");
   process.exit(1);
@@ -95,7 +88,7 @@ async function pollAnalysis(analysisId) {
   throw new Error('Timeout: Análise não foi concluída no tempo esperado');
 }
 
-// Verificação de URL
+// Verificação da URL
 app.post('/verificar-url', async (req, res) => {
   const { url } = req.body;
 
@@ -114,7 +107,7 @@ app.post('/verificar-url', async (req, res) => {
   }
 
   try {
-    // Envia URL para análise
+    // Enviar a URL para análise
     const uploadResponse = await axios.post(
       'https://www.virustotal.com/api/v3/urls',
       `url=${encodeURIComponent(url)}`,
@@ -129,7 +122,7 @@ app.post('/verificar-url', async (req, res) => {
 
     const analysisId = uploadResponse.data.data.id;
 
-    // Aguarda resultado da análise usando polling
+    // Aguarda o resultado da análise usando polling
     const resultado = await pollAnalysis(analysisId);
 
     res.json(resultado);
@@ -143,7 +136,7 @@ app.post('/verificar-url', async (req, res) => {
   }
 });
 
-// Verificação de Arquivo
+// Verificação do Arquivo
 app.post('/verificar-arquivo', upload.single('file'), async (req, res) => {
   if (!API_KEY) {
     return res.status(500).json({

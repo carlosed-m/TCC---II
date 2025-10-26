@@ -32,8 +32,7 @@ router.post('/reset-password', resetPassword);
 // Rota para logout (opcional - pode ser implementada no frontend)
 // POST /api/auth/logout
 router.post('/logout', authenticateToken, (req, res) => {
-    // Em uma implementação completa, você poderia invalidar o token
-    // Por agora, apenas retorna uma mensagem de sucesso
+
     res.json({
         success: true,
         message: 'Logout realizado com sucesso'

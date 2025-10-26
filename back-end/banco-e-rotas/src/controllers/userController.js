@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../config/db');
 
-// Obter perfil do usuário logado
+// Obter o perfil do usuário logado
 exports.getProfile = async (req, res) => {
     try {
         const userId = req.user.userId; // Vem do middleware de autenticação
@@ -32,7 +32,7 @@ exports.getProfile = async (req, res) => {
     }
 };
 
-// Atualizar perfil do usuário
+// Atualizar o perfil do usuário
 exports.updateProfile = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -61,7 +61,7 @@ exports.updateProfile = async (req, res) => {
             }
         }
 
-        // Atualizar dados do usuário
+        // Atualizar os dados do usuário
         const result = await pool.query(
             `UPDATE users 
              SET name = $1, email = $2, updated_at = CURRENT_TIMESTAMP 
@@ -92,7 +92,7 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
-// Alterar senha do usuário
+// Alterar a senha do usuário
 exports.changePassword = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -113,7 +113,7 @@ exports.changePassword = async (req, res) => {
             });
         }
 
-        // Buscar usuário atual
+        // Buscar o usuário atual
         const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
         
         if (userResult.rows.length === 0) {
@@ -125,7 +125,7 @@ exports.changePassword = async (req, res) => {
 
         const user = userResult.rows[0];
 
-        // Verificar senha atual
+        // Verificar a senha atual
         const isCurrentPasswordValid = await bcrypt.compare(currentPassword, user.password);
         if (!isCurrentPasswordValid) {
             return res.status(400).json({ 
@@ -134,11 +134,11 @@ exports.changePassword = async (req, res) => {
             });
         }
 
-        // Criptografar nova senha
+        // Criptografar a nova senha
         const saltRounds = 12;
         const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
 
-        // Atualizar senha no banco
+        // Atualizar a senha no banco
         await pool.query(
             'UPDATE users SET password = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2',
             [hashedNewPassword, userId]
@@ -158,13 +158,13 @@ exports.changePassword = async (req, res) => {
     }
 };
 
-// Deletar conta do usuário
+// Deletar a conta do usuário
 exports.deleteAccount = async (req, res) => {
     try {
         const userId = req.user.userId;
         const { password } = req.body;
 
-        // Validar senha antes de deletar
+        // Validar a senha antes de deletar
         if (!password) {
             return res.status(400).json({ 
                 erro: 'Senha obrigatória', 
@@ -172,7 +172,7 @@ exports.deleteAccount = async (req, res) => {
             });
         }
 
-        // Buscar usuário
+        // Buscar o usuário
         const userResult = await pool.query('SELECT password FROM users WHERE id = $1', [userId]);
         
         if (userResult.rows.length === 0) {
@@ -184,7 +184,7 @@ exports.deleteAccount = async (req, res) => {
 
         const user = userResult.rows[0];
 
-        // Verificar senha
+        // Verificar a senha
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             return res.status(400).json({ 
@@ -193,7 +193,7 @@ exports.deleteAccount = async (req, res) => {
             });
         }
 
-        // Deletar usuário (CASCADE deletará o histórico automaticamente)
+        // Deletar o usuário (Cascade deletará o histórico automaticamente)
         const deleteResult = await pool.query('DELETE FROM users WHERE id = $1', [userId]);
 
         if (deleteResult.rowCount === 0) {

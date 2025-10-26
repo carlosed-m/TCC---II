@@ -1,8 +1,8 @@
 /* ============================================
-   ESTILOS COMPARTILHADOS - MODAIS E COMPONENTES COMUNS
+   Eestilos Compartilhados - Modais e Componentes comuns
    ============================================ */
 
-/* === OVERLAY BASE === */
+/* === Overlay do Modal === */
 .modal,
 .modal-overlay {
   position: fixed;
@@ -23,7 +23,7 @@
   display: flex;
 }
 
-/* === ESTRUTURA BASE DO MODAL === */
+/* === Estrutura Base do Modal === */
 .modal-content {
   background: #ffffff;
   border-radius: 16px;
@@ -47,7 +47,7 @@
   }
 }
 
-/* === HEADER COMPARTILHADO === */
+/* === Header Compartilhado === */
 .modal-header {
   background: linear-gradient(135deg, #dc3545, #c82333);
   color: white;
@@ -105,7 +105,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* === BODY COMPARTILHADO === */
+/* === Body Compartilhado === */
 .modal-body {
   padding: 2rem 1.5rem;
   background: #ffffff;
@@ -126,7 +126,7 @@
   opacity: 0.8;
 }
 
-/* === FOOTER COMPARTILHADO === */
+/* === Footer Compartilhado === */
 .modal-footer {
   padding: 0 1.5rem 2rem;
   display: flex;
@@ -134,7 +134,7 @@
   justify-content: center;
 }
 
-/* === BOTÕES COMPARTILHADOS === */
+/* === Botões Compartilhados === */
 .btn-modal {
   padding: 12px 24px;
   border: none;
@@ -187,7 +187,7 @@
   background: linear-gradient(135deg, #495057, #343a40);
 }
 
-/* === ESTILOS ESPECÍFICOS DO MODAL DE LOGOUT === */
+/* === Estilos Específicos do Modal de Logout === */
 .logout-modal-content {
   text-align: center;
   background: #ffffff;
@@ -220,7 +220,7 @@
   background: #ffffff;
 }
 
-/* === ESTILOS ESPECÍFICOS DO MODAL DE DELETE === */
+/* === Estilos Específicos do Modal de Exclusão === */
 .delete-modal-content {
   background: #ffffff;
   text-align: center;
@@ -261,7 +261,7 @@
   font-size: 0.9rem;
 }
 
-/* === TEMA ESCURO === */
+/* === Tema Escuro === */
 .dark-theme .modal-content,
 .dark-theme .logout-modal-content,
 .dark-theme .delete-modal-content {
@@ -350,7 +350,7 @@
   color: #bdc3c7 !important;
 }
 
-/* === RESPONSIVIDADE === */
+/* === Deixando Responsivo === */
 @media (max-width: 480px) {
   .modal-content {
     width: 95%;
@@ -383,7 +383,7 @@
   }
 }
 
-/* === MODAL DE CARREGAMENTO === */
+/* === Modal de Carregamento === */
 .loading-modal {
   position: fixed;
   top: 0;

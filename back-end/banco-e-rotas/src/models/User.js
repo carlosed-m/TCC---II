@@ -1,7 +1,7 @@
-const { Pool } = require('pg'); // Import the PostgreSQL client
-const pool = require('../config/db'); // Import the database connection
+const { Pool } = require('pg'); // Importar o PostgreSQL
+const pool = require('../config/db'); // Importa o pool das conexões
 
-// User model definition
+// Definição do modelo do usuário
 class User {
     constructor(id, username, password, email) {
         this.id = id;

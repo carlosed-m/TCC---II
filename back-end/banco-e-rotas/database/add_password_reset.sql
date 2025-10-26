@@ -1,7 +1,4 @@
 -- Script de migração para adicionar funcionalidade de recuperação de senha
--- Execute este script se você já tem a tabela users criada
-
--- Adicionar colunas para recuperação de senha (se não existirem)
 DO $$ 
 BEGIN
     -- Verificar se a coluna reset_token existe, se não, criar

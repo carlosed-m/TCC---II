@@ -140,7 +140,7 @@ class RegisterForm {
     this.passwordInput.addEventListener('input', this.validatePassword.bind(this));
     this.confirmPasswordInput.addEventListener('input', this.validatePasswordConfirmation.bind(this));
   }
-
+  // Validação do nome
   validateName() {
     const name = this.nameInput.value;
     const nameValidation = document.getElementById('name-validation');
@@ -162,7 +162,8 @@ class RegisterForm {
     
     this.checkFormValidity();
   }
-
+  // Validação do e-mail
+  // Validação do e-mail
   validateEmail() {
     const email = this.emailInput.value;
     const emailValidation = document.getElementById('email-validation');
@@ -184,7 +185,7 @@ class RegisterForm {
     
     this.checkFormValidity();
   }
-
+  // Validação da senha
   validatePassword() {
     const password = this.passwordInput.value;
     
@@ -220,7 +221,7 @@ class RegisterForm {
     
     this.checkFormValidity();
   }
-
+  // Validação da confirmação de senha
   validatePasswordConfirmation() {
     const password = this.passwordInput.value;
     const confirmPassword = this.confirmPasswordInput.value;
@@ -242,7 +243,7 @@ class RegisterForm {
     
     this.checkFormValidity();
   }
-
+  // Atualiza o indicador de força da senha
   updateStrengthIndicator(elementId, isValid) {
     const element = document.getElementById(elementId);
     const icon = element.querySelector('i');
@@ -257,7 +258,7 @@ class RegisterForm {
       icon.className = 'fa-solid fa-times';
     }
   }
-
+  // Verifica se o formulário está válido para habilitar o botão de envio
   checkFormValidity() {
     const nameValid = this.nameInput.classList.contains('valid') && this.nameInput.value.length >= 2;
     const emailValid = this.emailInput.classList.contains('valid');
@@ -345,7 +346,7 @@ function initPasswordToggle() {
     });
   }
 }
-
+// Função para alternar a visibilidade da senha
 function togglePasswordVisibility(field, icon) {
   if (field.type === 'password') {
     field.type = 'text';

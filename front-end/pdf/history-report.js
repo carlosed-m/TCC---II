@@ -1,5 +1,5 @@
 /**
- * GERADOR DE PDF - RELATÓRIO DETALHADO DO HISTÓRICO
+ * Geração do PDF - Relatório da tela de Histórico
  */
 
 class HistoryReportGenerator {
@@ -34,7 +34,7 @@ class HistoryReportGenerator {
         throw new Error(`Erro ${response.status}: ${errorText}`);
       }
 
-      // Converter resposta para blob
+      // Converter a resposta para blob
       const blob = await response.blob();
       
       // Criar URL temporária para download
@@ -108,7 +108,7 @@ class HistoryReportGenerator {
       alert('Nenhuma verificação selecionada para o relatório.');
       return;
     }
-
+    // Utilizando a biblioteca jsPDF
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     

@@ -1,6 +1,6 @@
 /* Estilos para páginas de autenticação (Login e Cadastro) */
 
-/* === BOTÃO VOLTAR AO SCANNER === */
+/* === Botão de Voltar ao Scanner === */
 .back-btn {
   display: inline-flex;
   align-items: center;
@@ -23,7 +23,7 @@
   background: #1e40af;
 }
 
-/* === TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA === */
+/* === Transições suaves para mudança de Tema === */
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -33,7 +33,7 @@ html, body {
   transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-
+/* === Contêiner Principal da Autenticação === */
 .auth-container {
   min-height: 100vh;
   display: flex;
@@ -42,7 +42,7 @@ html, body {
   background: #fafafa;
   padding: 20px;
 }
-
+/* === Cartão da Autenticação === */
 .auth-card {
   background: white;
   padding: 40px;
@@ -51,7 +51,7 @@ html, body {
   width: 100%;
   max-width: 450px;
 }
-
+/* === Cabeçalho da Autenticação === */
 .auth-header {
   text-align: center;
   margin-bottom: 30px;
@@ -64,6 +64,7 @@ html, body {
   margin-bottom: 15px;
   color: #667eea;
 }
+
 
 .auth-header .logo i {
   font-size: 2.5rem;
@@ -80,7 +81,7 @@ html, body {
   margin: 0;
   font-size: 1.5rem;
 }
-
+/* === Formulários da Autenticação === */
 .form-group {
   margin-bottom: 20px;
 }
@@ -236,7 +237,7 @@ html, body {
   transform: none;
 }
 
-/* === ESTILOS EXPLÍCITOS PARA TEMA CLARO === */
+/* === Estilos específicos para o Tema Claro === */
 .light-theme .form-group label,
 body.light-theme .form-group label {
   color: #555 !important;
@@ -296,7 +297,7 @@ body.light-theme .password-toggle:hover {
   color: #2563eb !important;
 }
 
-/* ESPECIFICIDADE MÁXIMA PARA TEMA CLARO - usando html.light-theme */
+/* Especificidade máxima para tema claro - usando html.light-theme */
 html.light-theme .form-group label {
   color: #555 !important;
   font-weight: 600 !important;
@@ -365,7 +366,7 @@ html.light-theme .password-toggle:hover {
   text-decoration: underline;
 }
 
-/* Link para esqueceu senha */
+/* Link do esqueceu a sua senha */
 .forgot-password-link {
   text-align: center;
   margin-top: 15px;
@@ -420,7 +421,7 @@ html.light-theme .password-toggle:hover {
   100% { transform: rotate(360deg); }
 }
 
-/* Modal de Sucesso */
+/* Modal do Sucesso */
 .modal {
   display: none;
   position: fixed;
@@ -494,7 +495,7 @@ html.light-theme .password-toggle:hover {
   color: #ecf0f1;
 }
 
-/* Estilos do tema escuro para contêiner de senha */
+/* Estilos do tema escuro para o contêiner da senha */
 .dark-theme .password-container input {
   background: #34495e;
   border-color: #1e40af;
@@ -526,7 +527,7 @@ html.light-theme .password-toggle:hover {
   color: #bdc3c7;
 }
 
-/* Responsividade */
+/* Deixando responsivo */
 @media (max-width: 480px) {
   .auth-card {
     max-width: 400px;
@@ -546,7 +547,7 @@ html.light-theme .password-toggle:hover {
   }
 }
 
-/* === TEMA ESCURO PARA REDEFINIÇÃO DE SENHA === */
+/* === Tema Escuro para a redefinição de senha === */
 .dark-theme .password-strength {
   background-color: #34495e !important;
   border-left-color: #3b82f6 !important;
@@ -598,7 +599,7 @@ html.light-theme .password-toggle:hover {
   box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.25) !important;
 }
 
-/* Botões do toggle de senha no tema escuro */
+/* Botões do toggle da senha no tema escuro */
 .dark-theme .password-toggle {
   background-color: transparent !important;
   color: #bdc3c7 !important;
@@ -608,7 +609,7 @@ html.light-theme .password-toggle:hover {
   color: #ecf0f1 !important;
 }
 
-/* Container de senha no tema escuro */
+/* Container da senha no tema escuro */
 .dark-theme .password-container {
   position: relative;
 }
@@ -617,7 +618,7 @@ html.light-theme .password-toggle:hover {
   padding-right: 45px !important;
 }
 
-/* === ESTILOS GERAIS DO TEMA ESCURO === */
+/* === Estilos gerais do tema escuro === */
 .dark-theme body {
   background-color: #1a202c !important;
   color: #ecf0f1 !important;
@@ -655,7 +656,7 @@ html.light-theme .password-toggle:hover {
   color: #bdc3c7 !important;
 }
 
-/* Campos de formulário no tema escuro */
+/* Campos do formulário no tema escuro */
 .dark-theme .form-group {
   color: #ecf0f1 !important;
 }
@@ -681,7 +682,7 @@ html.light-theme .password-toggle:hover {
   color: #ecf0f1 !important;
 }
 
-/* Container de senha no tema escuro */
+/* Contêiner da senha no tema escuro */
 .dark-theme .password-container {
   position: relative;
 }
@@ -692,7 +693,7 @@ html.light-theme .password-toggle:hover {
   color: #ecf0f1 !important;
 }
 
-/* Botões do toggle de senha no tema escuro */
+/* Botões do toggle da senha no tema escuro */
 .dark-theme .password-toggle {
   background-color: transparent !important;
   border: none !important;

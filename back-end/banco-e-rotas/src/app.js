@@ -1,10 +1,7 @@
-// =======================================================
-// API COMPLETA TCC - Integração com Banco de Dados
-// =======================================================
+//=======================================================
 // API principal com PostgreSQL, autenticação JWT,
-// histórico de verificações e geração de relatórios PDF.
-// Use este servidor para funcionalidade completa.
-// =======================================================
+// histórico de verificações e geração dos relatórios PDF
+//
 
 require('dotenv').config();
 const express = require('express');
@@ -14,7 +11,7 @@ const path = require('path');
 // Teste de conexão com banco
 const pool = require('./config/db');
 
-// --- CONFIGURAÇÃO INICIAL ---
+// --- Configuração Inicial ---
 const app = express();
 const PORT = process.env.PORT || 3001; // API Backend
 
@@ -40,12 +37,12 @@ app.use((req, res, next) => {
     next();
 });
 
-// --- IMPORTAÇÃO DAS ROTAS ---
+// --- Importação das Rotas ---
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const historyRoutes = require('./routes/history');
 
-// --- REGISTRO DAS ROTAS ---
+// --- Registro das Rotas ---
 // Rota de status da API
 app.get('/api/status', (req, res) => {
     res.json({
@@ -59,13 +56,13 @@ app.get('/api/status', (req, res) => {
 // Rotas de autenticação
 app.use('/api/auth', authRoutes);
 
-// Rotas de usuários
+// Rotas dos usuários
 app.use('/api/users', userRoutes);
 
-// Rotas de histórico
+// Rotas do histórico
 app.use('/api/history', historyRoutes);
 
-// Middleware de tratamento de rotas não encontradas
+// Middleware de tratamento das rotas não encontradas
 app.use('*', (req, res) => {
     res.status(404).json({
         erro: 'Rota não encontrada',
@@ -73,7 +70,7 @@ app.use('*', (req, res) => {
     });
 });
 
-// Middleware de tratamento de erros globais
+// Middleware de tratamento dos erros globais
 app.use((err, req, res, next) => {
     console.error('Erro não tratado:', err);
     res.status(500).json({
@@ -82,7 +79,7 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Teste de conexão com banco na inicialização
+// Teste de conexão com o banco na inicialização
 const testDatabaseConnection = async () => {
     try {
         await pool.query('SELECT NOW()');
@@ -96,7 +93,7 @@ const testDatabaseConnection = async () => {
     }
 };
 
-// --- INICIA O SERVIDOR ---
+// --- Inicia o Servidor ---
 app.listen(PORT, () => {
     console.log(`🚀 Servidor API rodando em http://localhost:${PORT}`);
     console.log(`📊 Status da API: http://localhost:${PORT}/api/status`);

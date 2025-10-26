@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* === PREVENÇÃO DE PISCADAS DE TEMA === */
+/* === Configuração do esquema de cor para evitar as piscadas da troca do tema claro ao escuro === */
 html {
   /* Configuração inicial para evitar flash de conteúdo */
   color-scheme: light dark;
@@ -15,7 +15,7 @@ html.light-theme {
   color-scheme: light;
 }
 
-/* === TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA === */
+/* === Transições suaves para mudança de Tema === */
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -127,7 +127,7 @@ body.dark-theme {
     background-color: var(--bg-color-dark);
     border-color: var(--accent-color-dark);
 }
-/* Container principal e elementos de texto */
+/* Contêiner principal e elementos do texto */
 .container {
     max-width: 800px;
     margin: 2rem auto;
@@ -311,7 +311,7 @@ input[type="file"] {
     color: #326cca;
 }
 
-/* Modal de erro de tamanho de arquivo */
+/* Modal de erro de tamanho do arquivo */
 #file-size-error-modal .modal-content {
     max-width: 550px;
     max-height: 95vh;
@@ -395,7 +395,7 @@ input[type="file"] {
     color: #3b82f6;
 }
 
-/* Formulário de URL */
+/* Formulário da URL */
 .url-form {
     display: flex;
     border: 2px solid #1e40af;
@@ -452,7 +452,7 @@ input[type="file"] {
     -webkit-text-fill-color: var(--primary-text-dark) !important;
 }
 
-/* Tema escuro para o campo de URL */
+/* Tema escuro para o campo da URL */
 .dark-theme .url-form input {
     background-color: var(--surface-color-dark);
     color: var(--primary-text-dark);
@@ -466,7 +466,7 @@ input[type="file"] {
     color: var(--secondary-text-light);
 }
 
-/* === AVISO DE URL === */
+/* === Aviso da URL === */
 .url-warning {
     background-color: #fef3cd;
     border: 1px solid #f6d55c;
@@ -498,7 +498,7 @@ input[type="file"] {
 .dark-theme .url-warning i {
     color: #fbbf24;
 }
-
+/* Animação de slide down */
 @keyframes slideDown {
     from {
         opacity: 0;
@@ -597,7 +597,7 @@ input[type="file"] {
     gap: 1rem; /* Espaço entre elementos */
 }
 
-/* === ESTILOS DE AUTENTICAÇÃO === */
+/* === Estilos de Autenticação === */
 .auth-section {
     display: flex;
     align-items: center;
@@ -668,7 +668,7 @@ input[type="file"] {
     border-color: var(--border-color-dark);
 }
 
-/* Responsividade para dispositivos móveis */
+/* Deixando responsivo */
 @media (max-width: 768px) {
     .auth-section {
         flex-direction: column;
@@ -751,7 +751,7 @@ input[type="file"] {
     background-color: #ac3d21;
 }
 
-/* Área de resultados */
+/* Área dos resultados */
 #results {
     margin-top: 2rem;
     width: 100%;
@@ -820,7 +820,7 @@ input[type="file"] {
     }
 }
 
-/* Cartão de dicas de segurança - Base */
+/* Cartão de dicas de segurança */
 .security-tips-card {
     border-radius: 8px;
     padding: 1.5rem;
@@ -884,7 +884,7 @@ input[type="file"] {
     color: #f87171;
 }
 
-/* Estilos gerais do card (fallback) */
+/* Estilos gerais do card */
 .security-tips-card h3 {
     margin-bottom: 0.5rem;
     font-size: 1.1rem;

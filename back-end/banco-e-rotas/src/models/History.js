@@ -1,10 +1,10 @@
 const { Pool } = require('pg'); // Import the PostgreSQL client
 
-// Define the History model
+// Definir a classe History
 class History {
     constructor() {
         this.pool = new Pool({
-            // Database connection configuration
+            // Configuração da conexão com o banco de dados
             user: 'your_username',
             host: 'localhost',
             database: 'your_database',
@@ -13,7 +13,7 @@ class History {
         });
     }
 
-    // Method to get user history
+    // Método para obter o histórico do usuário
     async getHistory(userId) {
         const query = 'SELECT * FROM user_history WHERE user_id = $1';
         const values = [userId];
@@ -21,7 +21,7 @@ class History {
         return result.rows;
     }
 
-    // Method to verify a specific history entry
+    // Método para verificar uma entrada específica do histórico
     async verifyHistory(userId, historyId) {
         const query = 'SELECT * FROM user_history WHERE user_id = $1 AND id = $2';
         const values = [userId, historyId];

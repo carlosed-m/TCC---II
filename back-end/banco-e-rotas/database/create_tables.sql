@@ -1,4 +1,4 @@
--- Script SQL para criação das tabelas do sistema TCC
+-- Script SQL para criação das tabelas
 -- Criação da tabela de usuários
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,

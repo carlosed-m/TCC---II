@@ -1,5 +1,4 @@
-// === APLICAÇÃO IMEDIATA DO TEMA ===
-// Aplicar tema antes do DOM carregar para evitar piscadas
+// Aplicar tema antes do DOM carregar para evitar piscadas trocas dos temas
 (function() {
   const savedTheme = localStorage.getItem('theme') || 'light-theme';
   document.documentElement.className = savedTheme;
@@ -10,13 +9,13 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
-  // === SISTEMA DE AUTENTICAÇÃO ===
+  // === Sistema de Autenticação ===
   const API_URL = 'http://localhost:3001/api';
   
-  // === CONFIGURAÇÕES DE ARQUIVO ===
+  // === Configurações do Arquivo ===
   const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB em bytes
   
-  // === FUNÇÕES UTILITÁRIAS ===
+  // === Funções Utilitárias ===
   function showFileSizeErrorModal(fileName, fileSize) {
     const modal = document.getElementById('file-size-error-modal');
     const details = document.getElementById('file-size-details');
@@ -29,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     modal.style.display = 'block';
   }
-
+  // Fechar modal de erro de tamanho de arquivo
   function closeFileSizeErrorModal() {
     const modal = document.getElementById('file-size-error-modal');
     modal.style.display = 'none';
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = 'html/login.html';
     });
   }
-
+  // Navegar para a parte do Histórico
   if (historyBtn) {
     historyBtn.addEventListener('click', () => {
       window.location.href = 'html/history.html';
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar status de autenticação
   checkAuthStatus();
 
-  // === ELEMENTOS PRINCIPAIS DO DOM ===
+  // === Elementos Principais do DOM ===
   const themeToggleButton = document.getElementById('theme-toggle-button');
   const body = document.body;
   const tabs = document.querySelectorAll('.tab-link');
@@ -159,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlForm = document.getElementById('urlForm');
   const fileInput = document.getElementById('fileInput');
 
-  // === SISTEMA DE TEMA ===
+  // === Sistema de Tema ===
   // Função para aplicar o tema salvo de forma suave
   function applyTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light-theme';
@@ -167,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Aplicar ao documentElement e body simultaneamente
     document.documentElement.className = savedTheme;
     body.className = savedTheme;
-    
+    // Atualizar ícone e texto do botão de tema
     if (themeToggleButton) {
       const icon = themeToggleButton.querySelector('i');
       const span = themeToggleButton.querySelector('span');
@@ -233,16 +232,16 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const urlInput = document.getElementById('urlInput');
       const url = urlInput.value.trim();
-
+      // Verifica se a URL inserida é válida
       if (!url) {
         exibirResultado({ erro: 'Por favor, insira uma URL válida' });
         return;
       }
-
+      // Mostrar loader
       mostrarLoader(true);
       isVerificationInProgress = true;
       currentVerificationController = new AbortController();
-
+      // Iniciar verificação da URL
       try {
         const response = await fetch('http://localhost:3000/verificar-url', {
           method: 'POST',
@@ -250,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({ url }),
           signal: currentVerificationController.signal
         });
-
+        // Obter dados da resposta
         const data = await response.json();
         
         if (!response.ok) {
@@ -258,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
           exibirResultado(data);
           return;
         }
-        
+        // Exibir resultado da verificação
         exibirResultado(data);
       } catch (error) {
         if (error.name === 'AbortError') {
@@ -279,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (urlInput) {
     urlInput.addEventListener('input', (e) => {
       const url = e.target.value.trim();
-      
+      // Verifica se a URL inserida é válida
       if (url.length > 0 && !validateURL(url)) {
         showURLWarning();
       } else {
@@ -347,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
         exibirResultado({ erro: 'Nenhum arquivo selecionado' });
         return;
       }
-
+      // Mostrar loader de envio
       mostrarLoader(true);
       isVerificationInProgress = true;
       currentVerificationController = new AbortController();
@@ -401,7 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (results) results.innerHTML = '';
     }
   }
-
+  // Formatar bytes para exibição legível
   function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -411,40 +410,31 @@ document.addEventListener('DOMContentLoaded', () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  function escapeHtml(str) {
-    return str
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
-  // === VALIDAÇÃO DE URL ===
+  // === Validação da URL ===
   function validateURL(url) {
     const urlPattern = /^https?:\/\//i;
     return urlPattern.test(url);
   }
-
+  // Mostrar aviso de URL inválida
   function showURLWarning() {
     const warning = document.getElementById('url-warning');
     if (warning) {
       warning.style.display = 'flex';
     }
   }
-
+  // Esconder aviso de URL inválida
   function hideURLWarning() {
     const warning = document.getElementById('url-warning');
     if (warning) {
       warning.style.display = 'none';
     }
   }
-
+  // Exibir resultado da verificação
   function exibirResultado(data) {
     const resultsDiv = document.getElementById('results');
     if (!resultsDiv) return;
     resultsDiv.innerHTML = '';
-
+    // Verificar se houve erro na resposta
     if (data.erro) {
       const errorDiv = document.createElement('div');
       errorDiv.className = 'error-message';
@@ -455,12 +445,12 @@ document.addEventListener('DOMContentLoaded', () => {
       resultsDiv.appendChild(errorDiv);
       return;
     }
-
+    //  Verificar se os atributos existem
     if (!data.data?.attributes) {
       resultsDiv.innerHTML = '<div class="error-message">Resposta inválida da API</div>';
       return;
     }
-
+    // Processar e exibir os resultados
     const attributes = data.data.attributes;
     const stats = attributes.last_analysis_stats || attributes.stats;
     const isMalicious = stats && stats.malicious > 0;
@@ -483,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
       : window.securityTips?.safe?.[
           Math.floor(Math.random() * window.securityTips.safe.length)
         ];
-
+    // Adiciona a dica ao card
     if (tip) {
       tipsCard.innerHTML = `
         <h3>${isMalicious ? '🚨 Dica de Segurança' : 'Lembre-se Sempre'}</h3>
@@ -753,7 +743,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// === FUNÇÕES DO MODAL DE LOGOUT ===
+// === Funções do Modal de Logout ===
 
 // Mostrar modal de logout
 function showLogoutModal() {

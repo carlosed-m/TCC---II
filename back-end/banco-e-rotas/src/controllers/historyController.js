@@ -52,13 +52,13 @@ exports.getUserHistory = async (req, res) => {
         `;
         let queryParams = [userId];
         
-        // Filtrar por tipo se especificado
+        // Filtrar por tipo
         if (type && (type === 'url' || type === 'file')) {
             query += ` AND type = $${queryParams.length + 1}`;
             queryParams.push(type);
         }
         
-        // Filtrar por status se especificado
+        // Filtrar por status
         if (status) {
             if (status === 'clean') {
                 query += ` AND threat_count = 0`;
@@ -69,7 +69,7 @@ exports.getUserHistory = async (req, res) => {
             }
         }
         
-        // Filtrar por busca se especificado
+        // Filtrar por busca
         if (search) {
             query += ` AND (target ILIKE $${queryParams.length + 1})`;
             queryParams.push(`%${search}%`);
@@ -184,7 +184,7 @@ exports.getVerificationDetails = async (req, res) => {
             parsedResult = verification.result; // Mantém como está se não conseguir fazer parse
         }
 
-        // Criar resposta com detalhes técnicos estruturados
+        // Criar uma resposta com detalhes técnicos estruturados
         const detailedResponse = {
             id: verification.id,
             tipo: verification.type,
@@ -204,7 +204,7 @@ exports.getVerificationDetails = async (req, res) => {
                 engines_detectaram: []
             },
             
-            // Dados originais para debug
+            // Dados originais para o debug
             resultado_completo: parsedResult
         };
 
@@ -216,7 +216,7 @@ exports.getVerificationDetails = async (req, res) => {
             if (stats) {
                 console.log('✅ Estatísticas encontradas:', stats);
                 
-                // Formato VirusTotal v3
+                // Formato do VirusTotal v3
                 detailedResponse.detalhes_tecnicos.total_engines = 
                     (stats.harmless || 0) + (stats.malicious || 0) + 
                     (stats.suspicious || 0) + (stats.undetected || 0) + (stats.timeout || 0);
@@ -226,7 +226,7 @@ exports.getVerificationDetails = async (req, res) => {
                 detailedResponse.detalhes_tecnicos.nao_detectados = stats.undetected || 0;
                 detailedResponse.detalhes_tecnicos.timeout = stats.timeout || 0;
                 
-                // Extrair engines que detectaram ameaças
+                // Extrair as engines que detectaram ameaças
                 const results = parsedResult.data?.attributes?.results;
                 if (results) {
                     const enginesComAmeacas = [];
@@ -278,7 +278,7 @@ exports.getVerificationDetails = async (req, res) => {
     }
 };
 
-// Deletar uma verificação do histórico
+// Excluir uma verificação do histórico
 exports.deleteVerification = async (req, res) => {
     try {
         const { id } = req.params;
@@ -310,7 +310,7 @@ exports.deleteVerification = async (req, res) => {
     }
 };
 
-// Obter estatísticas do usuário
+// Obter as estatísticas do usuário
 exports.getUserStats = async (req, res) => {
     try {
         const userId = req.user.userId;
@@ -340,7 +340,7 @@ exports.getUserStats = async (req, res) => {
     }
 };
 
-// Gerar PDF da verificação
+// Gerar o PDF da verificação
 exports.generateVerificationPDF = async (req, res) => {
     try {
         const { id } = req.params;
@@ -375,12 +375,12 @@ exports.generateVerificationPDF = async (req, res) => {
             parsedResult = verification.result;
         }
 
-        // Extrair estatísticas
+        // Extrair as estatísticas
         const stats = parsedResult?.data?.attributes?.stats || {};
         const totalEngines = (stats.harmless || 0) + (stats.malicious || 0) + 
                            (stats.suspicious || 0) + (stats.undetected || 0) + (stats.timeout || 0);
 
-        // Gerar PDF usando mesmo layout da tela inicial
+        // Gerar o PDF usando o mesmo layout da tela inicial
         const PDFDocument = require('pdfkit');
         const doc = new PDFDocument({ margin: 20 });
         
@@ -412,7 +412,7 @@ exports.generateVerificationPDF = async (req, res) => {
             return y + lines + 5;
         }
 
-        // Cabeçalho azul
+        // Cabeçalho
         doc.rect(0, 0, pageWidth, 25).fill('#3B82F6');
         
         doc.fillColor('#FFFFFF');
@@ -423,7 +423,7 @@ exports.generateVerificationPDF = async (req, res) => {
         doc.fillColor('#000000');
         yPosition += 10;
         
-        // Traduzir status para português
+        // Traduzir os status para português
         function translateStatus(status) {
             const statusMap = {
                 'clean': 'Limpo',
@@ -486,7 +486,7 @@ exports.generateVerificationPDF = async (req, res) => {
             Object.keys(results).forEach(engineName => {
                 const result = results[engineName];
                 if (result.category === 'malicious') {
-                    // Traduzir resultados comuns dos engines
+                    // Traduzir os resultados comuns das engines
                     const translatedResult = result.result
                         .replace(/malware/gi, 'malware')
                         .replace(/trojan/gi, 'trojan')
@@ -506,7 +506,7 @@ exports.generateVerificationPDF = async (req, res) => {
         doc.text('Relatório gerado automaticamente pelo sistema No Matters', margin, doc.page.height - 25);
         doc.text(`Página 1 de 1 - ${new Date().toLocaleString('pt-BR')}`, pageWidth - margin - 100, doc.page.height - 25);
 
-        // Finalizar PDF
+        // Finalizar o PDF
         doc.end();
         
         console.log('✅ PDF gerado e enviado com sucesso');
@@ -520,7 +520,7 @@ exports.generateVerificationPDF = async (req, res) => {
     }
 };
 
-// Gerar PDF temporário (sem salvar no histórico)
+// Gerar o PDF temporário (sem salvar no histórico)
 exports.generateTemporaryPDF = async (req, res) => {
     try {
         const { type, target, result, status, threat_count, scan_date } = req.body;
@@ -535,7 +535,7 @@ exports.generateTemporaryPDF = async (req, res) => {
             });
         }
 
-        // Criar objeto simulando uma verificação do histórico
+        // Criar o objeto simulando uma verificação do histórico
         const verification = {
             id: 'temp',
             type,
@@ -545,7 +545,7 @@ exports.generateTemporaryPDF = async (req, res) => {
             scan_date: scan_date ? new Date(scan_date) : new Date()
         };
 
-        // Processar resultado (mesmo código da função original)
+        // Processar o resultado (mesmo código da função original)
         let parsedResult;
         try {
             parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
@@ -572,11 +572,11 @@ exports.generateTemporaryPDF = async (req, res) => {
         const totalEngines = (stats.harmless || 0) + (stats.malicious || 0) + 
                            (stats.suspicious || 0) + (stats.undetected || 0) + (stats.timeout || 0);
 
-        // Gerar PDF usando mesmo layout da função original
+        // Gerar o PDF usando o mesmo layout da função original
         const PDFDocument = require('pdfkit');
         const doc = new PDFDocument({ margin: 20 });
         
-        // Headers para download
+        // Headers para o download
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="relatorio_seguranca_temp.pdf"`);
         
@@ -588,7 +588,7 @@ exports.generateTemporaryPDF = async (req, res) => {
         const margin = 20;
         let yPosition = 30;
 
-        // Função auxiliar para adicionar texto com quebra de linha
+        // Função auxiliar para adicionar o texto com quebra de linha
         function addText(text, x, y, options = {}) {
             const maxWidth = options.maxWidth || (pageWidth - 2 * margin);
             const fontSize = options.fontSize || 12;
@@ -597,14 +597,14 @@ exports.generateTemporaryPDF = async (req, res) => {
             doc.fontSize(fontSize);
             doc.font(isBold ? 'Helvetica-Bold' : 'Helvetica');
             
-            // Calcular altura necessária
+            // Calcular a altura necessária
             const lines = doc.heightOfString(text, { width: maxWidth });
             doc.text(text, x, y, { width: maxWidth });
             
             return y + lines + 5;
         }
 
-        // Cabeçalho azul
+        // Cabeçalho
         doc.rect(0, 0, pageWidth, 25).fill('#3B82F6');
         
         doc.fillColor('#FFFFFF');
@@ -615,7 +615,7 @@ exports.generateTemporaryPDF = async (req, res) => {
         doc.fillColor('#000000');
         yPosition += 10;
         
-        // Traduzir status para português
+        // Traduzir os status para português
         function translateStatus(status) {
             const statusMap = {
                 'clean': 'Limpo',
@@ -678,7 +678,7 @@ exports.generateTemporaryPDF = async (req, res) => {
             Object.keys(results).slice(0, 5).forEach(engineName => {
                 const result = results[engineName];
                 if (result.category === 'malicious') {
-                    // Traduzir resultados comuns dos engines
+                    // Traduzir os resultados comuns das engines
                     const translatedResult = result.result
                         ?.replace(/malware/gi, 'malware')
                         ?.replace(/trojan/gi, 'trojan')
@@ -698,7 +698,7 @@ exports.generateTemporaryPDF = async (req, res) => {
         doc.text('Relatório gerado automaticamente pelo sistema No Matters', margin, doc.page.height - 25);
         doc.text(`Página 1 de 1 - ${new Date().toLocaleString('pt-BR')}`, pageWidth - margin - 100, doc.page.height - 25);
 
-        // Finalizar PDF
+        // Finalizar o PDF
         doc.end();
         
         console.log('✅ PDF temporário gerado e enviado com sucesso');

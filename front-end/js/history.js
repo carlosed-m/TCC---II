@@ -49,7 +49,7 @@ class HistoryManager {
     this.loadStats();
     this.loadHistory();
   }
-
+  // Verifica se o usuário está autenticado
   checkAuth() {
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
@@ -63,7 +63,7 @@ class HistoryManager {
     this.userName.textContent = `Olá, ${user.name.split(' ')[0]}`;
     return true;
   }
-
+  // Configura o tema com base no localStorage
   setupTheme() {
     const currentTheme = localStorage.getItem('theme') || 'light-theme';
     // Aplicar simultaneamente ao documentElement e body
@@ -116,7 +116,7 @@ class HistoryManager {
     this.statusFilter.addEventListener('change', this.applyFilters.bind(this));
     this.searchInput.addEventListener('input', this.debounce(this.applyFilters.bind(this), 300));
   }
-
+  // Carrega estatísticas do usuário
   async loadStats() {
     try {
       const token = localStorage.getItem('authToken');
@@ -125,7 +125,7 @@ class HistoryManager {
           'Authorization': `Bearer ${token}`
         }
       });
-
+      // Verificar resposta do servidor
       if (response.ok) {
         const data = await response.json();
         const stats = data.data;
@@ -140,7 +140,7 @@ class HistoryManager {
       // Erro ao carregar estatísticas - continua normalmente
     }
   }
-
+  // Carrega histórico de verificações
   async loadHistory(page = 1, filters = {}) {
     this.loading.style.display = 'block';
     this.historyList.style.display = 'none';
@@ -154,7 +154,7 @@ class HistoryManager {
         limit: '10',
         ...filters
       });
-
+    
       const response = await fetch(`${API_URL}/history?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`
@@ -186,7 +186,7 @@ class HistoryManager {
     this.historyList.innerHTML = history.map(item => this.createHistoryItem(item)).join('');
     this.historyList.style.display = 'block';
   }
-
+  // Função para criar o HTML de um item do histórico
   createHistoryItem(item) {
     const date = new Date(item.created_at).toLocaleString('pt-BR');
     const statusClass = this.getStatusClass(item.status, item.threat_count);
@@ -228,7 +228,7 @@ class HistoryManager {
       </div>
     `;
   }
-
+  // Funções para obter classe e texto de status
   getStatusClass(status, threatCount) {
     if (threatCount === 0) return 'status-clean';
     if (threatCount > 0 && threatCount <= 3) return 'status-suspicious';
@@ -277,12 +277,12 @@ class HistoryManager {
     this.pagination.innerHTML = paginationHTML;
     this.pagination.style.display = 'flex';
   }
-
+  // Função para baixar PDF de uma verificação
   async downloadPDF(id) {
     const reportGenerator = new HistoryReportGenerator();
     await reportGenerator.downloadPDF(id);
   }
-
+  // Função para exibir toast de notificação
   showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
@@ -312,9 +312,7 @@ class HistoryManager {
     
     return toast;
   }
-
-  // Função createDetailsModalContent removida - agora usamos PDF
-
+  // Função para exibir modal de confirmação de exclusão
   showDeleteConfirmation(id) {
     // Encontrar a verificação nos dados atuais
     const verification = this.allHistory.find(item => item.id === id);
@@ -349,7 +347,7 @@ class HistoryManager {
       </div>
     `;
     
-    // FORÇA a cor via JavaScript - usar as mesmas cores do tema claro
+    // Força a cor via JavaScript - usar as mesmas cores do tema claro
     setTimeout(() => {
       const typeElement = infoElement.querySelector('.verification-type');
       const isDarkTheme = document.documentElement.classList.contains('dark-theme') || 
@@ -380,7 +378,7 @@ class HistoryManager {
     const confirmBtn = document.getElementById('confirm-delete-btn');
     confirmBtn.onclick = () => this.confirmDelete(id);
   }
-
+  // Função para confirmar exclusão
   async confirmDelete(id) {
     try {
       const token = localStorage.getItem('authToken');
@@ -414,7 +412,7 @@ class HistoryManager {
   async deleteItem(id) {
     this.showDeleteConfirmation(id);
   }
-
+  // Aplica os filtros selecionados
   applyFilters() {
     this.currentFilters = {};
     
@@ -425,7 +423,7 @@ class HistoryManager {
     this.currentPage = 1;
     this.loadHistory(1, this.currentFilters);
   }
-
+  // Debounce para otimizar buscas
   debounce(func, wait) {
     let timeout;
     return function executedFunction(...args) {
@@ -464,7 +462,7 @@ window.addEventListener('click', (event) => {
   }
 });
 
-// Fechar modais com tecla ESC
+// Fechar modais com tecla ESC do teclado
 document.addEventListener('keydown', (event) => {
   if (event.key === 'Escape') {
     const detailsModal = document.getElementById('details-modal');
@@ -485,7 +483,7 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
-// === FUNÇÕES DO MODAL DE LOGOUT ===
+// === Funções do Modal de Logout ===
 
 // Mostrar modal de logout
 function showLogoutModal() {

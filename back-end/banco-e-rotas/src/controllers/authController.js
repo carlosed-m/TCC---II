@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const pool = require('../config/db');
 
-// Chave secreta JWT - em produção, use variável de ambiente
+// Chave secreta JWT
 const JWT_SECRET = process.env.JWT_SECRET || 'tcc_jwt_secret_key_2024';
 
 // Registrar novo usuário
@@ -88,7 +88,7 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Buscar usuário no banco
+        // Buscar o usuário no banco
         const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
         if (result.rows.length === 0) {
             return res.status(401).json({ 
@@ -108,13 +108,13 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Atualizar último login
+        // Atualiza o último login
         await pool.query(
             'UPDATE users SET updated_at = CURRENT_TIMESTAMP WHERE id = $1', 
             [user.id]
         );
 
-        // Gerar token JWT
+        // Gera o token JWT
         const token = jwt.sign(
             { userId: user.id, email: user.email }, 
             JWT_SECRET, 
@@ -142,7 +142,7 @@ exports.login = async (req, res) => {
     }
 };
 
-// Verificar token JWT
+// Verificar o token JWT
 exports.verifyToken = async (req, res) => {
     try {
         const token = req.headers.authorization?.split(' ')[1];
@@ -181,7 +181,7 @@ exports.verifyToken = async (req, res) => {
     }
 };
 
-// Verificar se e-mail existe para recuperação
+// Verificar se e-mail já existe para recuperação
 exports.forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
@@ -193,7 +193,7 @@ exports.forgotPassword = async (req, res) => {
             });
         }
 
-        // Verificar se usuário existe
+        // Verificar se o usuário existe
         const userResult = await pool.query('SELECT id, name, email FROM users WHERE email = $1', [email]);
         
         if (userResult.rows.length === 0) {

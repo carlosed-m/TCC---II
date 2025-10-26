@@ -1,6 +1,6 @@
 /* Estilos para a página de histórico */
 
-/* === TRANSIÇÕES SUAVES PARA MUDANÇA DE TEMA === */
+/* === Transições suaves para mudança de Tema === */
 html, body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -33,7 +33,7 @@ html, body {
   font-size: 1.1rem;
 }
 
-/* Grid de estatísticas */
+/* Grid das estatísticas */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -92,7 +92,7 @@ html, body {
   font-size: 0.9rem;
 }
 
-/* Lista de histórico */
+/* Lista do histórico */
 .history-list {
   display: flex;
   flex-direction: column;
@@ -255,7 +255,7 @@ html, body {
   border-color: #a71e2a;
 }
 
-/* Tema claro específico para botões PDF e Delete */
+/* Tema claro específico para os botões do PDF e Excluir */
 
 .light-theme .delete-btn,
 body:not(.dark-theme) .delete-btn {
@@ -462,7 +462,7 @@ body:not(.dark-theme) .delete-btn:hover {
   margin: 4px 0;
 }
 
-/* Estilo para tipo de verificação no modal */
+/* Estilo para o tipo de verificação no modal */
 .verification-info .verification-type {
   display: inline-flex;
   align-items: center;
@@ -485,7 +485,7 @@ body:not(.dark-theme) .delete-btn:hover {
   color: #7b1fa2;
 }
 
-/* Estilo para links no modal */
+/* Estilo para os links no modal */
 .verification-info .verification-link {
   color: #1976d2 !important;
   text-decoration: underline;
@@ -498,7 +498,7 @@ body:not(.dark-theme) .delete-btn:hover {
   text-decoration: underline;
 }
 
-/* Estilo para status no modal */
+/* Estilo para os status no modal */
 .verification-info .verification-status {
   display: inline-flex;
   align-items: center;
@@ -753,7 +753,7 @@ body:not(.dark-theme) .delete-btn:hover {
   }
 }
 
-/* Tema escuro para modais */
+/* Tema escuro para os modais */
 .dark-theme .details-modal-content,
 .dark-theme .delete-modal-content {
   background: var(--surface-color-dark) !important;
@@ -795,7 +795,7 @@ body:not(.dark-theme) .delete-btn:hover {
   color: var(--primary-text-dark) !important;
 }
 
-/* Estilos para tipo de verificação no tema escuro */
+/* Estilos para o tipo de verificação no tema escuro */
 .dark-theme .verification-info .verification-type.type-url,
 .dark-theme .delete-modal-content .verification-info .verification-type.type-url {
   background: rgba(25, 118, 210, 0.2) !important;
@@ -808,7 +808,7 @@ body:not(.dark-theme) .delete-btn:hover {
   color: #ba68c8 !important;
 }
 
-/* Forçar especificamente para o modal de exclusão no tema escuro */
+/* Forçar especificamenteo modal de exclusão no tema escuro */
 .dark-theme #delete-confirmation-modal .verification-type.type-url {
   background: rgba(25, 118, 210, 0.2) !important;
   color: #64b5f6 !important;
@@ -821,7 +821,7 @@ body:not(.dark-theme) .delete-btn:hover {
   border: none !important;
 }
 
-/* Estilo para links no tema escuro */
+/* Estilo para os links no tema escuro */
 .dark-theme .verification-info .verification-link {
   color: #64b5f6 !important;
   text-decoration: underline;
@@ -832,7 +832,7 @@ body:not(.dark-theme) .delete-btn:hover {
   text-decoration: underline;
 }
 
-/* Estilo para status no tema escuro */
+/* Estilo para os status no tema escuro */
 .dark-theme .verification-info .verification-status.status-clean {
   background: rgba(46, 125, 50, 0.2);
   color: #81c784;
@@ -903,7 +903,7 @@ body:not(.dark-theme) .delete-btn:hover {
   border-color: #991b1b !important;
 }
 
-/* Botões PDF e Delete no tema escuro */
+/* Botões do PDF e Excluir no tema escuro */
 .dark-theme .pdf-btn {
   background: linear-gradient(135deg, #dc3545, #c82333);
   color: white;
@@ -967,7 +967,7 @@ body:not(.dark-theme) .delete-btn:hover {
   border-color: var(--accent-color-dark);
 }
 
-/* Responsividade */
+/* Deixando responsivo */
 @media (max-width: 768px) {
   .history-container {
     padding: 15px;
