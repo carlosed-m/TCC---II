@@ -269,7 +269,7 @@ class RegisterForm {
   }
 
   showSuccessModal() {
-    this.successModal.style.display = 'block';
+    this.successModal.style.display = 'flex';
   }
 
   async handleSubmit(e) {
