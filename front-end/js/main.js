@@ -237,6 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
         exibirResultado({ erro: 'Por favor, insira uma URL válida' });
         return;
       }
+      
+      // Salvar URL para o relatório
+      window.lastScannedUrl = url;
+      window.lastScannedFile = null;
+      
       // Mostrar loader
       mostrarLoader(true);
       isVerificationInProgress = true;
@@ -346,6 +351,11 @@ document.addEventListener('DOMContentLoaded', () => {
         exibirResultado({ erro: 'Nenhum arquivo selecionado' });
         return;
       }
+      
+      // Salvar arquivo para o relatório
+      window.lastScannedFile = file.name;
+      window.lastScannedUrl = null;
+      
       // Mostrar loader de envio
       mostrarLoader(true);
       isVerificationInProgress = true;
@@ -651,7 +661,10 @@ document.addEventListener('DOMContentLoaded', () => {
       timestamp: new Date(),
       isMalicious: isMalicious,
       stats: stats,
-      tip: tip
+      tip: tip,
+      // Adicionar URL/arquivo original
+      originalUrl: window.lastScannedUrl || null,
+      originalFile: window.lastScannedFile || null
     };
 
     // Botão para gerar relatório PDF

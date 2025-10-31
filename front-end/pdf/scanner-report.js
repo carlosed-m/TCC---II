@@ -1,5 +1,7 @@
 /**
- * Geração do PDF - Relatório da Tela Inicial */
+ * GERADOR DE PDF - RELATÓRIO DE VERIFICAÇÃO DA TELA INICIAL
+ * Este arquivo contém a lógica para gerar PDFs dos resultados da verificação na tela inicial
+ */
 
 class ScannerReportGenerator {
   constructor() {
@@ -38,11 +40,11 @@ class ScannerReportGenerator {
   }
 
   /**
-   * Adiciona o cabeçalho do relatório
+   * Adiciona o cabeçalho azul do relatório
    * @private
    */
   _addHeader(doc) {
-    // Cabeçalho
+    // Cabeçalho azul
     doc.setFillColor(59, 130, 246); // #3B82F6
     doc.rect(0, 0, this.pageWidth, 25, 'F');
     
@@ -65,13 +67,75 @@ class ScannerReportGenerator {
     this.yPosition = this._addText(doc, `Data/Hora: ${analysisData.timestamp.toLocaleString('pt-BR')}`, this.margin, this.yPosition);
     this.yPosition = this._addText(doc, `Tipo de Análise: ${analysisData.analysisType}`, this.margin, this.yPosition);
     
-    // URL ou arquivo analisado
+    // URL ou arquivo analisado - DESTACADO COM BOX
     const attributes = analysisData.data.data.attributes;
-    if (attributes.url) {
-      this.yPosition = this._addText(doc, `URL Analisada: ${attributes.url}`, this.margin, this.yPosition);
-    } else if (attributes.meaningful_name) {
-      this.yPosition = this._addText(doc, `Arquivo Analisado: ${attributes.meaningful_name}`, this.margin, this.yPosition);
+    
+    // Tentar diferentes caminhos para encontrar a URL/arquivo
+    const url = attributes.url || attributes.last_submission_url || analysisData.originalUrl || null;
+    const fileName = attributes.meaningful_name || attributes.names?.[0] || analysisData.originalFile || null;
+    
+    if (url) {
+      // Criar box destacado para URL
+      const boxHeight = 18;
+      doc.setFillColor(240, 249, 255); // Azul claro
+      doc.roundedRect(this.margin, this.yPosition - 3, this.pageWidth - 2 * this.margin, boxHeight, 2, 2, 'F');
+      doc.setDrawColor(59, 130, 246); // Borda azul
+      doc.setLineWidth(0.5);
+      doc.roundedRect(this.margin, this.yPosition - 3, this.pageWidth - 2 * this.margin, boxHeight, 2, 2, 'S');
+      
+      // Título destacado
+      doc.setTextColor(59, 130, 246);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('URL Analisada:', this.margin + 3, this.yPosition + 3);
+      
+      // URL em texto menor
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      const urlLines = doc.splitTextToSize(url, this.pageWidth - 2 * this.margin - 10);
+      doc.text(urlLines[0], this.margin + 3, this.yPosition + 9);
+      if (urlLines.length > 1) {
+        doc.text(urlLines[1], this.margin + 3, this.yPosition + 13);
+      }
+      this.yPosition += 25;
+      
+    } else if (fileName) {
+      // Criar box destacado para Arquivo
+      const boxHeight = 18;
+      doc.setFillColor(240, 249, 255); // Azul claro
+      doc.roundedRect(this.margin, this.yPosition - 3, this.pageWidth - 2 * this.margin, boxHeight, 2, 2, 'F');
+      doc.setDrawColor(59, 130, 246); // Borda azul
+      doc.setLineWidth(0.5);
+      doc.roundedRect(this.margin, this.yPosition - 3, this.pageWidth - 2 * this.margin, boxHeight, 2, 2, 'S');
+      
+      // Título destacado
+      doc.setTextColor(59, 130, 246);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      doc.text('Arquivo Analisado:', this.margin + 3, this.yPosition + 3);
+      
+      // Nome do arquivo
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      const fileLines = doc.splitTextToSize(fileName, this.pageWidth - 2 * this.margin - 10);
+      doc.text(fileLines[0], this.margin + 3, this.yPosition + 9);
+      
+      // Adicionar tamanho se disponível
+      if (attributes.size) {
+        const sizeInMB = (attributes.size / (1024 * 1024)).toFixed(2);
+        doc.setFontSize(8);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Tamanho: ${sizeInMB} MB`, this.margin + 3, this.yPosition + 13);
+      }
+      this.yPosition += 25;
     }
+    
+    // Reset cores
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
     
     // Status da verificação
     const status = analysisData.isMalicious ? 'malicious' : 'clean';
@@ -81,7 +145,7 @@ class ScannerReportGenerator {
   }
 
   /**
-   * Adiciona o resultado da análise
+   * Adiciona o resultado da análise com caixa colorida
    * @private
    */
   _addAnalysisResult(doc, analysisData) {
@@ -133,13 +197,13 @@ class ScannerReportGenerator {
    * @private
    */
   _addFooter(doc) {
-    // Verifica se precisa de nova página
+    // Verificar se precisa de nova página
     if (this.yPosition > doc.internal.pageSize.getHeight() - 50) {
       doc.addPage();
       this.yPosition = 30;
     }
     
-    // Rodapé
+    // Rodapé (sempre na parte inferior da página)
     const pageHeight = doc.internal.pageSize.getHeight();
     doc.setFontSize(10);
     doc.setTextColor(128, 128, 128);
@@ -159,7 +223,7 @@ class ScannerReportGenerator {
     doc.setFontSize(fontSize);
     doc.setFont('helvetica', isBold ? 'bold' : 'normal');
     
-    // Dividir texto em linhas, se necessário
+    // Dividir texto em linhas se necessário
     const lines = doc.splitTextToSize(text, maxWidth);
     const lineHeight = fontSize * 0.35;
     

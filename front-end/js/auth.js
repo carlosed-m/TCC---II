@@ -22,7 +22,7 @@ class AuthManager {
   // Funções de UI
   static showError(errorElement, errorTextElement, message) {
     errorTextElement.textContent = message;
-    errorElement.style.display = 'block';
+    errorElement.style.display = 'flex'; // Flex inline para alinhar ícone e texto
   }
 
   static hideError(errorElement) {

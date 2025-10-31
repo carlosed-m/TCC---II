@@ -383,41 +383,37 @@ html.light-theme .password-toggle:hover {
   text-decoration: underline;
 }
 
-/* Mensagens de feedback - Modal Centralizado */
+/* Mensagens de erro e feedback*/
 .error-message, .success-message {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.error-message > div, .success-message > div {
-  background: white;
-  padding: 30px 40px;
-  border-radius: 12px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   border-left: 4px solid;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  max-width: 450px;
-  width: 90%;
-  text-align: center;
+  align-items: center;
+  gap: 8px;
 }
 
-.error-message > div {
+.error-message {
   background: #ffe6e6;
   color: #d63031;
   border-left-color: #d63031;
 }
 
-.success-message > div {
+.success-message {
   background: #e6ffe6;
   color: #00b894;
   border-left-color: #00b894;
+}
+
+.error-message > div i {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.success-message > div i {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
 /* Loading */
