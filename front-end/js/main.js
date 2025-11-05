@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <strong>Limite máximo:</strong> ${formatBytes(MAX_FILE_SIZE)}
     `;
     
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
   }
   // Fechar modal de erro de tamanho de arquivo
   function closeFileSizeErrorModal() {
