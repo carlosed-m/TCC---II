@@ -236,7 +236,7 @@ class HistoryManager {
   }
 
   getStatusText(status, threatCount) {
-    if (threatCount === 0) return '<i class="fa-solid fa-shield-check"></i> Limpo';
+    if (threatCount === 0) return '<i class="fa-solid fa-shield-check"></i> Seguro';
     if (threatCount > 0 && threatCount <= 3) return '<i class="fa-solid fa-exclamation-triangle"></i> Suspeito';
     return '<i class="fa-solid fa-skull-crossbones"></i> Malicioso';
   }

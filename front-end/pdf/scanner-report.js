@@ -137,8 +137,16 @@ class ScannerReportGenerator {
     doc.setFontSize(12);
     doc.setFont('helvetica', 'normal');
     
-    // Status da verificação
-    const status = analysisData.isMalicious ? 'malicious' : 'clean';
+    // Status da verificação - Lógica de 3 níveis
+    const maliciousCount = analysisData.stats?.malicious || 0;
+    let status;
+    if (maliciousCount === 0) {
+      status = 'clean';
+    } else if (maliciousCount <= 3) {
+      status = 'suspicious';
+    } else {
+      status = 'malicious';
+    }
     this.yPosition = this._addText(doc, `Status da Verificação: ${this._translateStatus(status)}`, this.margin, this.yPosition);
     
     this.yPosition += 10;
@@ -149,8 +157,19 @@ class ScannerReportGenerator {
    * @private
    */
   _addAnalysisResult(doc, analysisData) {
-    const resultColor = analysisData.isMalicious ? [239, 68, 68] : [34, 197, 94];
-    const resultText = analysisData.isMalicious ? 'AMEAÇA DETECTADA' : 'NENHUMA AMEAÇA ENCONTRADA';
+    const maliciousCount = analysisData.stats?.malicious || 0;
+    
+    let resultColor, resultText;
+    if (maliciousCount === 0) {
+      resultColor = [34, 197, 94]; // Verde
+      resultText = 'NENHUMA AMEAÇA ENCONTRADA';
+    } else if (maliciousCount <= 3) {
+      resultColor = [251, 146, 60]; // Laranja
+      resultText = 'AMEAÇA SUSPEITA DETECTADA';
+    } else {
+      resultColor = [239, 68, 68]; // Vermelho
+      resultText = 'AMEAÇA DETECTADA';
+    }
     
     doc.setFillColor(...resultColor);
     doc.rect(this.margin, this.yPosition - 8, this.pageWidth - 2 * this.margin, 20, 'F');
@@ -240,7 +259,7 @@ class ScannerReportGenerator {
    */
   _translateStatus(status) {
     const statusMap = {
-      'clean': 'Limpo',
+      'clean': 'Seguro',
       'malicious': 'Malicioso', 
       'suspicious': 'Suspeito',
       'undetected': 'Não Detectado',

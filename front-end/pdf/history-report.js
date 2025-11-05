@@ -198,7 +198,7 @@ class HistoryReportGenerator {
     doc.setFont('helvetica', 'normal');
     doc.text(`Data: ${new Date(verification.created_at).toLocaleString('pt-BR')}`, margin + 5, yPosition);
     yPosition += 7;
-    doc.text(`Status: ${verification.threat_count > 0 ? 'Ameaça Detectada' : 'Limpo'}`, margin + 5, yPosition);
+    doc.text(`Status: ${verification.threat_count > 0 ? 'Ameaça Detectada' : 'Seguro'}`, margin + 5, yPosition);
     yPosition += 7;
     doc.text(`Ameaças: ${verification.threat_count}`, margin + 5, yPosition);
     yPosition += 12;
