@@ -50,32 +50,6 @@ cd back-end/banco-e-rotas
 npm install
 ```
 
-#### 3.2. Configurar Variáveis de Ambiente
-Crie o arquivo `.env` na pasta `back-end/banco-e-rotas/`:
-```env
-# Configurações do Banco de Dados
-DB_USER=tcc_user
-DB_PASSWORD=tcc123
-DB_HOST=localhost
-DB_NAME=TccII
-DB_PORT=5432
-
-# Configurações de Autenticação
-JWT_SECRET=sua_chave_secreta_jwt_aqui
-
-# API Externa
-VT_API_KEY=sua_chave_virustotal_aqui
-
-# Configurações do Servidor
-PORT=3001
-```
-
-#### 3.3. Obter Chave da API VirusTotal
-1. Acesse: https://www.virustotal.com/gui/join-us
-2. Crie uma conta gratuita
-3. Vá em "API Key" no seu perfil
-4. Copie a chave e cole no arquivo `.env` na variável `VT_API_KEY`
-
 ### 4. Configuração do Front-End
 
 #### 4.1. Instalar Dependências
