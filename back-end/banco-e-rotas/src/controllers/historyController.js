@@ -426,7 +426,7 @@ exports.generateVerificationPDF = async (req, res) => {
         // Traduzir os status para português
         function translateStatus(status) {
             const statusMap = {
-                'clean': 'Limpo',
+                'clean': 'Seguro',
                 'malicious': 'Malicioso',
                 'suspicious': 'Suspeito',
                 'undetected': 'Não Detectado',
@@ -492,7 +492,7 @@ exports.generateVerificationPDF = async (req, res) => {
                         .replace(/trojan/gi, 'trojan')
                         .replace(/virus/gi, 'vírus')
                         .replace(/suspicious/gi, 'suspeito')
-                        .replace(/clean/gi, 'limpo')
+                        .replace(/clean/gi, 'seguro')
                         .replace(/detected/gi, 'detectado')
                         .replace(/undetected/gi, 'não detectado');
                     
@@ -618,7 +618,7 @@ exports.generateTemporaryPDF = async (req, res) => {
         // Traduzir os status para português
         function translateStatus(status) {
             const statusMap = {
-                'clean': 'Limpo',
+                'clean': 'Seguro',
                 'malicious': 'Malicioso',
                 'suspicious': 'Suspeito',
                 'undetected': 'Não Detectado',
@@ -684,7 +684,7 @@ exports.generateTemporaryPDF = async (req, res) => {
                         ?.replace(/trojan/gi, 'trojan')
                         ?.replace(/virus/gi, 'vírus')
                         ?.replace(/suspicious/gi, 'suspeito')
-                        ?.replace(/clean/gi, 'limpo')
+                        ?.replace(/clean/gi, 'seguro')
                         ?.replace(/detected/gi, 'detectado')
                         ?.replace(/undetected/gi, 'não detectado') || 'Ameaça detectada';
                     
