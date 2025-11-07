@@ -39,7 +39,7 @@ GRANT ALL PRIVILEGES ON DATABASE "TccII" TO tcc_user;
 Execute o script SQL localizado em `back-end/banco-e-rotas/database/create_tables.sql`:
 ```sql
 -- Conecte-se ao banco TccII e execute:
-\i back-end/banco-e-rotas/database/create_tables.sql
+Execute o código que está nos arquivos create_tables.sql e add_password_reset.sql. Caso apareça a mensagem que foi realizado com sucesso, pode estar fechando o pgAdmin
 ```
 
 ### 3. Configuração do Back-End
