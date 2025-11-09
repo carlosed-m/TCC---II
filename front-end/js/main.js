@@ -496,11 +496,19 @@ document.addEventListener('DOMContentLoaded', () => {
     detailsCard.className = 'details-card';
     detailsCard.style.display = 'none';
 
+    // Calcular total de antivírus
+    const totalAntivirus = (stats.harmless || 0) + (stats.malicious || 0) + (stats.suspicious || 0) + (stats.undetected || 0) + (stats.timeout || 0);
+    
     // Estatísticas
     const statsHtml = `
       <div class="stats-container">
         <div class="stat-item">
           <h4>Resultados da Análise</h4>
+          <div class="total-antivirus-info">
+            <i class="fa-solid fa-shield-virus"></i>
+            <span><strong>${totalAntivirus} antivírus</strong> foram utilizados nesta verificação</span>
+          </div>
+          <p class="antivirus-explanation">Os números abaixo representam quantos antivírus classificaram o conteúdo em cada categoria:</p>
           <div class="stat-grid">
             <div class="stat-box harmless">
               <span class="stat-number">${stats.harmless || 0}</span>
@@ -786,10 +794,35 @@ function closeLogoutModal() {
   }
 }
 
+// === Funções do Modal de Ajuda ===
+
+// Abrir modal de ajuda
+function openHelpModal() {
+  const modal = document.getElementById('help-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // Prevenir scroll da página
+  }
+}
+
+// Fechar modal de ajuda
+function closeHelpModal() {
+  const modal = document.getElementById('help-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = ''; // Restaurar scroll da página
+  }
+}
+
+// Tornar funções globais para uso no HTML
+window.openHelpModal = openHelpModal;
+window.closeHelpModal = closeHelpModal;
+
 // Event listeners para o modal de logout
 document.addEventListener('DOMContentLoaded', () => {
   const closeLogoutModalBtn = document.getElementById('close-logout-modal');
   const logoutModal = document.getElementById('logout-modal');
+  const helpModal = document.getElementById('help-modal');
   
   // Fechar modal ao clicar no botão OK
   if (closeLogoutModalBtn) {
@@ -805,10 +838,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
+  // Fechar modal de ajuda ao clicar fora
+  if (helpModal) {
+    helpModal.addEventListener('click', (e) => {
+      if (e.target === helpModal) {
+        closeHelpModal();
+      }
+    });
+  }
+  
   // Fechar modal ao pressionar ESC
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && logoutModal && logoutModal.style.display === 'block') {
-      closeLogoutModal();
+    if (e.key === 'Escape') {
+      if (logoutModal && logoutModal.style.display === 'flex') {
+        closeLogoutModal();
+      }
+      if (helpModal && helpModal.style.display === 'flex') {
+        closeHelpModal();
+      }
     }
   });
 });

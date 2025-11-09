@@ -140,17 +140,62 @@ h1 {
     margin-bottom: 0.5rem;
 }
 
+/* Header com botão de ajuda */
+.header-with-help {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
 .subtitle {
     font-size: 1.1rem;
     color: var(--secondary-text-light);
-    margin-bottom: 2rem;
+    margin: 0;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .dark-theme .subtitle {
     color: var(--secondary-text-dark);
+}
+
+/* Botão de Ajuda */
+.help-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--accent-color-light);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.help-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.help-btn i {
+    font-size: 1.1rem;
+}
+
+.dark-theme .help-btn {
+    background: var(--accent-color-dark);
+    box-shadow: 0 2px 8px rgba(96, 165, 250, 0.3);
+}
+
+.dark-theme .help-btn:hover {
+    background: #60a5fa;
+    box-shadow: 0 4px 12px rgba(96, 165, 250, 0.4);
 }
 /* Container de escaneamento e abas */
 .scan-container {
@@ -940,6 +985,52 @@ input[type="file"] {
     margin-bottom: 24px;
 }
 
+/* Informação sobre total de antivírus */
+.total-antivirus-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 1rem;
+}
+
+.dark-theme .total-antivirus-info {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+}
+
+.total-antivirus-info i {
+    font-size: 1.5rem;
+    color: #3b82f6;
+}
+
+.dark-theme .total-antivirus-info i {
+    color: #93c5fd;
+}
+
+.total-antivirus-info span {
+    color: var(--primary-text-light);
+    line-height: 1.5;
+}
+
+.dark-theme .total-antivirus-info span {
+    color: var(--primary-text-dark);
+}
+
+.antivirus-explanation {
+    color: var(--secondary-text-light);
+    font-size: 0.95rem;
+    margin: 0.5rem 0 1rem 0;
+    font-style: italic;
+}
+
+.dark-theme .antivirus-explanation {
+    color: var(--secondary-text-dark);
+}
+
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -1266,4 +1357,226 @@ input[type="file"] {
 
 .dark-theme .details-card h4 {
     color: var(--primary-text-dark);
+}
+
+/* === Modal de Ajuda === */
+.help-modal-content {
+    max-width: 700px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 16px;
+    background: var(--surface-color-light);
+    box-shadow: none;
+}
+
+.dark-theme .help-modal-content {
+    background: var(--surface-color-dark);
+    box-shadow: none;
+}
+
+.help-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.help-modal-content::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 0 16px 16px 0;
+}
+
+.dark-theme .help-modal-content::-webkit-scrollbar-track {
+    background: #1e293b;
+}
+
+.help-modal-content::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.dark-theme .help-modal-content::-webkit-scrollbar-thumb {
+    background: #475569;
+}
+
+.help-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.dark-theme .help-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+.help-modal-body {
+    padding: 1.5rem 2rem;
+    text-align: left;
+}
+
+.help-section {
+    margin-bottom: 2rem;
+}
+
+.help-section:last-child {
+    margin-bottom: 0;
+}
+
+.help-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.help-icon-title i {
+    font-size: 1.5rem;
+}
+
+.help-icon-title h4 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: var(--primary-text-light);
+}
+
+.dark-theme .help-icon-title h4 {
+    color: var(--primary-text-dark);
+}
+
+.help-description {
+    color: var(--secondary-text-light);
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.dark-theme .help-description {
+    color: var(--secondary-text-dark);
+}
+
+.help-steps {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: var(--primary-text-light);
+}
+
+.dark-theme .help-steps {
+    color: var(--primary-text-dark);
+}
+
+.help-steps li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+.help-steps code {
+    background: #f3f4f6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #1f2937;
+}
+
+.dark-theme .help-steps code {
+    background: #374151;
+    color: #e5e7eb;
+}
+
+.help-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.help-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: #f9fafb;
+    border-radius: 8px;
+    border-left: 3px solid #3b82f6;
+}
+
+.dark-theme .help-list li {
+    background: #1f2937;
+}
+
+.help-list li i {
+    font-size: 1.25rem;
+    margin-top: 0.15rem;
+}
+
+.help-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.dark-theme .help-tip {
+    background: #1e3a8a;
+}
+
+.help-tip i {
+    color: #3b82f6;
+    font-size: 1.25rem;
+    margin-top: 0.15rem;
+}
+
+.dark-theme .help-tip i {
+    color: #93c5fd;
+}
+
+.help-tip span {
+    color: var(--primary-text-light);
+    line-height: 1.6;
+}
+
+.dark-theme .help-tip span {
+    color: var(--primary-text-dark);
+}
+
+.help-warning {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #fed7aa;
+    border-left: 4px solid #f59e0b;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.dark-theme .help-warning {
+    background: #78350f;
+}
+
+.help-warning i {
+    color: #f59e0b;
+    font-size: 1.25rem;
+    margin-top: 0.15rem;
+}
+
+.dark-theme .help-warning i {
+    color: #fbbf24;
+}
+
+.help-warning span {
+    color: var(--primary-text-light);
+    line-height: 1.6;
+}
+
+.dark-theme .help-warning span {
+    color: var(--primary-text-dark);
+}
+
+.help-divider {
+    height: 1px;
+    background: var(--border-color-light);
+    margin: 2rem 0;
+}
+
+.dark-theme .help-divider {
+    background: var(--border-color-dark);
 }

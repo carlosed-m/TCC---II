@@ -57,7 +57,13 @@
   </header>
 
   <main class="container">
-    <p class="subtitle">Analise arquivos, URLs para detectar malware e outras ameaças.</p>
+    <div class="header-with-help">
+      <p class="subtitle">Analise arquivos, URLs para detectar malware e outras ameaças.</p>
+      <button id="help-btn" class="help-btn" onclick="openHelpModal()">
+        <i class="fa-solid fa-circle-question"></i>
+        <span>Ajuda</span>
+      </button>
+    </div>
 
     <div class="scan-container">
       <div class="tabs">
@@ -154,6 +160,75 @@
           <i class="fa-solid fa-check"></i>
           Entendido
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Ajuda -->
+  <div id="help-modal" class="modal">
+    <div class="modal-content help-modal-content">
+      <div class="modal-header">
+        <i class="fa-solid fa-circle-question modal-icon" style="color: #3b82f6;"></i>
+        <h3>Como usar o No Matters</h3>
+        <button class="modal-close" onclick="closeHelpModal()">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body help-modal-body">
+        <div class="help-section">
+          <div class="help-icon-title">
+            <i class="fa-solid fa-link" style="color: #3b82f6;"></i>
+            <h4>Verificação de URLs</h4>
+          </div>
+          <p class="help-description">Para verificar a segurança de um site ou link:</p>
+          <ol class="help-steps">
+            <li>Clique na aba <strong>"URL"</strong> no topo da área de verificação</li>
+            <li>Cole ou digite o endereço completo do site no campo (exemplo: <code>https://exemplo.com</code>)</li>
+            <li>Certifique-se de que a URL começa com <code>http://</code> ou <code>https://</code></li>
+            <li>Clique no botão azul com a seta <i class="fa-solid fa-arrow-right"></i> para iniciar a análise</li>
+          </ol>
+          <div class="help-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span><strong>Dica:</strong> Você pode copiar links suspeitos de e-mails, mensagens ou redes sociais e verificá-los antes de acessar.</span>
+          </div>
+        </div>
+
+        <div class="help-divider"></div>
+
+        <div class="help-section">
+          <div class="help-icon-title">
+            <i class="fa-solid fa-file" style="color: #3b82f6;"></i>
+            <h4>Verificação de Arquivos</h4>
+          </div>
+          <p class="help-description">Para verificar a segurança de um arquivo do seu computador:</p>
+          <ol class="help-steps">
+            <li>Clique na aba <strong>"ARQUIVO"</strong> no topo da área de verificação</li>
+            <li>Clique no botão <strong>"Escolher Arquivo"</strong></li>
+            <li>Na janela que abrir, navegue até o arquivo que deseja verificar e selecione-o</li>
+            <li>Verifique se o arquivo selecionado aparece na tela com seu nome e tamanho</li>
+            <li>Clique em <strong>"Confirmar envio"</strong> para iniciar a análise</li>
+          </ol>
+          <div class="help-warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span><strong>Atenção:</strong> O tamanho máximo permitido é de <strong>50 MB</strong>. Arquivos maiores não poderão ser analisados.</span>
+          </div>
+        </div>
+
+        <div class="help-divider"></div>
+
+        <div class="help-section">
+          <div class="help-icon-title">
+            <i class="fa-solid fa-chart-line" style="color: #3b82f6;"></i>
+            <h4>Entendendo os Resultados</h4>
+          </div>
+          <p class="help-description">Após a análise, você verá:</p>
+          <ul class="help-list">
+            <li><i class="fa-solid fa-circle-check" style="color: #22c55e;"></i> <strong>Seguro:</strong> Nenhuma ameaça foi detectada</li>
+            <li><i class="fa-solid fa-exclamation-triangle" style="color: #fb923c;"></i> <strong>Suspeito:</strong> 1 a 3 antivírus detectaram algo suspeito</li>
+            <li><i class="fa-solid fa-skull-crossbones" style="color: #ef4444;"></i> <strong>Malicioso:</strong> 4 ou mais antivírus detectaram ameaças</li>
+          </ul>
+          <p class="help-description" style="margin-top: 1rem;">Você também pode gerar um relatório em PDF com os detalhes completos da análise.</p>
+        </div>
       </div>
     </div>
   </div>
