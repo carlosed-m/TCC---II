@@ -101,9 +101,7 @@ openssl rand -hex 64
 ```
 
 ⚠️ **IMPORTANTE:**
-- Mínimo recomendado: 64 caracteres hexadecimais
-- **NUNCA** commite o arquivo `.env` no Git (já está no `.gitignore`)
-- Use chaves diferentes para desenvolvimento e produção
+- Mínimo recomendado: 64 caracteres hexadecimais;
 
 #### 3.3. Como obter a chave do VirusTotal (VT_API_KEY)
 
