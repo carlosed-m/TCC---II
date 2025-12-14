@@ -20,7 +20,7 @@ const FormData = require('form-data');
 // Configuração inicial do servidor Express e middlewares
 const app = express();
 const upload = multer({ dest: path.join(__dirname, '../../../uploads') }); // Configura o diretório para upload de arquivos
-const API_KEY = "3bff712a13371ad413ae5dfc49b8bb4f8ae5b476084fc945d496f2ad6721e4d5"; // Chave da API do VirusTotal
+const API_KEY = "api_key_virustotal"; // Chave da API do VirusTotal
 
 // Configuração dos middlewares
 app.use(cors());
